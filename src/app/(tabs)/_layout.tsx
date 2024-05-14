@@ -1,9 +1,10 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Platform, Pressable } from 'react-native';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Link, Tabs } from 'expo-router';
 
 import Colors from '@constants/Colors';
+import { useClientOnlyValue } from '@/src/components/useClientOnlyValue';
 
 
 
@@ -18,14 +19,13 @@ export default function TabLayout() {
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         
-        headerShown: false,
+        headerShown: useClientOnlyValue(false, true),
+        headerTitle: '',
         tabBarShowLabel: false,
         tabBarStyle: Platform.OS == 'ios' ? {
           height: '9.5%',
         } : {
           height: '6.5%',
-        },
-        tabBarIconStyle: {
         },
       }}
     >
@@ -33,6 +33,20 @@ export default function TabLayout() {
       name="index"
       options={{
         title: 'home',
+        headerRight: () => (
+          <Link href="/mypage" asChild>
+            <Pressable>
+              {({ pressed }) => (
+                <MaterialCommunityIcons
+                  name="account"
+                  size={25}
+                  color={Colors[colorScheme ?? 'light'].text}
+                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                />
+              )}
+            </Pressable>
+          </Link>
+        ),
         tabBarIcon: ({ color }) => 
         <MaterialCommunityIcons 
           name="home" 
