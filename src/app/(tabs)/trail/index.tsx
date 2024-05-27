@@ -1,8 +1,12 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { FlatList, Image, Pressable, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import TrailIndexRoom from '@components/trail/TrailIndexroom';
+import Trails from '@/assets/testdata/trailList';
+import RoomList from '@/assets/testdata/roomData';
+import TrailIndexTrail from '@/src/components/trail/TrailIndextrail';
 
 //메뉴 정보
 const MenuTab = [
@@ -38,12 +42,12 @@ export default function TabTwoScreen() {
         <View style={styles.menuElement}>
           <Pressable onPress={() => {}} style={[styles.menuIcon]}>
             <MaterialCommunityIcons
-              name="pencil"
+              name="format-list-text"
               size={MenuTabSize}
               color={"#000000"}
             />
           </Pressable>
-          <Text>산책로 리스트</Text>
+          <Text style={styles.menuText}>산책로 리스트</Text>
         </View>
         <View style={styles.menuElement}>
           <Pressable onPress={() => {}} style={[styles.menuIcon]}>
@@ -53,37 +57,57 @@ export default function TabTwoScreen() {
               color={"#000000"}
             />
           </Pressable>
-          <Text>산책 기록</Text>
+          <Text style={styles.menuText}>산책 기록</Text>
         </View>
         <View style={styles.menuElement}>
           <Pressable onPress={() => {}} style={[styles.menuIcon]}>
             <MaterialCommunityIcons
-              name="pencil"
+              name="account-group"
               size={MenuTabSize}
               color={"#000000"}
             />
           </Pressable>
-          <Text>모임 참여</Text>
+          <Text style={styles.menuText}>모임 참여</Text>
         </View>
         <View style={styles.menuElement}>
           <Pressable onPress={() => {}} style={[styles.menuIcon]}>
             <MaterialCommunityIcons
-              name="pencil"
+              name="plus"
               size={MenuTabSize}
               color={"#000000"}
             />
           </Pressable>
-          <Text>모임 생성</Text>
+          <Text style={styles.menuText}>모임 생성</Text>
         </View>
       </View>
       {/*광고배너*/}
       <View style={styles.ad}>
+        <Image source={require('@assets/images/default_advertising.png')}
+          style={styles.adimg}
+          />
       </View>
       {/*모임*/}
       <View style={styles.rooms}>
+          {/** text 눌렀을 때 */}
+          <Pressable onPress={() => {}}>
+            <Text style={styles.textStack}>지금 뜨는 모임</Text>
+          </Pressable>
+          {/** 현재 모집중인 모임 목록 */}
+          <TrailIndexRoom room={RoomList[0]}></TrailIndexRoom>
       </View>
       {/*산책로들*/}
       <View style={styles.trails}>
+          <Pressable onPress={() => {}}>
+            <Text style={styles.textStack}>인기 있는 산책로</Text>
+          </Pressable>
+          <FlatList
+            data={Trails}
+            renderItem={({item}) => <TrailIndexTrail trail={item}/>}
+            horizontal={true}
+            scrollEnabled
+            showsHorizontalScrollIndicator={false}
+    
+          />
       </View>
     </View>
   );
@@ -93,30 +117,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
   menuList: {
     flexDirection: 'row',
-    width: '100%',
-    alignSelf: 'center',
+    width: '90%',
+    marginHorizontal: '5%',
+    marginVertical: '3%',
+    marginBottom: '1%',
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 30,
-    flex: 1,
+    paddingHorizontal: 10,
   },
   menuIcon: {
     borderStyle: 'solid',
     width: '100%',
     aspectRatio: 1,
-    marginBottom: 5,
+    marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
@@ -125,17 +141,44 @@ const styles = StyleSheet.create({
   },
   menuElement: {
     width: '25%',
-    padding: 5,
-    margin: 10,
-    fontSize: 10,
+    padding: 3,
+    margin: 5,
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+  },
+  menuText: {
+    fontSize: 13,
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  textStack: {
+    fontSize: 20,
+    fontWeight: 'bold',
+
   },
   ad: {
-
+    width: '100%',
+    height: 100,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  adimg: {
+    width: '90%',
+    height: '90%',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#aaaaaa',
   },
   rooms: {
-
+    width: '100%',
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
   trails: {
-
+    flex: 1,
+    width: '100%',
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
 });

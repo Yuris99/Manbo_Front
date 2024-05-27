@@ -9,4 +9,6 @@ const Users: User[] = [
         age: 22,
     },
     
-]
+];
+
+export default Users;
