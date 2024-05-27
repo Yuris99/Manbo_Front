@@ -51,7 +51,7 @@ export type Trail = {
     name: string;
     walks: number;
     rank: number;
-    created: Date;
+    created: String;
     tags: TrailTag[];
 };
 

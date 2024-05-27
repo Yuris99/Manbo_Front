@@ -73,6 +73,7 @@ export default function TabLayout() {
       name="trail"
       options={{
         title: 'trail',
+        headerShown: false,
         tabBarIcon: ({ color }) => 
           <MaterialCommunityIcons 
             name="walk" 
