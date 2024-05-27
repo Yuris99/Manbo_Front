@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
 import React from 'react'
 import { Room } from '@/src/types';
-import { Link } from 'expo-router';
+import { Link, router, useSegments } from 'expo-router';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Trails from '@/assets/testdata/trailList';
@@ -30,12 +30,15 @@ const TrailTag = () => {
   );
 };
 
+const openJoinPage = () => {
+  router.push('/modals/Roomjoin');
+}
 
 const TrailIndexRoom = ({room} : Roomdata) => {
   //방이 없을 때
   if(room == null) {
     return (
-      <Link href={`@app/trail/roompage/createRoom`} asChild>
+      <Link href={`trail/roompage/Createroom`} asChild>
         <Pressable style={styles.container}>
           <View style={[styles.viewunable]}>
             <Text style={{fontSize: 30, color: '#333333'}}>모집중인 모임이 없어요!</Text>
@@ -46,8 +49,7 @@ const TrailIndexRoom = ({room} : Roomdata) => {
     );
   }
   return (
-    <Link href={`@app/trail/roompage/room/${room.id}`} asChild>
-      <Pressable style={styles.container}>
+      <Pressable onPress={() => {openJoinPage();}} style={styles.container}>
         <View style={styles.views}>
           {/*모임 사진 + 마스크 */}
           <MaskedView style={styles.viewmask} maskElement={
@@ -110,15 +112,15 @@ const TrailIndexRoom = ({room} : Roomdata) => {
           </View>
         </View>
       </Pressable>
-    </Link>
   );
 };
 
 export default TrailIndexRoom;
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    marginVertical: 10,
+    width: '95%',
+    margin: 10,
+    alignSelf: 'center',
   },
   viewunable: {
     width: '100%',

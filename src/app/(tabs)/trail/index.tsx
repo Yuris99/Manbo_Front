@@ -7,6 +7,7 @@ import TrailIndexRoom from '@components/trail/TrailIndexroom';
 import Trails from '@/assets/testdata/trailList';
 import RoomList from '@/assets/testdata/roomData';
 import TrailIndexTrail from '@/src/components/trail/TrailIndextrail';
+import { Link, router } from 'expo-router';
 
 //메뉴 정보
 const MenuTab = [
@@ -34,7 +35,7 @@ const MenuTab = [
 
 const MenuTabSize = 40;
 
-export default function TabTwoScreen() {
+export default function Trail() {
   return (
     <View style={styles.container}>
       {/*메뉴리스트*/}
@@ -60,23 +61,33 @@ export default function TabTwoScreen() {
           <Text style={styles.menuText}>산책 기록</Text>
         </View>
         <View style={styles.menuElement}>
-          <Pressable onPress={() => {}} style={[styles.menuIcon]}>
-            <MaterialCommunityIcons
-              name="account-group"
-              size={MenuTabSize}
-              color={"#000000"}
-            />
-          </Pressable>
+          <Link href="/trail/roompage" asChild>
+            <Pressable>
+              <View style={[styles.menuIcon]}>
+                <MaterialCommunityIcons
+                  name="account-group"
+                  size={MenuTabSize}
+                  color={"#000000"}
+                />
+              </View>
+            </Pressable>
+          </Link>
           <Text style={styles.menuText}>모임 참여</Text>
         </View>
         <View style={styles.menuElement}>
-          <Pressable onPress={() => {}} style={[styles.menuIcon]}>
-            <MaterialCommunityIcons
-              name="plus"
-              size={MenuTabSize}
-              color={"#000000"}
-            />
-          </Pressable>
+          <Link href="/roompage" asChild>
+            <Pressable style={[styles.menuIcon]}>
+              {({ pressed }) => (
+                <View style={styles.menuIcon}>
+                <MaterialCommunityIcons
+                  name="plus"
+                  size={MenuTabSize}
+                  color={"#000000"}
+                />
+                </View>
+              )}
+            </Pressable>
+          </Link>
           <Text style={styles.menuText}>모임 생성</Text>
         </View>
       </View>
@@ -89,9 +100,13 @@ export default function TabTwoScreen() {
       {/*모임*/}
       <View style={styles.rooms}>
           {/** text 눌렀을 때 */}
-          <Pressable onPress={() => {}}>
-            <Text style={styles.textStack}>지금 뜨는 모임</Text>
+          <Link href="/roompage" asChild>
+          <Pressable>
+            {({ pressed }) => (
+              <Text style={[styles.textStack, {paddingHorizontal: 10,}]}>지금 뜨는 모임</Text>
+            )}
           </Pressable>
+          </Link>
           {/** 현재 모집중인 모임 목록 */}
           <TrailIndexRoom room={RoomList[0]}></TrailIndexRoom>
       </View>
@@ -173,7 +188,6 @@ const styles = StyleSheet.create({
   rooms: {
     width: '100%',
     marginTop: 10,
-    paddingHorizontal: 10,
   },
   trails: {
     flex: 1,

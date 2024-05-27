@@ -1,3 +1,4 @@
+import CreateRoomComponent from "@/src/components/trail/CreateRoomComponent";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link, Stack } from "expo-router";
 import { Pressable, Text, View } from "react-native";
@@ -8,7 +9,7 @@ export default function TrailStack () {
             <Stack.Screen name="index" options={{
                 //현재 위치
                 headerLeft: () => (
-                        <Link href="/" asChild>
+                        <Link href={{pathname:"/mypage", params: {title: '모집중인 모임'}}} asChild>
                         <Pressable>
                             {({ pressed }) => (
                                 <View style={{flexDirection:"row", justifyContent:"flex-start", padding: 5, alignItems: "center"}}>
@@ -24,6 +25,18 @@ export default function TrailStack () {
                         </Link>
                 ),
                 title: '',
+            }} />
+            <Stack.Screen name="roompage" options={{ 
+                title: '모집중인 모임',
+                headerRight: () => (
+                    <Link href='./Createroom' asChild>
+                        <Pressable>
+                            {({pressed}) => (
+                                <CreateRoomComponent />
+                            )}
+                        </Pressable>
+                    </Link>
+                )
             }} />
         </Stack>
     );
