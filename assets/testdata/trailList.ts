@@ -15,9 +15,10 @@ const Trails: Trail[] = [
         },
         name: "숭실대 산책로 1번",
         walks: 55,
-        rank: 1,
-        created: now.subtract(32, 'days').toISOString(),
+        rank: 9.2,
+        created: now.subtract(32, 'days').toDate(),
         tags: ["tag1"],
+        trailImgs: ['https://www.fao.org/images/newsroomlibraries/breafing-notes/36949400340_030e4ae5f9_oab4ccd35-fd6a-4230-bd2e-f0113f50357d.jpg?sfvrsn=426ca1c_3'],
     },
     {
         id: 2,
@@ -30,9 +31,10 @@ const Trails: Trail[] = [
         },
         name: "숭실대 산책로 2번",
         walks: 32,
-        rank: 2,
-        created: now.subtract(15, 'days').toISOString(),
+        rank: 6,
+        created: now.subtract(15, 'days').toDate(),
         tags: [],
+        trailImgs: ['https://austinactivekids.com/wp-content/uploads/2020/01/IMG_0191-1536x1152.jpeg'],
     },
     {
         id: 3,
@@ -45,9 +47,11 @@ const Trails: Trail[] = [
         },
         name: "숭실대 산책로 3번",
         walks: 12,
-        rank: 3,
-        created: now.subtract(5, 'days').toISOString(),
+        rank: 10,
+        created: now.subtract(5, 'days').toDate(),
         tags: ["tag1", "tag2"],
+        trailImgs: ['https://austinactivekids.com/wp-content/uploads/2020/01/2FC59971-A3F5-4C07-BFF4-439E8D663D0E-1536x1536.jpg'],
     },
     
-]
+];
+export default Trails;
