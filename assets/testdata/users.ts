@@ -8,6 +8,13 @@ const Users: User[] = [
         gender: "M",
         age: 22,
     },
+    {
+        id: 2,
+        username: "홍지훈",
+        email: "20201777@gmail.com",
+        gender: "M",
+        age: 24,
+    },
     
 ];
 

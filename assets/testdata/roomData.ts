@@ -14,6 +14,7 @@ const RoomList : Room[] = [
         meettime: now.add(110, 'hour').toDate(),
         state: 'Open',
         membercnt: 2,
+        roomTags: ["keyword"],
     },
     {
         id: 1,
@@ -25,6 +26,19 @@ const RoomList : Room[] = [
         meettime: now.add(11, 'hour').toDate(),
         state: 'Open',
         membercnt: 4,
+        roomTags: ["태그도", "존나많아지면", "어떻게되려나?", "그냥", "아주아주", "많아지면?"],
+    },
+    {
+        id: 2,
+        host_id: 2,
+        trail_id: 0,
+        name: "제목쓰기귀찮",
+        content: "설명도 쓰기 귀찮",
+        maximum: 2,
+        meettime: now.add(11, 'hour').toDate(),
+        state: 'Open',
+        membercnt: 1,
+        roomTags: [],
     },
 ];
 

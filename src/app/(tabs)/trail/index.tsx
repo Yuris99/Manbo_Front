@@ -41,13 +41,17 @@ export default function Trail() {
       {/*메뉴리스트*/}
       <View style={styles.menuList}>
         <View style={styles.menuElement}>
-          <Pressable onPress={() => {}} style={[styles.menuIcon]}>
-            <MaterialCommunityIcons
-              name="format-list-text"
-              size={MenuTabSize}
-              color={"#000000"}
-            />
-          </Pressable>
+          <Link href="/trail/trailpage" asChild>
+            <Pressable>
+              <View style={[styles.menuIcon]}>
+                <MaterialCommunityIcons
+                  name="format-list-text"
+                  size={MenuTabSize}
+                  color={"#000000"}
+                />
+              </View>
+            </Pressable>
+          </Link>
           <Text style={styles.menuText}>산책로 리스트</Text>
         </View>
         <View style={styles.menuElement}>
@@ -75,7 +79,7 @@ export default function Trail() {
           <Text style={styles.menuText}>모임 참여</Text>
         </View>
         <View style={styles.menuElement}>
-          <Link href="/roompage" asChild>
+          <Link href="/trail/roompage/Createroom" asChild>
             <Pressable style={[styles.menuIcon]}>
               {({ pressed }) => (
                 <View style={styles.menuIcon}>
@@ -116,6 +120,10 @@ export default function Trail() {
             <Text style={styles.textStack}>인기 있는 산책로</Text>
           </Pressable>
           <FlatList
+            contentContainerStyle={{
+              marginVertical: 15,
+              gap: 10,
+            }}
             data={Trails}
             renderItem={({item}) => <TrailIndexTrail trail={item}/>}
             horizontal={true}

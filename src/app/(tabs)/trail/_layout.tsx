@@ -9,7 +9,7 @@ export default function TrailStack () {
             <Stack.Screen name="index" options={{
                 //현재 위치
                 headerLeft: () => (
-                        <Link href={{pathname:"/mypage", params: {title: '모집중인 모임'}}} asChild>
+                        <Link href={{pathname:"/mypage"}} asChild>
                         <Pressable>
                             {({ pressed }) => (
                                 <View style={{flexDirection:"row", justifyContent:"flex-start", padding: 5, alignItems: "center"}}>
@@ -27,32 +27,10 @@ export default function TrailStack () {
                 title: '',
             }} />
             <Stack.Screen name="roompage" options={{ 
-                title: '모집중인 모임',
-                headerRight: () => (
-                    <Link href='./Createroom' asChild>
-                        <Pressable>
-                            {({pressed}) => (
-                                <CreateRoomComponent />
-                            )}
-                        </Pressable>
-                    </Link>
-                )
+                headerShown: false,
             }} />
             <Stack.Screen name="trailpage" options={{ 
-                title: '산책로',
-                headerRight: () => (
-                    <Link href='./SearchTrail' asChild>
-                        <Pressable>
-                            {({pressed}) => (
-                                    <MaterialCommunityIcons 
-                                        name="magnify" 
-                                        color={"#000000"} 
-                                        size={25}
-                                    />
-                            )}
-                        </Pressable>
-                    </Link>
-                )
+                headerShown: false,
             }} />
         </Stack>
     );

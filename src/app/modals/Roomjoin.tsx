@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     height: '35%',
-    borderWidth: 1,
     fontSize: contentsize,
   },
   roomtimedot: {

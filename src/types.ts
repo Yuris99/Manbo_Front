@@ -142,4 +142,5 @@ export type Room = {
     meettime: Date;
     state: RoomState;
     membercnt: number;
+    roomTags: string[];
 }

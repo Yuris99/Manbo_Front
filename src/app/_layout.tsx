@@ -10,6 +10,7 @@ import { useColorScheme } from '@components/useColorScheme';
 import { Pressable, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import HeaderBackButton from '../components/default/HeaderBackButton';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -60,15 +61,7 @@ function RootLayoutNav() {
           presentation:'modal',
           title:'모임 참여',
           headerLeft: () => (
-                  <Pressable onPress={()=>{router.back();}}>
-                          <View style={{justifyContent:"center",alignItems: "center"}}>
-                              <MaterialCommunityIcons 
-                                  name="chevron-left" 
-                                  color={"#000000"} 
-                                  size={40}
-                              />
-                          </View>
-                  </Pressable>
+            <HeaderBackButton />
           ),
         }} />
       </Stack>

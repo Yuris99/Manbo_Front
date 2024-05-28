@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
+import { View, Text, StyleSheet, Pressable, Image, Platform } from 'react-native'
 import React from 'react'
 import { Trail } from '@/src/types';
 import { Link } from 'expo-router';
@@ -9,6 +9,8 @@ import Trails from '@/assets/testdata/trailList';
 type TrailData = {
   trail: Trail;
 }
+
+const titlesize = Platform.OS == 'ios' ? 15 : 13;
 
 const TrailIndexTrail = ({trail} : TrailData) => {
   return (
@@ -21,7 +23,7 @@ const TrailIndexTrail = ({trail} : TrailData) => {
         {/* infoText */}
         <View style={styles.trailinfo}>
         <View style={styles.textbox}>
-          <Text style={styles.trailtitle}>{trail.name}</Text> 
+          <Text style={styles.trailtitle} ellipsizeMode='tail' numberOfLines={1}>{trail.name}</Text> 
           <View style={styles.rankinfo}>
             <MaterialCommunityIcons
               name={'star'}
@@ -42,10 +44,8 @@ export default TrailIndexTrail;
 const styles = StyleSheet.create({
   container: {
     borderRadius: 20,
-    width: 180,
     aspectRatio: 1,
-    marginVertical: 10,
-    marginRight: 10,
+    flex: 1,
   },
   image: {
     position: 'absolute',
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   trailtitle: {
-    fontSize: 15,
+    fontSize: titlesize,
     color: '#000000',    
     fontWeight: 'bold',
     marginLeft: 5,

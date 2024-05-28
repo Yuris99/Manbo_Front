@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Image, Platform } from 'react-native'
+import { View, Text, StyleSheet, Pressable, Image, Platform, FlatList } from 'react-native'
 import React from 'react'
 import { Room } from '@/src/types';
 import { Link, router, useSegments } from 'expo-router';
@@ -15,18 +15,21 @@ const startloc = Trails[0].startloc;
 
 const WeekendKorean : string[] = ['일', '월', '화', '수', '목', '금', '토'];
 
-const TrailTag = () => {
+const TrailTag = (tagname : {tagname:string}) => {
   return (
     <View style={{
-      color: '#aaaaaa',
       backgroundColor: '#ffffff',
       alignSelf: 'flex-start',
       height: 20,
       justifyContent: 'center',
       paddingHorizontal: 10,
       borderRadius: 100,
-      
-    }}><Text style={{fontSize: 10}}>키워드</Text></View>
+      marginRight: 5,
+    }}><Text style={{
+      fontSize: 10, 
+      color: '#666666'
+    }}>{tagname.tagname}</Text>
+    </View>
   );
 };
 
@@ -67,8 +70,14 @@ const TrailIndexRoom = ({room} : Roomdata) => {
           </MaskedView>
           {/*모임 설명 */}
           <View style={styles.roominfo}>
-            {/*모임 태그 (flatlist로 스크롤러블 예정) */}
-            <TrailTag></TrailTag>
+            {/*모임 태그 (flatlist로 스크롤러블?) */}
+            <FlatList 
+              data={room.roomTags}
+              renderItem={({item}) => <TrailTag tagname={item} /> }
+              horizontal
+              contentContainerStyle={{
+              }}
+            />
             {/*모임 이름, 길때처리? */}
             <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{room.name}</Text>
             {/*날짜 및 시간, 인원수*/}
@@ -145,6 +154,7 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 32,
     backgroundColor: '#dddddd',
+    justifyContent: "center",
   },
   viewmask: {
     width: '100%',
@@ -159,17 +169,15 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   roominfo: {
-    flexDirection: 'column',
     left: '32%',
+    width: '60%',
     margin: 10,
     marginHorizontal: 15,
-
   },
   title: {
     paddingTop: 5,
     fontSize: titlesize,
     fontWeight: 'bold',
-    width: '65%',
     
   },
   roomtimedot: {

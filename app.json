@@ -28,7 +28,12 @@
     },
     "plugins": [
       "expo-router",
-      "expo-location"
+      "expo-location",
+      ["expo-font",
+        {
+          "fonts": ["./assets/fonts/KCC-Hanbit.ttf"]
+        }
+      ],
     ],
     "experiments": {
       "typedRoutes": true
