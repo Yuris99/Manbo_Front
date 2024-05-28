@@ -61,6 +61,7 @@ export default function TabLayout() {
       name="community"
       options={{
         title: 'community',
+        headerShown: false,
         tabBarIcon: ({ color }) => 
           <MaterialCommunityIcons 
             name="message-text" 
