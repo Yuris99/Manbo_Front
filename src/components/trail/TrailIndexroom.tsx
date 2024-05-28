@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
+import { View, Text, StyleSheet, Pressable, Image, Platform } from 'react-native'
 import React from 'react'
 import { Room } from '@/src/types';
 import { Link, router, useSegments } from 'expo-router';
@@ -30,9 +30,12 @@ const TrailTag = () => {
   );
 };
 
-const openJoinPage = () => {
-  router.push('/modals/Roomjoin');
+const openJoinPage = (item : Room) => {
+  router.push({ pathname: `/modals/Roomjoin`, params: {roomid: item.id} });
 }
+const noroomtitle = Platform.OS == 'ios' ? 30 : 26;
+const noroomlink = Platform.OS == 'ios' ? 20 : 18;
+
 
 const TrailIndexRoom = ({room} : Roomdata) => {
   //방이 없을 때
@@ -41,15 +44,15 @@ const TrailIndexRoom = ({room} : Roomdata) => {
       <Link href={`trail/roompage/Createroom`} asChild>
         <Pressable style={styles.container}>
           <View style={[styles.viewunable]}>
-            <Text style={{fontSize: 30, color: '#333333'}}>모집중인 모임이 없어요!</Text>
-            <Text style={{fontSize: 20, color: '#666666', marginTop: 20,}}>만들러 가기 >></Text>
+            <Text style={{fontSize: noroomtitle, color: '#333333'}}>모집중인 모임이 없어요!</Text>
+            <Text style={{fontSize: noroomlink, color: '#666666', marginTop: 20,}}>만들러 가기 >></Text>
           </View>
         </Pressable>
       </Link>
     );
   }
   return (
-      <Pressable onPress={() => {openJoinPage();}} style={styles.container}>
+      <Pressable onPress={() => {openJoinPage(room);}} style={styles.container}>
         <View style={styles.views}>
           {/*모임 사진 + 마스크 */}
           <MaskedView style={styles.viewmask} maskElement={
@@ -67,7 +70,7 @@ const TrailIndexRoom = ({room} : Roomdata) => {
             {/*모임 태그 (flatlist로 스크롤러블 예정) */}
             <TrailTag></TrailTag>
             {/*모임 이름, 길때처리? */}
-            <Text style={styles.title}>{room.name}</Text>
+            <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{room.name}</Text>
             {/*날짜 및 시간, 인원수*/}
             <View style={styles.roomtimedot}>
               {/*날짜 및 시간 아이콘 + text*/}
@@ -105,7 +108,7 @@ const TrailIndexRoom = ({room} : Roomdata) => {
               <Text style={{
                 marginLeft: 5,
                 marginRight: 15,
-              }}>
+              }} numberOfLines={1} ellipsizeMode='tail'>
                 {startloc}
                 </Text>
             </View>
@@ -116,6 +119,9 @@ const TrailIndexRoom = ({room} : Roomdata) => {
 };
 
 export default TrailIndexRoom;
+
+const titlesize = Platform.OS == 'ios' ? 20 : 18;
+
 const styles = StyleSheet.create({
   container: {
     width: '95%',
@@ -161,8 +167,9 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingTop: 5,
-    fontSize: 20,
+    fontSize: titlesize,
     fontWeight: 'bold',
+    width: '65%',
     
   },
   roomtimedot: {

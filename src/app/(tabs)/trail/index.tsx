@@ -108,7 +108,7 @@ export default function Trail() {
           </Pressable>
           </Link>
           {/** 현재 모집중인 모임 목록 */}
-          <TrailIndexRoom room={RoomList[0]}></TrailIndexRoom>
+          <TrailIndexRoom room={null}></TrailIndexRoom>
       </View>
       {/*산책로들*/}
       <View style={styles.trails}>

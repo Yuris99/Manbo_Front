@@ -38,6 +38,22 @@ export default function TrailStack () {
                     </Link>
                 )
             }} />
+            <Stack.Screen name="trailpage" options={{ 
+                title: '산책로',
+                headerRight: () => (
+                    <Link href='./SearchTrail' asChild>
+                        <Pressable>
+                            {({pressed}) => (
+                                    <MaterialCommunityIcons 
+                                        name="magnify" 
+                                        color={"#000000"} 
+                                        size={25}
+                                    />
+                            )}
+                        </Pressable>
+                    </Link>
+                )
+            }} />
         </Stack>
     );
 }
