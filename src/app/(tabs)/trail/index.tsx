@@ -104,7 +104,7 @@ export default function Trail() {
       {/*모임*/}
       <View style={styles.rooms}>
           {/** text 눌렀을 때 */}
-          <Link href="/roompage" asChild>
+          <Link href="/trail/roompage" asChild>
           <Pressable>
             {({ pressed }) => (
               <Text style={[styles.textStack, {paddingHorizontal: 10,}]}>지금 뜨는 모임</Text>
@@ -116,16 +116,20 @@ export default function Trail() {
       </View>
       {/*산책로들*/}
       <View style={styles.trails}>
-          <Pressable onPress={() => {}}>
+          <Link href="/trail/trailpage" asChild>
+          <Pressable>
+            {({ pressed }) => (
             <Text style={styles.textStack}>인기 있는 산책로</Text>
+            )}
           </Pressable>
+        </Link>
           <FlatList
             contentContainerStyle={{
               marginVertical: 15,
               gap: 10,
             }}
             data={Trails}
-            renderItem={({item}) => <TrailIndexTrail trail={item}/>}
+            renderItem={({item}) => <TrailIndexTrail trail={item} look={1} />}
             horizontal={true}
             scrollEnabled
             showsHorizontalScrollIndicator={false}

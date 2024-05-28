@@ -1,5 +1,5 @@
 import Trails from '@/assets/testdata/trailList';
-import TrailListTrail from '@/src/components/trail/Traillisttrail';
+import TrailIndexTrail from '@/src/components/trail/TrailIndextrail';
 import { View, FlatList } from 'react-native';
 
 
@@ -13,13 +13,10 @@ export default function TrailScreen() {
         style={{
           width: '95%',  
           alignSelf: 'center',
-          margin: 10,
-        }}
-        contentContainerStyle={{
-          gap: 10,
+          marginHorizontal: 10,
         }}
         data={Trails}
-        renderItem={({ item }) => <TrailListTrail trail={ item } />}
+        renderItem={({ item }) => <TrailIndexTrail trail={ item } look={0} />}
         numColumns={2}
         columnWrapperStyle={{ 
           gap: 10,

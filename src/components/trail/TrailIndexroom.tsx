@@ -48,7 +48,7 @@ const TrailIndexRoom = ({room} : Roomdata) => {
         <Pressable style={styles.container}>
           <View style={[styles.viewunable]}>
             <Text style={{fontSize: noroomtitle, color: '#333333'}}>모집중인 모임이 없어요!</Text>
-            <Text style={{fontSize: noroomlink, color: '#666666', marginTop: 20,}}>만들러 가기 >></Text>
+            <Text style={{fontSize: noroomlink, color: '#666666', marginTop: 20,}}>만들러 가기 {">>"}</Text>
           </View>
         </Pressable>
       </Link>

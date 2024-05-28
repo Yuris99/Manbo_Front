@@ -1,21 +1,23 @@
 import { View, Text, StyleSheet, Pressable, Image, Platform } from 'react-native'
 import React from 'react'
 import { Trail } from '@/src/types';
-import { Link } from 'expo-router';
+import { Link, useSegments } from 'expo-router';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Trails from '@/assets/testdata/trailList';
 
 type TrailData = {
   trail: Trail;
+  look: number;
 }
 
 const titlesize = Platform.OS == 'ios' ? 15 : 13;
 
-const TrailIndexTrail = ({trail} : TrailData) => {
+const TrailIndexTrail = ({trail, look} : TrailData) => {
+  //재사용 하기 위한 maxwidth 설정
   return (
-    <Link href={`@app/trail/trailpage/trail/${trail.id}`} asChild>
-      <Pressable style={styles.container}>
+    <Link href={{pathname: `/trail/trailpage/${trail.id}`, params: {name:trail.name}}} key={trail.name} asChild>
+      <Pressable style={(look == 1 ? styles.container : styles.container2)}>
         {/* background image */}
         <Image source={{uri: trail.trailImgs[0]}}
           style={styles.image}
@@ -46,6 +48,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     aspectRatio: 1,
     flex: 1,
+  },
+  container2: {
+    borderRadius: 20,
+    aspectRatio: 1,
+    flex: 1,
+    maxWidth: '49%',
+    marginVertical: 5,
   },
   image: {
     position: 'absolute',
