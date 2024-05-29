@@ -12,6 +12,16 @@ type ThemeProps = {
   darkColor?: string;
 };
 
+//커스텀 색상
+const colorParette = [
+  "#9BC34A",
+  "#FFF9C4",
+];
+export function useMBColor(colornum: number)  {
+  if(colornum >= colorParette.length) return colorParette[0];
+  return colorParette[colornum];
+};
+
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 

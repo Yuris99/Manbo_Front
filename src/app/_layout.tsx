@@ -1,12 +1,16 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@components/useColorScheme';
+import { Pressable, Text } from 'react-native';
+import { View } from '../components/Themed';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import HeaderBackButton from '../components/default/HeaderBackButton';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,6 +57,13 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="modals/Roomjoin" options={{ 
+          presentation:'modal',
+          title:'모임 참여',
+          headerLeft: () => (
+            <HeaderBackButton />
+          ),
+        }} />
       </Stack>
     </ThemeProvider>
   );

@@ -31,6 +31,7 @@ export type Location = {
  */
 export type TrailTag = 'tag1' | 'tag2';
 
+
 /** 산책로 통합 데이터타입
  * 
  * @property {number} id - 산책로 id
@@ -53,6 +54,7 @@ export type Trail = {
     rank: number;
     created: Date;
     tags: TrailTag[];
+    trailImgs: string[];
 };
 
 /** 게시글 종류 ENUM
@@ -139,4 +141,6 @@ export type Room = {
     maximum: number;
     meettime: Date;
     state: RoomState;
+    membercnt: number;
+    roomTags: string[];
 }
