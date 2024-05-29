@@ -34,7 +34,7 @@
         {
           "fonts": ["./assets/fonts/KCC-Hanbit.ttf"]
         }
-      ],
+      ]
     ],
     "experiments": {
       "typedRoutes": true
