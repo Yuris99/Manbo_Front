@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, Pressable } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 export default function TabTwoScreen() {
   return (
@@ -15,20 +16,30 @@ export default function TabTwoScreen() {
           <Text style={styles.title}>만보 정식출시 안내</Text>
         </View>
       </View>
+      {/**실시간 인기글 */}
       <View style={styles.middleContainer}>
-        <Text style={styles.middleButtonText}>실시간 인기글</Text>
-        <TouchableOpacity style={styles.middleButton}>
-        </TouchableOpacity>
+        <Text style={styles.middleButtonText}>실시간 인기글(임시로 공지링크)</Text>
+        <Link href={"/community/board/notice"} asChild>
+          <Pressable onPress={()=>{console.log("tes");}}>
+            <View style={styles.middleButton}></View>
+          </Pressable>
+        </Link>
       </View>
+      {/**추천 게시판 */}
       <View style={styles.middleContainer}>
         <Text style={styles.middleButtonText}>산책로 추천 게시판</Text>
-        <TouchableOpacity style={styles.middleButton}>
-        </TouchableOpacity>
+        <Link href={"/community/board/recommand"} asChild>
+          <Pressable style={styles.middleButton}>
+          </Pressable>
+        </Link>
       </View>
+      {/**자유 게시판 */}
       <View style={styles.middleContainer}>
         <Text style={styles.middleButtonText}>자유 게시판</Text>
-        <TouchableOpacity style={styles.middleButton}>
-        </TouchableOpacity>
+        <Link href={"/community/board/free"} asChild>
+          <Pressable style={styles.middleButton}>
+          </Pressable>
+        </Link>
       </View>
     </View>
   );
