@@ -37,12 +37,12 @@ export default function TrailInfo() {
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.3], [0, 1]),
+      opacity: interpolate(scrollOffset.value-IMG_HEIGHT+100, [0, (IMG_HEIGHT) / 5], [0, 1]),
     };
   });  
   const headerAnimatedStyleColor = useAnimatedStyle(() => {
     return {
-      color: interpolateColor(scrollOffset.value, [0, IMG_HEIGHT / 1.3], ["#ffffff", "#000000"]),
+      color: interpolateColor(scrollOffset.value, [0, (IMG_HEIGHT-300) / 1.3], ["#ffffff", "#000000"]),
     };
   });  
   const headerAnimatedStyleRev = useAnimatedStyle(() => {
@@ -76,8 +76,26 @@ export default function TrailInfo() {
         />
         {/**내용 */}
         <View style={styles.traildata}>
-          <Text style={styles.title}>{trail.name}</Text>
+          <View style={styles.titlewrapper}>
+            <Text style={styles.title}>{trail.name}</Text>
+          </View>
+          {/**리뷰 목록 */}
+          <Pressable style={styles.reviewdata}>
+            <View style={styles.score}>
+            <MaterialCommunityIcons
+              name={'star'}
+              size={30}
+              color={"gold"}
+            />
+            <Text style={styles.scorenum}>{trail.rank}</Text> 
+            </View>
+              <Text style={[styles.scorenum, {color: 'grey'}]}>리뷰 보러 가기 {">"}</Text>
+          </Pressable>
         {/**지도보기 */}
+        {/**설명 */}
+        <View style={styles.contentwrapper}>
+          <Text style={styles.content}>{trail.content}</Text>
+        </View>
         </View>
       </Animated.ScrollView>
     </View>
@@ -100,14 +118,48 @@ const styles = StyleSheet.create({
     height: IMG_HEIGHT,
   },
   traildata: {
-    height: 2000,
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 20, 
+    fontSize: 25, 
     fontWeight: 'bold', 
     textAlign: 'center', 
-    marginTop: 20 
+  },
+  titlewrapper: {
+    padding: 20,
+    paddingBottom: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderColor: "#eeeeee",
+  },
+  reviewdata: {
+    width: "100%",
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  score: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  scorenum: {
+    fontSize: 20,
+    marginLeft: 10,
+    marginRight: 30,
+    fontWeight: '600', 
+  },
+  content: {
+    fontSize: 18, 
+    fontWeight: '500', 
+  },
+  contentwrapper: {
+    margin: 10,
+    padding: 20,
+    borderRadius: 30,
+    backgroundColor: '#dddddd',
   },
   header: {
     backgroundColor: "#9BC34A",

@@ -9,7 +9,6 @@ type HeaderBackButtonProps = {
 
 export default function HeaderBackButton(props: HeaderBackButtonProps) {
   const iconcolor = props == undefined ? "#000000" : props.iconcolor;
-  console.log(props);
   return (
     <Pressable onPress={()=>{router.back();}}>
             <View style={{justifyContent:"center",alignItems: "center"}}>

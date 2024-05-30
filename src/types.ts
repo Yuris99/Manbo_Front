@@ -39,6 +39,7 @@ export type TrailTag = 'tag1' | 'tag2';
  * @property {string} startloc - 시작위치(좌표값)
  * @property {Location} location - 산책로 위치(시군구)
  * @property {string} name - 산책로 이름
+ * @property {string} content - 산책로 설명
  * @property {number} walks - 산책로 이용 횟수
  * @property {number} rank - 산책로 평점
  * @property {number} created - 등록일
@@ -50,6 +51,7 @@ export type Trail = {
     startloc: string;
     location: Location;
     name: string;
+    content: string;
     walks: number;
     rank: number;
     created: Date;
