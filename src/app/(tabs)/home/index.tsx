@@ -1,7 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
+import { Link } from 'expo-router';
 
 //home.tsx
 //login page 만들면 home.tsx로 수정예정 (그전까진 index.tsx)
@@ -12,6 +13,11 @@ export default function TabOneScreen() {
       <Text style={styles.title}>Hello World</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="app/(tabs)/home/index.tsx" />
+      <Link href={"/login"}>
+        <Pressable>
+          <Text>로그인 페이지로</Text>
+        </Pressable>
+      </Link>
     </View>
   );
 }
