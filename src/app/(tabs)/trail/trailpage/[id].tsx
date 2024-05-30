@@ -1,7 +1,10 @@
 import Trails from '@/assets/testdata/trailList';
-import { useLocalSearchParams } from 'expo-router';
-import { View, FlatList, Text, ScrollView, StyleSheet, Image, Dimensions } from 'react-native';
-import Animated , { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
+import HeaderBackButton from '@/src/components/default/HeaderBackButton';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
+import { View, FlatList, Text, ScrollView, StyleSheet, Image, Dimensions, Pressable } from 'react-native';
+import Animated , { interpolate, interpolateColor, useAnimatedRef, useAnimatedStyle, useScrollViewOffset  } from 'react-native-reanimated';
+import useHeaderHeight from '@react-navigation/elements'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -12,7 +15,7 @@ export default function TrailInfo() {
 	const scrollOffset = useScrollViewOffset(scrollRef);
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
-    return {
+		return {
 			transform: [
 				{
 					translateY: interpolate(
@@ -25,21 +28,51 @@ export default function TrailInfo() {
 					scale: interpolate(scrollOffset.value, [-IMG_HEIGHT, 0, IMG_HEIGHT], [2, 1, 1])
 				}
 			]
-    }
-  })
+		};
+	});
 
   const {id} = useLocalSearchParams();
   //산책로 정보 가져오기
   const trail = Trails[Number(id)];
+
+  const headerAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.3], [0, 1]),
+    };
+  });  
+  const headerAnimatedStyleColor = useAnimatedStyle(() => {
+    return {
+      color: interpolateColor(scrollOffset.value, [0, IMG_HEIGHT / 1.3], ["#ffffff", "#000000"]),
+    };
+  });  
+  const headerAnimatedStyleRev = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.3], [1, 0]),
+    };
+  });
+  
+
   return (
     <View style={styles.container}>
+    <Stack.Screen 
+      options={{
+        headerTransparent: true,
+        title: trail.name,
+        headerLeft: () => <HeaderBackButton iconcolor='#ffffff' />,
+        headerTitleStyle: {color: "white"},
+        headerBackground: () => <Animated.View style={[styles.header, headerAnimatedStyle]}/>
+      }}
+    />
       {/**header */}
-      <Animated.ScrollView style={styles.Startheader}>
+      <Animated.ScrollView 
+        ref={scrollRef}
+        style={styles.Startheader}
+        >
         {/**이미지 */}
         <Animated.Image source={{
           uri: trail.trailImgs[0],
         }}
-        style={styles.image}
+        style={[styles.image, imageAnimatedStyle]}
         />
         {/**내용 */}
         <View style={styles.traildata}>
@@ -60,9 +93,10 @@ const styles = StyleSheet.create({
   },
   Startheader: {
     flex: 1,
+    width: '100%',
   },
   image: {
-    width: width,
+    width: '100%',
     height: IMG_HEIGHT,
   },
   traildata: {
@@ -75,4 +109,9 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     marginTop: 20 
   },
+  header: {
+    backgroundColor: "#9BC34A",
+    color: 'green',
+    height: 100,
+  }
 })
