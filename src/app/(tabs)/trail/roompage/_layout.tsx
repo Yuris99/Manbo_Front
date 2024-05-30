@@ -4,6 +4,7 @@ import { Link, Stack } from 'expo-router';
 import CreateRoomComponent from '@/src/components/trail/CreateRoomComponent';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import AssignRoomComponent from '@/src/components/trail/AssignRoomComponent';
+import LeftRoomComponent from '@/src/components/trail/LeftRoomComponent';
 
 export default function RoomStack() {
   return (<Stack screenOptions={{
@@ -33,6 +34,8 @@ export default function RoomStack() {
           <AssignRoomComponent />
         </Pressable>
       )
+    }} />
+    <Stack.Screen name="Roominfo" options={{ 
     }} />
   </Stack>);
 }

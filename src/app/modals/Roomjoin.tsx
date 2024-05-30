@@ -4,7 +4,7 @@ import Users from "@/assets/testdata/users";
 import EditScreenInfo from "@/src/components/EditScreenInfo";
 import { Room, Trail, User } from "@/src/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
 
@@ -14,6 +14,9 @@ const WeekendKorean : string[] = ['일', '월', '화', '수', '목', '금', '토
 const img = "https://austinactivekids.com/wp-content/uploads/2020/01/2FC59971-A3F5-4C07-BFF4-439E8D663D0E-1536x1536.jpg";
 
 
+const JoinRoom = (item : Room) => {
+  router.replace({pathname: '/trail/roompage/Roominfo', params: {roomid: item.id}});
+}
 
 const RoomJoinScreen = () => {
   const { roomid } = useLocalSearchParams();
@@ -83,7 +86,7 @@ const RoomJoinScreen = () => {
           </View>
         </View>
         {/**모임 참여 버튼 */}
-        <Pressable style={styles.joinbutton}>
+        <Pressable style={styles.joinbutton} onPress={()=>{JoinRoom(room)}}>
           <Text style={styles.joinbuttontext}>모임 참여!</Text>
         </Pressable>
       </View>
