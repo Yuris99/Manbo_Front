@@ -60,6 +60,7 @@ export default function registerPage3Info() {
       await setloc(0, '도/특별시/광역시');
       await setloc(1, '시/군/구');
       await setloc(2, '읍/면/동');
+      console.log(locate);
       router.push("/login/register/register4gps");
 
     }
