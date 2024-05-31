@@ -2,7 +2,7 @@ import { Alert, Image, Keyboard, KeyboardAvoidingView, Pressable, StyleSheet, Te
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { Stack, router } from 'expo-router';
+import { Stack } from 'expo-router';
 import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import InputContainer from '@/src/components/login/InputContainer';
@@ -12,26 +12,40 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 export default function registerPage() {
-  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordc, setPasswordc] = useState('');
   const [loading, setLoading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(' ');
-  const [emailBorderColor, setEmailBorderColor] = useState("#aaa");
+  const [pwBorderColor, setPwBorderColor] = useState("#aaa");
+  const [pwcBorderColor, setPwcBorderColor] = useState("#aaa");
 
   async function signin() {
     setLoading(true);
     const emailRegex =
     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-    if(email == '') {
-      setErrorMessage("이메일을 입력해주세요!");
-      setEmailBorderColor("#FF1744");
-    }  else if(!emailRegex.test(email)) {
-      setErrorMessage("유효하지 않은 이메일 입니다!");
-      setEmailBorderColor("#FF1744");
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    if(password == '') {
+      setErrorMessage("비밀번호를 입력해주세요!");
+      setPwcBorderColor("#aaa");
+      setPwBorderColor("#FF1744");
+    } else if(!passwordRegex.test(password)) {
+      setErrorMessage("비밀번호 양식을 확인해주세요!");
+      setPwcBorderColor("#aaa");
+      setPwBorderColor("#FF1744");
+    } else if(passwordc == '') {
+      setErrorMessage("비밀번호를 한번 더 입력해주세요!");
+      setPwBorderColor("#aaa");
+      setPwcBorderColor("#FF1744");
+    } else if(password != passwordc) {
+      setErrorMessage("비밀번호가 일치하지 않습니다!");
+      setPwBorderColor("#aaa");
+      setPwcBorderColor("#FF1744");
     } else {
-      setEmailBorderColor("#aaa");
       //db접속 및 인증
-      router.push("/login/register/register2pw");
+      setPwBorderColor("#aaa");
+      setPwcBorderColor("#aaa");
+
     }
     setLoading(false);
   }
@@ -46,20 +60,29 @@ export default function registerPage() {
         ),
       }}/>
       <MaterialCommunityIcons
-        name={"email"}
+        name={"lock"}
         color={"#aaa"}
         size={60}
         style={styles.icon}
       />
-      <Text style={styles.sentence}>이메일을 입력해주세요.</Text>
+      <Text style={styles.sentence}>비밀번호를 입력해주세요.</Text>
+      <Text style={styles.guide}>영문+숫자+특수문자 8자리 이상</Text>
       <View style={styles.buttonwrapper}>
-          <TextInput style={[styles.textinputstyle, {borderColor: emailBorderColor}]}
-          value={email}
-          onChangeText={setEmail}
-          inputMode='email'
-          autoComplete='email'
+          <TextInput style={[styles.textinputstyle, {borderColor: pwBorderColor}]}
+          value={password}
+          onChangeText={setPassword}
+          textContentType='password'
           autoCapitalize='none'
-          placeholder="example@example.com"
+          placeholder="비밀번호"
+          secureTextEntry
+          />
+          <TextInput style={[styles.textinputstyle, {borderColor: pwcBorderColor}]}
+          value={passwordc}
+          onChangeText={setPasswordc}
+          textContentType='password'
+          autoCapitalize='none'
+          placeholder="비밀번호 확인"
+          secureTextEntry
           />
         <SubmitButton text="다음" disabled={loading} onPress={signin} />
         <Text style={{
@@ -91,6 +114,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '500',
     margin: 20,
+    marginBottom: 10,
+    alignSelf: 'flex-start',
+  },
+  guide: {
+    fontSize: 18,
+    fontWeight: '500',
+    margin: 10,
+    marginLeft: 20,
+    color: "#999",
     alignSelf: 'flex-start',
   },
   buttonwrapper: {
