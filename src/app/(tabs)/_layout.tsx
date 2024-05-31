@@ -34,21 +34,7 @@ export default function TabLayout() {
     <Tabs.Screen
       name="home"
       options={{
-        title: 'home',
-        headerRight: () => (
-          <Link href="/mypage/" asChild>
-            <Pressable>
-              {({ pressed }) => (
-                <MaterialCommunityIcons
-                  name="account"
-                  size={25}
-                  color={Colors[colorScheme ?? 'light'].text}
-                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                />
-              )}
-            </Pressable>
-          </Link>
-        ),
+        headerShown: false,
         tabBarIcon: ({ color }) => 
         <MaterialCommunityIcons 
           name="home" 
