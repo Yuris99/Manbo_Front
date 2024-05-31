@@ -85,7 +85,8 @@ export default function TabLayout() {
     <Tabs.Screen
       name="mypage"
       options={{
-        title: 'home',
+        title: 'mypage',
+        headerShown: false,
         tabBarIcon: ({ color }) => 
           <MaterialCommunityIcons 
             name="account" 
