@@ -3,18 +3,21 @@ import React from 'react'
 import { router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function HeaderBackButton() {
+type HeaderBackButtonProps = {
+  iconcolor?: string;
+};
+
+export default function HeaderBackButton(props: HeaderBackButtonProps) {
+  const iconcolor = props == undefined ? "#000000" : props.iconcolor;
   return (
     <Pressable onPress={()=>{router.back();}}>
             <View style={{justifyContent:"center",alignItems: "center"}}>
                 <MaterialCommunityIcons 
                     name="chevron-left" 
-                    color={"#000000"} 
+                    color={iconcolor} 
                     size={40}
                 />
             </View>
     </Pressable>
   )
 }
-
-const styles = StyleSheet.create({})

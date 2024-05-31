@@ -27,10 +27,7 @@ export default function TrailPage() {
     )
   }} />
   <Stack.Screen name="[id]" options={{
-    title: trailtitle,
-    headerLeft: () => (
-      <HeaderBackButton />
-    ),
+    title: '',
   }} />
   </Stack>);
 }
