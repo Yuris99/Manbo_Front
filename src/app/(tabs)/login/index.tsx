@@ -20,7 +20,7 @@ export default function FirstLoginPage() {
         <Text style={styles.sentence}>만남과 걸음의 보람</Text>
       </View>
       <View style={styles.buttonwrapper}>
-        <Link href="/login/register" style={{width: '100%'}} asChild>
+        <Link href="/login/register/registerMain" style={{width: '100%'}} asChild>
         <SubmitButton text="시작하기" />
         </Link>
         <Link href="/login/loginpage" style={{width: '100%'}} asChild>

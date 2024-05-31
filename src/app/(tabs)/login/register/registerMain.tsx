@@ -1,11 +1,10 @@
-import { Alert, Image, Keyboard, KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TextInput, TouchableWithoutFeedback } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
 import { Stack, router } from 'expo-router';
 import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
-import InputContainer from '@/src/components/login/InputContainer';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -30,6 +29,7 @@ export default function registerPage() {
       setEmailBorderColor("#FF1744");
     } else {
       setEmailBorderColor("#aaa");
+      setErrorMessage(" ");
       //db접속 및 인증
       router.push("/login/register/register2pw");
     }
@@ -51,7 +51,7 @@ export default function registerPage() {
         size={60}
         style={styles.icon}
       />
-      <Text style={styles.sentence}>이메일을 입력해주세요.</Text>
+      <Text style={styles.sentence}>이메일을 입력해주세요</Text>
       <View style={styles.buttonwrapper}>
           <TextInput style={[styles.textinputstyle, {borderColor: emailBorderColor}]}
           value={email}
@@ -66,7 +66,8 @@ export default function registerPage() {
           width: '90%',
           alignSelf: 'center',
           textAlign: 'center',
-          color: '#FF1744' 
+          color: '#FF1744', 
+          marginTop: -10,
         }}>
           {errorMessage}
         </Text>
@@ -75,6 +76,7 @@ export default function registerPage() {
     </TouchableWithoutFeedback>
   );
 }
+const paddingbot = Platform.OS == 'ios' ? 20 : 10;
 
 const styles = StyleSheet.create({
   container: {
@@ -85,12 +87,14 @@ const styles = StyleSheet.create({
   icon: {
     alignSelf: 'flex-start',
     padding: 20,
+    paddingTop: 5,
     paddingBottom: 0,
   },
   sentence: {
     fontSize: 24,
     fontWeight: '500',
     margin: 20,
+    marginVertical: paddingbot,
     alignSelf: 'flex-start',
   },
   buttonwrapper: {
@@ -107,6 +111,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 50,
     margin: 10,
+    marginBottom: Platform.OS == 'ios' ? 10 : 5,
     padding: 10,
     backgroundColor: '#fff',
     borderRadius: 30,

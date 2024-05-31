@@ -5,7 +5,6 @@ import { Text, View } from '@components/Themed';
 import { Stack } from 'expo-router';
 import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
-import InputContainer from '@/src/components/login/InputContainer';
 import { useState } from 'react';
 
 
@@ -43,6 +42,7 @@ export default function LoginPage() {
     } else {
       setEmailBorderColor("#aaa");
       setPwBorderColor("#aaa");
+      setErrorMessage(" ");
       //db접속 및 인증
 
     }
