@@ -4,21 +4,15 @@ import { Post,PostType } from '@/src/types'
 import Posts from '@/assets/testdata/freedata'
 import FreePost from '@/assets/testdata/freedata'
 
-type Post = {
+type PostProps = {
     post: Post;
 }
 
-const CommunityIndexfree = ( {post} : Post) => {
+const CommunityIndexfree = ( {post} : PostProps) => {
     return(
         <View style={styles.postinfo}>
             {
-                <FlatList
-                renderItem={({item}) => <PostType tagname={item}/> }
-                horiziontal
-                contentContainerStyle={{
-
-                }}
-                />
+              
             }
         </View>
     );

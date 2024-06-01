@@ -1,14 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
+import FreePost from '@/assets/testdata/freedata';
+import CommunityIndexfree from '@/src/components/community/CommunityIndexfree';
 
 export default function FreePage() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>free</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/mypage/index.tsx" />
+      <FlatList 
+      data={FreePost}
+      renderItem={({item}) => <CommunityIndexfree post={item} />}
+      />
+
     </View>
   );
 }
