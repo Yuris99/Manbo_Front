@@ -42,6 +42,7 @@ const FreePost : Post[] = [
 
 const RecommandPost : Post[] = [
     {
+        type: 'Recommend',
         id: 0,
         user_id: 1,
         trail_id: 1,
@@ -52,6 +53,7 @@ const RecommandPost : Post[] = [
         like: 1,
     },
     {
+        type: 'Recommend',
         id: 1,
         user_id: 2,
         trail_id: 0,
@@ -62,6 +64,7 @@ const RecommandPost : Post[] = [
         like: 0,
     },
     {
+        type: 'Recommend',
         id: 2,
         user_id: 1,
         trail_id: 2,
@@ -75,6 +78,7 @@ const RecommandPost : Post[] = [
 
 const Announcement : Post[] = [
     {
+        type: 'Announcement',
         id: 0,
         user_id: 1,
         trail_id: null,
@@ -85,6 +89,7 @@ const Announcement : Post[] = [
         like: 1,
     },
     {
+        type: 'Announcement',
         id: 1,
         user_id: 2,
         trail_id: null,
@@ -97,4 +102,4 @@ const Announcement : Post[] = [
 ];
 
 
-export default RoomList;
+export default FreePost;

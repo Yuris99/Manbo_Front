@@ -2,7 +2,7 @@ import { Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, Styl
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { useState } from 'react';
@@ -47,6 +47,7 @@ export default function LoginPage() {
 
     }
     setLoading(false);
+    router.replace('/home');
   }
 
   return (
