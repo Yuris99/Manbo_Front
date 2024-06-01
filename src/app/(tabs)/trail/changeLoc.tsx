@@ -1,23 +1,18 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { Platform, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { Link } from 'expo-router';
 
-//home.tsx
-//login page 만들면 home.tsx로 수정예정 (그전까진 index.tsx)
-
-export default function TabOneScreen() {
+export default function ModalScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hello World</Text>
+      <Text style={styles.title}>Modal</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/home/index.tsx" />
-      <Link href={"/login"}>
-        <Pressable>
-          <Text>로그인 페이지로</Text>
-        </Pressable>
-      </Link>
+      <EditScreenInfo path="app/modal.tsx" />
+
+      {/* Use a light status bar on iOS to account for the black space above the modal */}
+      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );
 }

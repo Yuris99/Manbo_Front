@@ -20,23 +20,25 @@ export type User = {
  * @property {string} town - 군
  * @property {string} village - 구
  */
-export type Location = {
+export type Loc = {
     city: string;
     town: string;
     village: string;
 };
+
 
 /** 산책로 태그 Enum
  *  추가예정
  */
 export type TrailTag = 'tag1' | 'tag2';
 
+
 /** 산책로 통합 데이터타입
  * 
  * @property {number} id - 산책로 id
  * @property {number} user_id - 제작자 id
  * @property {string} startloc - 시작위치(좌표값)
- * @property {Location} location - 산책로 위치(시군구)
+ * @property {Loc} location - 산책로 위치(시군구)
  * @property {string} name - 산책로 이름
  * @property {number} walks - 산책로 이용 횟수
  * @property {number} rank - 산책로 평점
@@ -47,12 +49,13 @@ export type Trail = {
     id: number;
     user_id: number;
     startloc: string;
-    location: Location;
+    location: Loc;
     name: string;
     walks: number;
     rank: number;
     created: Date;
     tags: TrailTag[];
+    trailImgs: string[];
 };
 
 /** 게시글 종류 ENUM
@@ -139,4 +142,5 @@ export type Room = {
     maximum: number;
     meettime: Date;
     state: RoomState;
+    membercnt: number;
 }
