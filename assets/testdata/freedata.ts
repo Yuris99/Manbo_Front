@@ -5,6 +5,7 @@ const now = dayjs();
 
 const FreePost : Post[] = [
     {
+        type: 'Free',
         id: 0,
         user_id: 1,
         trail_id: null,
@@ -15,6 +16,7 @@ const FreePost : Post[] = [
         like: 1,
     },
     {
+        type: 'Free',
         id: 1,
         user_id: 2,
         trail_id: null,
@@ -25,6 +27,7 @@ const FreePost : Post[] = [
         like: 0,
     },
     {
+        type: 'Free',
         id: 2,
         user_id: 1,
         trail_id: null,
