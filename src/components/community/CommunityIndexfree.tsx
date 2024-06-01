@@ -22,17 +22,19 @@ const CommunityIndexfree = ( {post} : PostProps) => {
                 <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{post.title}</Text>
                 <View style={styles.posttimedot}>
                     <Text style={{
-                        marginLeft: 5,
-                        marginRight: 15,
+                        marginLeft: 3,
+                        marginRight: 5,
                     }}>
                         {post.created.getMonth()+1}/{post.created.getDate()} {post.created.getHours() >=12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours()-12 :(post.created.getHours() == 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ?'0'+post.created.getMinutes() : post.created.getMinutes()  }
                         
                     </Text>
+                </View>
+                <View style={styles.posttimedot}>
                     <Text style={{
-                        marginLeft: 5,
-                        marginRight: 15,
+                        marginLeft: 3,
+                        marginRight: 5,
                     }}>
-                        {post.view} {post.like}
+                        조회수 {post.view}       추천수 {post.like}
                     </Text>
                 </View>
             </View>
@@ -48,19 +50,19 @@ const titlesize = Platform.OS == 'ios' ? 20 : 18;
 
 const styles = StyleSheet.create({
     postinfo:{
-        left: '32%',
-        width: '60%',
-        margin: 10,
-        marginHorizontal: 15,
+        left: '5%',
+        width: '80%',
+        margin: 20,
+        marginHorizontal: 30,
     },
     container: {
-        width: '95%',
-        margin: 10,
+        width: '100%',
+        margin: 5,
         alignSelf: 'center',
     },
     views: {
         width: '100%',
-        height: 120,
+        height: 100,
         borderRadius: 32,
         backgroundColor: '#dddddd',
         justifyContent: "center",
