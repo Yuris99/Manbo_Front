@@ -13,14 +13,17 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.project.manbo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.project.manbo",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",
@@ -30,6 +33,10 @@
     "plugins": [
       "expo-router",
       "expo-location",
+      {
+        "isIosBackgroundLocationEnabled": true,
+        "isAndroidBackgroundLocationEnabled": true
+      },
       ["expo-font",
         {
           "fonts": ["./assets/fonts/KCC-Hanbit.ttf"]
