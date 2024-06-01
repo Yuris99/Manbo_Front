@@ -20,11 +20,12 @@ export type User = {
  * @property {string} town - 군
  * @property {string} village - 구
  */
-export type Location = {
+export type Loc = {
     city: string;
     town: string;
     village: string;
 };
+
 
 /** 산책로 태그 Enum
  *  추가예정
@@ -37,7 +38,7 @@ export type TrailTag = 'tag1' | 'tag2';
  * @property {number} id - 산책로 id
  * @property {number} user_id - 제작자 id
  * @property {string} startloc - 시작위치(좌표값)
- * @property {Location} location - 산책로 위치(시군구)
+ * @property {Loc} location - 산책로 위치(시군구)
  * @property {string} name - 산책로 이름
  * @property {string} content - 산책로 설명
  * @property {number} walks - 산책로 이용 횟수
@@ -49,7 +50,7 @@ export type Trail = {
     id: number;
     user_id: number;
     startloc: string;
-    location: Location;
+    location: Loc;
     name: string;
     content: string;
     walks: number;

@@ -7,10 +7,6 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@components/useColorScheme';
-import { Pressable, Text } from 'react-native';
-import { View } from '../components/Themed';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import HeaderBackButton from '../components/default/HeaderBackButton';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,9 +50,10 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+      <UserProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         <Stack.Screen name="modals/Roomjoin" options={{ 
           presentation:'modal',
           title:'모임 참여',
@@ -64,7 +61,8 @@ function RootLayoutNav() {
             <HeaderBackButton />
           ),
         }} />
-      </Stack>
+        </Stack>
+      </UserProvider>
     </ThemeProvider>
   );
 }
