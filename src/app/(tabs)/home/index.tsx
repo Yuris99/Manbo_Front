@@ -1,24 +1,46 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Platform, Pressable, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { Link } from 'expo-router';
+import { Stack } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import HomeSentences, { Saying } from '@/assets/data/HomeSentences';
 
-//home.tsx
-//login page 만들면 home.tsx로 수정예정 (그전까진 index.tsx)
+const iconsize = 30;
 
-export default function TabOneScreen() {
+export default function homePage() {
+  const saying: Saying = HomeSentences[Math.floor(Math.random() * (HomeSentences.length-1))];
+  console.log(Math.random() * HomeSentences.length)
+  //테스트
+  const username = "홍지훈";
+  const walksum = 5923;  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Hello World</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/home/index.tsx" />
-      <Link href={"/login"}>
-        <Pressable>
-          <Text>로그인 페이지로</Text>
-        </Pressable>
-      </Link>
-    </View>
+    <SafeAreaView style={[styles.container]}>
+    {/**헤더 */}
+      <Stack.Screen options={{
+        title: '',
+        headerLeft: () => (
+          <Text style={styles.headertext}>{username}님, 반갑습니다!</Text>
+        ),
+        headerRight: () => (
+          <Pressable>
+            <MaterialCommunityIcons
+              name="logout"
+              size={30}
+              color={"#000000"} 
+            />
+          </Pressable>
+        ), 
+      }} />
+      {/**명언 */}
+      <View style={styles.sentenceWrapper}>
+        <Text style={styles.title} adjustsFontSizeToFit={true} numberOfLines={1}>{saying.sentence}</Text>
+        <Text style={styles.subtitle}>{saying.spoke}</Text>
+      </View>
+      {/**지도 */}
+      {/**모임 */}
+      {/**산책기록 */}
+    </SafeAreaView>
   );
 }
 
@@ -26,15 +48,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
+  },
+  sentenceWrapper: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    marginTop: 30,
+    height: 100,
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '500',
+    textAlign: 'center',
+    padding: 20,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  subtitle: {
+    fontSize: 16,
+    marginTop: 10,
+  },
+  headertext: {
+    fontSize: 20,
+    fontWeight: '500',
   },
 });
