@@ -7,7 +7,7 @@ import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { UserData } from '@/src/provider/UserProvider';
+import { UserData } from '@/src/providers/UserProvider';
 
 export default function registerPage3Info() {
   const {locate, setloc} = UserData();
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    backgroundColor: 'white',
   },
   icon: {
     alignSelf: 'flex-start',

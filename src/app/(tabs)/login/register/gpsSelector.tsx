@@ -1,5 +1,5 @@
 import AvailableLocation from '@/assets/data/availableLocation';
-import { UserData } from '@/src/provider/UserProvider';
+import { UserData } from '@/src/providers/UserProvider';
 import { Loc } from '@/src/types';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { View, StyleSheet, FlatList, Pressable, Text } from 'react-native';

@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@components/useColorScheme';
+import UserProvider from '../providers/UserProvider';
+import HeaderBackButton from '../components/default/HeaderBackButton';
 
 export {
   // Catch any errors thrown by the Layout component.

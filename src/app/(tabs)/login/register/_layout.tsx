@@ -7,7 +7,7 @@ export default function RegisterStack () {
             <Stack.Screen name="register2pw" options={{headerShadowVisible: false,}} />
             <Stack.Screen name="register3info" options={{headerShadowVisible: false,}} />
             <Stack.Screen name="register4gps" options={{headerShadowVisible: false,}} />
-            <Stack.Screen name="registerComplete" options={{headerShadowVisible: false,}} />
+            <Stack.Screen name="registerComplete" options={{headerShown: false,}} />
             <Stack.Screen name="gpsSelector" options={{ presentation: 'modal' }} />
         </Stack>
     );

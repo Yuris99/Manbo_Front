@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    backgroundColor: 'white',
   },
   icon: {
     alignSelf: 'flex-start',

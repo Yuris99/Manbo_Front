@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     height: '100%',
+    backgroundColor: 'white',
   },
   sentence: {
     fontSize: 30,

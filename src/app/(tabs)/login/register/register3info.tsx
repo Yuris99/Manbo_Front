@@ -8,7 +8,7 @@ import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
-import { UserData } from '@/src/provider/UserProvider';
+import { UserData } from '@/src/providers/UserProvider';
 
 const genders: string[] = ['남자', '여자', '기타'];
 
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    backgroundColor: 'white',
   },
   icon: {
     alignSelf: 'flex-start',

@@ -7,7 +7,7 @@ import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { UserData } from '@/src/provider/UserProvider';
+import { UserData } from '@/src/providers/UserProvider';
 
 export default function registerPage3Info() {
   const {user} = UserData();
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: '30%',
+    backgroundColor: 'white',
   },
   sentence: {
     fontSize: 24,

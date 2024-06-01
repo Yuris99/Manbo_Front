@@ -1,5 +1,4 @@
 import { FlatList, Image, Pressable, StyleSheet } from 'react-native';
-import { FlatList, Image, Pressable, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
@@ -64,7 +63,6 @@ export default function Trail() {
             />
           </Pressable>
           <Text style={styles.menuText}>산책 기록</Text>
-          <Text style={styles.menuText}>산책 기록</Text>
         </View>
         <View style={styles.menuElement}>
           <Link href="/trail/roompage" asChild>
@@ -99,9 +97,6 @@ export default function Trail() {
       </View>
       {/*광고배너*/}
       <View style={styles.ad}>
-        <Image source={require('@assets/images/default_advertising.png')}
-          style={styles.adimg}
-          />
         <Image source={require('@assets/images/default_advertising.png')}
           style={styles.adimg}
           />
@@ -157,20 +152,13 @@ const styles = StyleSheet.create({
     marginVertical: '3%',
     marginBottom: '1%',
     alignItems: 'center',
-    width: '90%',
-    marginHorizontal: '5%',
-    marginVertical: '3%',
-    marginBottom: '1%',
-    alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 10,
     paddingHorizontal: 10,
   },
   menuIcon: {
     borderStyle: 'solid',
     width: '100%',
     aspectRatio: 1,
-    marginBottom: 10,
     marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -180,20 +168,6 @@ const styles = StyleSheet.create({
   },
   menuElement: {
     width: '25%',
-    padding: 3,
-    margin: 5,
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-  },
-  menuText: {
-    fontSize: 13,
-    textAlign: 'center',
-    fontWeight: '500',
-  },
-  textStack: {
-    fontSize: 20,
-    fontWeight: 'bold',
-
     padding: 3,
     margin: 5,
     alignItems: 'center',
@@ -222,28 +196,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#aaaaaa',
-    width: '100%',
-    height: 100,
-    margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  adimg: {
-    width: '90%',
-    height: '90%',
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#aaaaaa',
   },
   rooms: {
     width: '100%',
     marginTop: 10,
   },
   trails: {
-    flex: 1,
-    width: '100%',
-    marginTop: 10,
-    paddingHorizontal: 10,
     flex: 1,
     width: '100%',
     marginTop: 10,
