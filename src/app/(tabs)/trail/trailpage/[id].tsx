@@ -1,10 +1,11 @@
 import Trails from '@/assets/testdata/trailList';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
-import { View, FlatList, Text, ScrollView, StyleSheet, Image, Dimensions, Pressable } from 'react-native';
+import { View, FlatList, Text, ScrollView, StyleSheet, Image, Dimensions, Pressable, Platform } from 'react-native';
 import Animated , { interpolate, interpolateColor, useAnimatedRef, useAnimatedStyle, useScrollViewOffset  } from 'react-native-reanimated';
 import useHeaderHeight from '@react-navigation/elements'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { NaverMapMarkerOverlay, NaverMapView } from '@mj-studio/react-native-naver-map';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -13,6 +14,8 @@ export default function TrailInfo() {
   //애니메이션 관련 데이터
 	const scrollRef = useAnimatedRef<Animated.ScrollView>();
 	const scrollOffset = useScrollViewOffset(scrollRef);
+
+
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
 		return {
@@ -40,16 +43,6 @@ export default function TrailInfo() {
       opacity: interpolate(scrollOffset.value-IMG_HEIGHT+100, [0, (IMG_HEIGHT) / 5], [0, 1]),
     };
   });  
-  const headerAnimatedStyleColor = useAnimatedStyle(() => {
-    return {
-      color: interpolateColor(scrollOffset.value, [0, (IMG_HEIGHT-300) / 1.3], ["#ffffff", "#000000"]),
-    };
-  });  
-  const headerAnimatedStyleRev = useAnimatedStyle(() => {
-    return {
-      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.3], [1, 0]),
-    };
-  });
   
 
   return (
@@ -59,6 +52,15 @@ export default function TrailInfo() {
         headerTransparent: true,
         title: trail.name,
         headerLeft: () => <HeaderBackButton iconcolor='#ffffff' />,
+        headerRight: () => (
+          <Pressable style={{}}>
+            <MaterialCommunityIcons
+              name="heart-outline"
+              size={30}
+              color={"white"}
+            />
+          </Pressable>
+        ),
         headerTitleStyle: {color: "white"},
         headerBackground: () => <Animated.View style={[styles.header, headerAnimatedStyle]}/>
       }}
@@ -92,6 +94,20 @@ export default function TrailInfo() {
               <Text style={[styles.scorenum, {color: 'grey'}]}>리뷰 보러 가기 {">"}</Text>
           </Pressable>
         {/**지도보기 */}
+          <NaverMapView
+            style={styles.trailmap}
+            symbolScale={0}
+            isShowLocationButton={false}
+            isShowZoomControls={false}
+            region={{latitude: trail.startcoord.latitude-0.001, longitude: trail.startcoord.longitude-0.002, latitudeDelta: 0.002, longitudeDelta: 0.004}}
+          >
+            <NaverMapMarkerOverlay
+              latitude={trail.startcoord.latitude}
+              longitude={trail.startcoord.longitude}
+              anchor={{x: 0.5, y: 1}}
+          />
+
+          </NaverMapView>
         {/**설명 */}
         <View style={styles.contentwrapper}>
           <Text style={styles.content}>{trail.content}</Text>
@@ -101,6 +117,9 @@ export default function TrailInfo() {
     </View>
   );
 }
+
+const titlealign = Platform.OS == 'ios' ? 'center' : 'left';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -119,11 +138,19 @@ const styles = StyleSheet.create({
   },
   traildata: {
     backgroundColor: '#fff',
+    height: '100%',
+  },
+  trailmap: {
+    backgroundColor: '#fff',
+    width: '100%',
+    height: 300,
+    marginTop: 20,
+    marginBottom: 10,
   },
   title: {
     fontSize: 25, 
     fontWeight: 'bold', 
-    textAlign: 'center', 
+    textAlign: titlealign, 
   },
   titlewrapper: {
     padding: 20,

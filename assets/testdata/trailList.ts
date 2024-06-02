@@ -20,6 +20,7 @@ const Trails: Trail[] = [
         created: now.subtract(32, 'days').toDate(),
         tags: ["tag1"],
         trailImgs: ['https://www.fao.org/images/newsroomlibraries/breafing-notes/36949400340_030e4ae5f9_oab4ccd35-fd6a-4230-bd2e-f0113f50357d.jpg?sfvrsn=426ca1c_3'],
+        startcoord: {latitude: 37.4946, longitude: 126.9598},
     },
     {
         id: 1,
@@ -37,6 +38,7 @@ const Trails: Trail[] = [
         created: now.subtract(15, 'days').toDate(),
         tags: [],
         trailImgs: ['https://austinactivekids.com/wp-content/uploads/2020/01/IMG_0191-1536x1152.jpeg'],
+        startcoord: {latitude: 37.4954, longitude: 126.9567},
     },
     {
         id: 2,
@@ -54,6 +56,7 @@ const Trails: Trail[] = [
         created: now.subtract(5, 'days').toDate(),
         tags: ["tag1", "tag2"],
         trailImgs: ['https://austinactivekids.com/wp-content/uploads/2020/01/2FC59971-A3F5-4C07-BFF4-439E8D663D0E-1536x1536.jpg'],
+        startcoord: {latitude: 37.4971, longitude: 126.9531},
     },
     
 ];

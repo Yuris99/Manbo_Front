@@ -32,6 +32,10 @@ export type Loc = {
  */
 export type TrailTag = 'tag1' | 'tag2';
 
+export type MapPosition = {
+    latitude: number;
+    longitude: number;
+}
 
 /** 산책로 통합 데이터타입
  * 
@@ -45,6 +49,7 @@ export type TrailTag = 'tag1' | 'tag2';
  * @property {number} rank - 산책로 평점
  * @property {number} created - 등록일
  * @property {TrailTag[]} tags - 산책로 태그 리스트
+ * @property {MapPosition} startcoord - 시작 좌표
  */
 export type Trail = {
     id: number;
@@ -58,6 +63,7 @@ export type Trail = {
     created: Date;
     tags: TrailTag[];
     trailImgs: string[];
+    startcoord: MapPosition;
 };
 
 /** 게시글 종류 ENUM
