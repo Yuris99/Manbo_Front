@@ -2,15 +2,23 @@ import { Platform, Pressable, SafeAreaView, StatusBar, StyleSheet } from 'react-
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { UserData } from '@/src/providers/UserProvider';
 
 const iconsize = 30;
 
 export default function TabTwoScreen() {
+  const {logout} = UserData();
+
   //테스트
   const username = "홍지훈";
   const walksum = 5923;
+
+  const logoutandmain = async() => {
+    await logout();
+    router.replace('/login');
+  };
   return (
     <SafeAreaView style={[styles.container]}>
     {/**헤더 */}
@@ -20,7 +28,7 @@ export default function TabTwoScreen() {
           <Text style={styles.headertext}>{username}님, 반갑습니다!</Text>
         ),
         headerRight: () => (
-          <Pressable>
+          <Pressable onPress={logoutandmain}>
             <MaterialCommunityIcons
               name="logout"
               size={30}
@@ -48,7 +56,7 @@ export default function TabTwoScreen() {
           size={iconsize}
           color={"#000"}
         />
-          <Text style={styles.menutext}>프로필 설정</Text>
+          <Text style={styles.menutext} onPress={() => router.push('/mypage/SetupProfile')}>프로필 설정</Text>
         </Pressable>
       {/**산책 기록 */}
         <Pressable style={styles.menuview}>
@@ -60,7 +68,7 @@ export default function TabTwoScreen() {
           <Text style={styles.menutext}>산책 기록</Text>
         </Pressable>
       {/**찜목록 */}
-        <Pressable style={styles.menuview}>
+        <Pressable style={styles.menuview} onPress={() => router.push('/mypage/Likepage')}>
         <MaterialCommunityIcons
           name="heart"
           size={iconsize}

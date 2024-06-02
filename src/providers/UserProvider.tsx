@@ -11,6 +11,7 @@ type UserType = {
   locate: Loc;
   coordinate: Region;
   login: (userid: number) => void;
+  logout: () => void;
   setloc: (selector: number, flow: string) => void;
   getCoordinate: () => void;
 };
@@ -21,6 +22,7 @@ const UserContext = createContext<UserType>({
   coordinate: {latitude: 37.551180, longitude: 127.001610, latitudeDelta: 0, longitudeDelta: 0},
   login: () => {},
   setloc: () => {},
+  logout: () => {},
   getCoordinate: () => {},
 });
 
@@ -32,6 +34,10 @@ const UserProvider = ({children}: PropsWithChildren) => {
   console.log(coordinate);
   const login = (userid: number) => {
     setUser(Users[userid]);
+  };
+  
+  const logout = () => {
+    setUser(null);
   };
 
   const setloc = (selector: number, flow: string) => {
@@ -60,7 +66,7 @@ const UserProvider = ({children}: PropsWithChildren) => {
 
   return (
     <UserContext.Provider
-      value={{user, locate, coordinate, login, setloc, getCoordinate}}>
+      value={{user, locate, coordinate, login, logout, setloc, getCoordinate}}>
         {children}
       </UserContext.Provider>
   )
