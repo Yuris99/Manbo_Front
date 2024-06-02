@@ -4,47 +4,111 @@
     "slug": "Manbo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/LOGO.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/LOGO.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.project.manbo"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/LOGO.png",
         "backgroundColor": "#ffffff"
       },
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.project.manbo",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/LOGO.png"
     },
     "plugins": [
       "expo-router",
       "expo-location",
-      {
-        "isIosBackgroundLocationEnabled": true,
-        "isAndroidBackgroundLocationEnabled": true
-      },
-      ["expo-font",
+      [
+        "expo-font",
         {
-          "fonts": ["./assets/fonts/KCC-Hanbit.ttf"]
+          "fonts": [
+            "./assets/fonts/KCC-Hanbit.ttf"
+          ]
+        }
+      ],
+      [
+        "@mj-studio/react-native-naver-map",
+        {
+          "client_id": "hcrfyw5ljo",
+          "android": {
+            "ACCESS_FINE_LOCATION": true,
+            "ACCESS_COARSE_LOCATION": true,
+            "ACCESS_BACKGROUND_LOCATION": true
+          },
+          "ios": {
+            "NSLocationAlwaysAndWhenInUseUsageDescription": "{{ your location usage description }}",
+            "NSLocationWhenInUseUsageDescription": "{{ your location usage description }}"
+          }
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": [
+              "https://repository.map.naver.com/archive/maven"
+            ]
+          }
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2c5ca273-54e0-4051-984c-d4f615712528"
+      }
     }
-  }
+  },
+  "plugins": [
+    [
+      "@mj-studio/react-native-naver-map",
+      {
+        "client_id": "hcrfyw5ljo",
+        "android": {
+          "ACCESS_FINE_LOCATION": true,
+          "ACCESS_COARSE_LOCATION": true,
+          "ACCESS_BACKGROUND_LOCATION": true
+        },
+        "ios": {
+          "NSLocationAlwaysAndWhenInUseUsageDescription": "{{ your location usage description }}",
+          "NSLocationWhenInUseUsageDescription": "{{ your location usage description }}"
+        }
+      }
+    ],
+    [
+      "expo-build-properties",
+      {
+        "android": {
+          "extraMavenRepos": [
+            "https://repository.map.naver.com/archive/maven"
+          ]
+        }
+      }
+    ]
+  ]
 }
