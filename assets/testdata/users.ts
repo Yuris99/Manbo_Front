@@ -7,6 +7,7 @@ const Users: User[] = [
         email: "soongsil@gmail.com",
         gender: "M",
         age: 22,
+        islogin: false,
     },
     {
         id: 2,
@@ -14,8 +15,7 @@ const Users: User[] = [
         email: "20201777@gmail.com",
         gender: "M",
         age: 24,
+        islogin: false,
     },
     
 ];
-
-export default Users;

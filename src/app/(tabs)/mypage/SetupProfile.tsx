@@ -1,4 +1,4 @@
-import Users from '@/assets/testdata/users';
+import { UserData } from '@/src/providers/UserProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, FlatList, StyleSheet, TextInput, Pressable, Text, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -9,7 +9,8 @@ export default function CreateRoom() {
 }
 
 function SetupProfile() {
-  const userdata = Users[0];
+  const {user} = UserData();
+  const userdata = user;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

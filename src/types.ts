@@ -12,6 +12,7 @@ export type User = {
     email: string;
     gender: string;
     age: number;
+    islogin: boolean;
 };
 
 /** 주소 설정 데이터 타입 (enum으로 바꿀 예정)

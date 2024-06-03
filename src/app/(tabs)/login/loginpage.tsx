@@ -6,10 +6,12 @@ import { Stack, router } from 'expo-router';
 import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { useState } from 'react';
+import { UserData } from '@/src/providers/UserProvider';
 
 
 
 export default function LoginPage() {
+  const {user, login} = UserData();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,14 +42,21 @@ export default function LoginPage() {
       setEmailBorderColor("#aaa");
       setPwBorderColor("#FF1744");
     } else {
-      setEmailBorderColor("#aaa");
-      setPwBorderColor("#aaa");
-      setErrorMessage(" ");
-      //db접속 및 인증
-
+      await login(email, password);
+      if(user?.islogin) {
+        setEmailBorderColor("#aaa");
+        setPwBorderColor("#aaa");
+        setErrorMessage(" ");
+        //db접속 및 인증
+        Alert.alert("성공적으로 로그인 되었습니다!");
+        router.replace('/home');
+      }else {
+        setErrorMessage("이메일 또는 비밀번호가 일치하지 않습니다!");
+        setEmailBorderColor("#FF1744");
+        setPwBorderColor("#FF1744");
+      }
     }
     setLoading(false);
-    router.replace('/home');
   }
 
   return (

@@ -18,16 +18,13 @@ export default function homePage() {
   const saying: Saying = HomeSentences[Math.floor(Math.random() * (HomeSentences.length-1))];
   //테스트
   const username = "홍지훈";
-  const walksum = 5923;  
   useFocusEffect(
     useCallback(() => {
       const getuserpos = async() => {
         await getCoordinate();
-        console.log("Test");
       };
       getuserpos();
 
-      console.log("home page call back!");
     }, [])
   );
   console.log("test: " + coordinate.latitude + "  " + coordinate.longitude);

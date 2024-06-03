@@ -2,15 +2,18 @@ import { Alert, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, Styl
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { Stack, router } from 'expo-router';
+import { Stack, router, useFocusEffect } from 'expo-router';
 import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { isExistEmail } from '@/src/lib/serverlogin';
+import { UserData } from '@/src/providers/UserProvider';
 
 
 
 export default function registerPage() {
+  const {user} = UserData();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -27,9 +30,13 @@ export default function registerPage() {
     }  else if(!emailRegex.test(email)) {
       setErrorMessage("유효하지 않은 이메일 입니다!");
       setEmailBorderColor("#FF1744");
-    } else {
+    } else if(await isExistEmail(email)) {
+      setErrorMessage("이미 존재하는 이메일 입니다!");
+      setEmailBorderColor("#FF1744");
+    } else{
       setEmailBorderColor("#aaa");
       setErrorMessage(" ");
+      
       //db접속 및 인증
       router.push("/login/register/register2pw");
     }
