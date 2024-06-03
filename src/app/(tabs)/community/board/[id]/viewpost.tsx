@@ -21,7 +21,6 @@ export default function NoticeBoard()
       <View style={styles.userContent}>
         <Text style={styles.content}>{post.content}</Text>
       </View>
-
     </View>
   );
 }
