@@ -1,12 +1,12 @@
 import { View,Text,FlatList, StyleSheet } from 'react-native';
-import FreePost from '@/assets/testdata/recommanddata';
+import RecommandPost from '@/assets/testdata/recommanddata';
 import CommunityIndexfree from '@/src/components/community/CommunityIndexfree';
 
 export default function RecommandBoard() {
   return (
     <View style={styles.container}>
       <FlatList 
-      data={FreePost}
+      data={RecommandPost}
       renderItem={({item}) => <CommunityIndexfree post={item} />}
       />
     

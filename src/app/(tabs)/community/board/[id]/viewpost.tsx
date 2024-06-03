@@ -1,12 +1,15 @@
 import { View, Text, FlatList, Image, Pressable, StyleSheet } from 'react-native';
 import FreePost from '@assets/testdata/freedata';
 import { Post } from '@/src/types'
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useSegments } from 'expo-router';
 
 
-export default function NoticeBoard() {
-  const {user_id} = useLocalSearchParams();
-  const post = FreePost[Number(user_id)];
+export default function NoticeBoard()
+{
+  const {id} = useLocalSearchParams();
+  console.log(id);
+  const post = id == undefined ? FreePost[0] : FreePost[Number(id)];
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{post.title}</Text>
@@ -18,6 +21,7 @@ export default function NoticeBoard() {
       <View style={styles.userContent}>
         <Text style={styles.content}>{post.content}</Text>
       </View>
+
     </View>
   );
 }

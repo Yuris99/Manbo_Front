@@ -3,14 +3,19 @@ import React from 'react'
 import { Post,PostType } from '@/src/types'
 import Posts from '@/assets/testdata/freedata'
 import FreePost from '@/assets/testdata/freedata'
+import { router } from 'expo-router'
 
 type PostProps = {
     post: Post;
 }
+const viewPost = (post_id : number) => {
+    router.push(`/community/board/${post_id}/viewpost`);
+    console.log("pushview");
+};
 
 const CommunityIndexfree = ( {post} : PostProps) => {
     return(
-      <Pressable onPress={() => {}} style={styles.container}>
+      <Pressable onPress={() => {viewPost(post.id)}} style={styles.container}>
         <View style={styles.views}>
             <View style={{
                 backgroundColor: 'Black',
