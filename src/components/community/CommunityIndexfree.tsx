@@ -1,78 +1,79 @@
-import {StyleSheet,View,Text,Pressable, Platform, FlatList} from 'react-native'
-import React from 'react'
-import { Post,PostType } from '@/src/types'
-import Posts from '@/assets/testdata/freedata'
-import FreePost from '@/assets/testdata/freedata'
+import { StyleSheet, View, Text, Pressable, Platform, FlatList } from 'react-native';
+import React from 'react';
+import { Post } from '@/src/types';
+import { router } from 'expo-router';
 
 type PostProps = {
-    post: Post;
-}
+  post: Post;
+};
 
-const CommunityIndexfree = ( {post} : PostProps) => {
-    return(
-      <Pressable onPress={() => {}} style={styles.container}>
-        <View style={styles.views}>
-            <View style={{
-                backgroundColor: 'Black',
-                borderRadius: 32,
-                flex: 1,
-            }}>
-            </View>
-            <View style={styles.postinfo}>
-                <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{post.title}</Text>
-                <View style={styles.posttimedot}>
-                    <Text style={{
-                        marginLeft: 5,
-                        marginRight: 15,
-                    }}>
-                        {post.created.getMonth()+1}/{post.created.getDate()} {post.created.getHours() >=12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours()-12 :(post.created.getHours() == 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ?'0'+post.created.getMinutes() : post.created.getMinutes()  }
-                        
-                    </Text>
-                    <Text style={{
-                        marginLeft: 5,
-                        marginRight: 15,
-                    }}>
-                        {post.view} {post.like}
-                    </Text>
-                </View>
-            </View>
+const viewPost = (post_id: number) => {
+  router.push(`/community/board/${post_id}/viewpost`);
+  console.log('pushview');
+};
 
+const CommunityIndexfree = ({ post }: PostProps) => {
+  return (
+    <Pressable onPress={() => { viewPost(post.id); }} style={styles.container}>
+      <View style={styles.card}>
+        <View style={styles.postInfo}>
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+            {post.title}
+          </Text>
+          <View style={styles.postDetails}>
+            <Text style={styles.detailText}>
+              {post.created.getMonth() + 1}/{post.created.getDate()} {post.created.getHours() >= 12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours() - 12 : (post.created.getHours() === 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ? '0' + post.created.getMinutes() : post.created.getMinutes()}
+            </Text>
+          </View>
+          <View style={styles.postDetails}>
+            <Text style={styles.detailText}>
+              조회수 {post.view}       추천수 {post.like}
+            </Text>
+          </View>
         </View>
+      </View>
+    </Pressable>
+  );
+};
 
-      </Pressable>
-
-    );
-} 
-
-const titlesize = Platform.OS == 'ios' ? 20 : 18;
+const titlesize = Platform.OS === 'ios' ? 20 : 18;
 
 const styles = StyleSheet.create({
-    postinfo:{
-        left: '32%',
-        width: '60%',
-        margin: 10,
-        marginHorizontal: 15,
-    },
-    container: {
-        width: '95%',
-        margin: 10,
-        alignSelf: 'center',
-    },
-    views: {
-        width: '100%',
-        height: 120,
-        borderRadius: 32,
-        backgroundColor: '#dddddd',
-        justifyContent: "center",
-    },
-    title: {
-        paddingTop: 5,
-        fontSize: titlesize,
-    },
-    posttimedot: {
-        paddingTop: 5,
-        flexDirection: 'row',
-    }
-})
+  container: {
+    width: '100%',
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    alignSelf: 'center',
+  },
+  card: {
+    width: '100%',
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  postInfo: {
+    width: '100%',
+  },
+  title: {
+    fontSize: titlesize,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
+  },
+  postDetails: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  detailText: {
+    fontSize: 12,
+    color: '#555',
+  },
+});
 
 export default CommunityIndexfree;

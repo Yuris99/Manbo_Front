@@ -1,7 +1,4 @@
-import { FlatList, StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@components/EditScreenInfo';
-import { Text, View } from '@components/Themed';
+import { Text, View, FlatList, StyleSheet } from 'react-native';
 import FreePost from '@/assets/testdata/freedata';
 import CommunityIndexfree from '@/src/components/community/CommunityIndexfree';
 

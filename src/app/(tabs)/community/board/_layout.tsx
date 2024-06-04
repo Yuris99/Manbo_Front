@@ -34,7 +34,8 @@ export default function BoardTabs() {
       title: "공지사항",
     }} />
     <MaterialTopTabs.Screen name="[id]" options={{
-    }} />
+    }}
+     />
     </MaterialTopTabs>
   );
 }

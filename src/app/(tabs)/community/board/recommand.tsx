@@ -1,14 +1,15 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@components/EditScreenInfo';
-import { Text, View } from '@components/Themed';
+import { View,Text,FlatList, StyleSheet } from 'react-native';
+import RecommandPost from '@/assets/testdata/recommanddata';
+import CommunityIndexfree from '@/src/components/community/CommunityIndexfree';
 
 export default function RecommandBoard() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>RecommandBoard</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/mypage/index.tsx" />
+      <FlatList 
+      data={RecommandPost}
+      renderItem={({item}) => <CommunityIndexfree post={item} />}
+      />
+    
     </View>
   );
 }

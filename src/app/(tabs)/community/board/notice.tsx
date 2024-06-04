@@ -1,14 +1,15 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@components/EditScreenInfo';
-import { Text, View } from '@components/Themed';
+import { Text, View, FlatList, StyleSheet } from 'react-native';
+import AnnouncementPost from '@/assets/testdata/announcedata';
+import CommunityIndexfree from '@/src/components/community/CommunityIndexfree';
 
 export default function NoticeBoard() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>notice</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/mypage/index.tsx" />
+      <FlatList 
+      data={AnnouncementPost}
+      renderItem={({item}) => <CommunityIndexfree post={item} />}
+      />
+      
     </View>
   );
 }
