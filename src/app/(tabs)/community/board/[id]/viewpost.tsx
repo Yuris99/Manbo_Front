@@ -1,57 +1,71 @@
-import { View, Text, FlatList, Image, Pressable, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import FreePost from '@assets/testdata/freedata';
-import { Post } from '@/src/types'
-import { Stack, useLocalSearchParams, useSegments } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 
-
-export default function NoticeBoard()
-{
-  const {id} = useLocalSearchParams();
-  console.log(id);
-  const post = id == undefined ? FreePost[0] : FreePost[Number(id)];
+export default function NoticeBoard() {
+  const { id } = useLocalSearchParams();
+  const post = id === undefined ? FreePost[0] : FreePost[Number(id)];
   
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>{post.title}</Text>
-     <View style={styles.userContainer}> 
+      <View style={styles.userContainer}>
         <Text style={styles.username}>{post.user_id}</Text>
-        <Text style={styles.userinfo}>{post.created.getMonth()+1}/{post.created.getDate()} {post.created.getHours() >=12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours()-12 :(post.created.getHours() == 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ?'0'+post.created.getMinutes() : post.created.getMinutes()  }</Text>
-        <Text style={styles.userinfo}>{post.view}  {post.like}</Text>
+        <Text style={styles.userinfo}>
+          {post.created.getMonth() + 1}/{post.created.getDate()} {post.created.getHours() >= 12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours() - 12 : (post.created.getHours() === 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ? '0' + post.created.getMinutes() : post.created.getMinutes()}
+        </Text>
+        <Text style={styles.userinfo}>조회수: {post.view} | 좋아요: {post.like}</Text>
       </View>
       <View style={styles.userContent}>
         <Text style={styles.content}>{post.content}</Text>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: '#f9f9f9',
   },
   userContainer: {
-   flex:1,
-   alignItems: 'center'
+    marginVertical: 10,
+    alignItems: 'center',
   },
   userContent: {
-    flex:1,
-    alignItems:'center',
+    marginVertical: 20,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+    textAlign: 'center',
   },
   username: {
-    fontSize: 10,
+    fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#555',
   },
   userinfo: {
-    fontSize: 10,
+    fontSize: 12,
+    color: '#777',
   },
   content: {
-    fontSize:15,
-    fontWeight: 'bold'
-  }
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#333',
+  },
 });
+
