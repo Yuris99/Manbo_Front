@@ -18,12 +18,12 @@ const JoinRoom = (item : Room) => {
   router.replace({pathname: '/trail/roompage/Roominfo', params: {roomid: item.id}});
 }
 
-const RoomJoinScreen = () => {
+const RoomJoinScreen = async () => {
   const { roomid } = useLocalSearchParams();
   //룸 가져오기
   const room = RoomList[Number(roomid)];
   const trail = Trails[room.trail_id];
-  const hostname = getusernamebyid(room.host_id);
+  const hostname = await getusernamebyid(room.host_id);
   //console.log(room);
   return (
     <View style={styles.container}>

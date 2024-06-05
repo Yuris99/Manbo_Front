@@ -4,8 +4,8 @@ import FreePost from '@assets/testdata/freedata';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function NoticeBoard() {
-  const { id } = useLocalSearchParams();
-  const post = id === undefined ? FreePost[0] : FreePost[Number(id)];
+  const { postid } = useLocalSearchParams();
+  const post = postid === undefined ? FreePost[0] : FreePost[Number(postid)];
   
   return (
     <ScrollView contentContainerStyle={styles.container}>

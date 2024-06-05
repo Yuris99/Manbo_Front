@@ -9,7 +9,7 @@ export default function TrailStack () {
             <Stack.Screen name="index" options={{
                 //현재 위치
                 headerLeft: () => (
-                        <Link href={{pathname:"/mypage"}} asChild>
+                        <Link href={{pathname:"/trail/changeLoc"}} asChild>
                         <Pressable>
                             {({ pressed }) => (
                                 <View style={{flexDirection:"row", justifyContent:"flex-start", padding: 5, alignItems: "center"}}>
@@ -31,6 +31,13 @@ export default function TrailStack () {
             }} />
             <Stack.Screen name="trailpage" options={{ 
                 headerShown: false,
+            }} />
+            <Stack.Screen name="changeLoc" options={{ 
+                title: '위치 변경',
+                presentation: 'modal',
+            }} />
+            <Stack.Screen name="gpsSelector" options={{ 
+                presentation: 'modal',
             }} />
         </Stack>
     );

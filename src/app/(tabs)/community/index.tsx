@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, ScrollView, Pressable, Platform } from 'r
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 export default function CommunityMain() {
   return (
@@ -18,8 +18,7 @@ export default function CommunityMain() {
     </Pressable>
     </Link>
       {/**추천 게시판 */}
-      <Link href={"/community/board/recommand"} asChild>
-      <Pressable style={styles.middleContainer}>
+      <Pressable style={styles.middleContainer} onPress={()=>{router.push('/community/board/recommand')}}>
         <View style={styles.buttontextview}>
           <Text style={styles.middleButtonText}>산책로 추천 게시판</Text>
           <MaterialCommunityIcons
@@ -36,9 +35,8 @@ export default function CommunityMain() {
             <Text style={styles.thumbnailText}>테스트</Text>
           </View>
       </Pressable>
-      </Link>
       {/**자유 게시판 */}
-      <Link href={"/community/board/free"} asChild>
+      <Link href={{pathname: "/community/board/free"}} asChild>
       <Pressable style={styles.middleContainer}>
         <View style={styles.buttontextview}>
           <Text style={styles.middleButtonText}>자유 게시판</Text>

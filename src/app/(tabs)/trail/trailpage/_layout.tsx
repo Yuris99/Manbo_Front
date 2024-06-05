@@ -29,5 +29,11 @@ export default function TrailPage() {
   <Stack.Screen name="[id]" options={{
     title: '',
   }} />
+  <Stack.Screen name="TrailViewMap" options={{
+    title: '산책로',
+    headerLeft: () => (
+      <HeaderBackButton />
+    ),
+  }} />
   </Stack>);
 }

@@ -1,13 +1,15 @@
 //board layout.tsx
 import AssignWriteComponent from '@/src/components/community/AssignWriteComponent';
+import WritePostComponent from '@/src/components/community/WritePostComponent';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
+import AssignSetupComponent from '@/src/components/mypage/AssignSetupComponent';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
   MaterialTopTabNavigationEventMap,
 } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { Tabs, withLayoutContext } from 'expo-router';
+import { Stack, Tabs, withLayoutContext } from 'expo-router';
 
 import { Platform } from 'react-native';
 
@@ -17,46 +19,49 @@ export default function BoardTabs() {
   const iconSize = Platform.OS == 'ios' ? 32 : 28;
 
   return (    
-    <Tabs screenOptions={{
-      tabBarStyle: {display: 'none'},
+    <Stack screenOptions={{
     }}
     
     >
-    <Tabs.Screen name="free" options={{
-      title: "자유게시판",
-      href: null,
-      headerLeft: () => (
-        <HeaderBackButton />
-      ),
-      headerRight: () => (
-        <AssignWriteComponent />
-      )
-    }} />
-    <Tabs.Screen name="recommand" options={{
+    <Stack.Screen name="recommand" options={{
       title: "추천게시판",
-      href: null,
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+      headerRight: () => (
+        <WritePostComponent />
+      )
+    }} />
+    <Stack.Screen name="free" options={{
+      title: "자유게시판",
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+      headerRight: () => (
+        <WritePostComponent />
+      )
+    }} />
+    <Stack.Screen name="notice" options={{
+      title: "공지사항",
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+    }} />
+    <Stack.Screen name="writepost" options={{
+      title: "글쓰기",
       headerLeft: () => (
         <HeaderBackButton />
       ),
       headerRight: () => (
         <AssignWriteComponent />
-      )
+      ),
     }} />
-    <Tabs.Screen name="notice" options={{
-      title: "공지사항",
-      href: null,
+    <Stack.Screen name="[postid]" options={{
       headerLeft: () => (
         <HeaderBackButton />
       ),
-    }} />
-    <Tabs.Screen name="[id]" options={{
-      href: null,
-      headerLeft: () => (
-        <HeaderBackButton />
-      ),
-      
     }}
-     />
-    </Tabs>
+    />
+    </Stack>
   );
 }

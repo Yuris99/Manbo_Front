@@ -11,8 +11,7 @@ const AssignWriteComponent = () => {
         paddingHorizontal: 12,
         borderRadius: 100,
         marginRight: 30,
-        
-      }}><Text style={{fontSize: 13}}>글쓰기</Text>
+      }}><Text style={{fontSize: 13}}>저장</Text>
       </View>
     );
   };

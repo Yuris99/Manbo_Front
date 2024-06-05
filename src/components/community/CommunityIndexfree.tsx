@@ -8,7 +8,7 @@ type PostProps = {
 };
 
 const viewPost = (post_id: number) => {
-  router.push(`/community/board/${post_id}/viewpost`);
+  router.push(`/community/board/${post_id}`);
 };
 
 const CommunityIndexfree = ({ post }: PostProps) => {
