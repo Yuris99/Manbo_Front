@@ -60,6 +60,8 @@ export default function BoardTabs() {
       headerLeft: () => (
         <HeaderBackButton />
       ),
+      headerShadowVisible: false,
+      title: '',
     }}
     />
     </Stack>

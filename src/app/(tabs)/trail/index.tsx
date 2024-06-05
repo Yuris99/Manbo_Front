@@ -55,7 +55,7 @@ export default function Trail() {
           <Text style={styles.menuText}>산책로 리스트</Text>
         </View>
         <View style={styles.menuElement}>
-          <Pressable onPress={() => {}} style={[styles.menuIcon]}>
+          <Pressable onPress={() => {router.push('trail/trailpage/Trailing')}} style={[styles.menuIcon]}>
             <MaterialCommunityIcons
               name="pencil"
               size={MenuTabSize}

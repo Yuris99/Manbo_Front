@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import FreePost from '@assets/testdata/freedata';
-import { useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 
-export default function NoticeBoard() {
+export default function postView() {
   const { postid } = useLocalSearchParams();
   const post = postid === undefined ? FreePost[0] : FreePost[Number(postid)];
   
@@ -20,6 +20,7 @@ export default function NoticeBoard() {
       <View style={styles.userContent}>
         <Text style={styles.content}>{post.content}</Text>
       </View>
+      <Text style={styles.commandText}>댓글</Text>
     </ScrollView>
   );
 }
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fff',
   },
   userContainer: {
     marginVertical: 10,
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   title: {
-    fontSize: 24,
+    fontSize: 34,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#333',
@@ -61,6 +62,10 @@ const styles = StyleSheet.create({
   userinfo: {
     fontSize: 12,
     color: '#777',
+  },
+  commandText: {
+    fontSize: 18,
+    marginHorizontal: 10,
   },
   content: {
     fontSize: 16,

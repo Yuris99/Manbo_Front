@@ -35,5 +35,12 @@ export default function TrailPage() {
       <HeaderBackButton />
     ),
   }} />
+  <Stack.Screen name="Trailing" options={{
+    title: '산책',
+    headerLeft: () => (
+      <HeaderBackButton />
+    ),
+    headerShadowVisible: false,
+  }} />
   </Stack>);
 }
