@@ -15,10 +15,10 @@ export default function TrailPage() {
       <HeaderBackButton />
     ),
     headerRight: () => (
-            <Pressable>
+            <Pressable onPress={()=>{router.push("/trail/trailpage/TrailViewMap")}}>
                 {({pressed}) => (
                         <MaterialCommunityIcons 
-                            name="magnify" 
+                            name="map" 
                             color={"#000000"} 
                             size={25}
                         />
