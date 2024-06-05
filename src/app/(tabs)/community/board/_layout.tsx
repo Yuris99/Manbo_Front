@@ -1,41 +1,62 @@
 //board layout.tsx
+import AssignWriteComponent from '@/src/components/community/AssignWriteComponent';
+import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
   MaterialTopTabNavigationEventMap,
 } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { withLayoutContext } from 'expo-router';
+import { Tabs, withLayoutContext } from 'expo-router';
 
 import { Platform } from 'react-native';
 
 
-const { Navigator } = createMaterialTopTabNavigator();
-
-export const MaterialTopTabs = withLayoutContext<
-MaterialTopTabNavigationOptions,
-typeof Navigator,
-TabNavigationState<ParamListBase>,
-MaterialTopTabNavigationEventMap
->(Navigator);
 
 export default function BoardTabs() {
   const iconSize = Platform.OS == 'ios' ? 32 : 28;
 
   return (    
-    <MaterialTopTabs>
-    <MaterialTopTabs.Screen name="free" options={{
+    <Tabs screenOptions={{
+      tabBarStyle: {display: 'none'},
+    }}
+    
+    >
+    <Tabs.Screen name="free" options={{
       title: "자유게시판",
+      href: null,
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+      headerRight: () => (
+        <AssignWriteComponent />
+      )
     }} />
-    <MaterialTopTabs.Screen name="recommand" options={{
+    <Tabs.Screen name="recommand" options={{
       title: "추천게시판",
+      href: null,
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+      headerRight: () => (
+        <AssignWriteComponent />
+      )
     }} />
-    <MaterialTopTabs.Screen name="notice" options={{
+    <Tabs.Screen name="notice" options={{
       title: "공지사항",
+      href: null,
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
     }} />
-    <MaterialTopTabs.Screen name="[id]" options={{
+    <Tabs.Screen name="[id]" options={{
+      href: null,
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+      
     }}
      />
-    </MaterialTopTabs>
+    </Tabs>
   );
 }

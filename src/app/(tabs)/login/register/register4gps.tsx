@@ -8,15 +8,21 @@ import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { UserData } from '@/src/providers/UserProvider';
+import { join } from '@/src/lib/serverlogin';
 
-export default function registerPage3Info() {
-  const {locate, setloc} = UserData();
+export default function registerPage4gps() {
+  const {locate, setloc, user} = UserData();
   const [loading, setLoading] = useState(false);
 
   async function signin() {
     setLoading(true);
     setLoading(false);
-    router.replace("/login/register/registerComplete");
+    const result = await join(user);
+    if(result == false) {
+      Alert.alert("회원가입에 실패했습니다!");
+    }else {
+      router.replace("/login/register/registerComplete");
+    }
   }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

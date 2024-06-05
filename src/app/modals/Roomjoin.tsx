@@ -1,7 +1,7 @@
 import RoomList from "@/assets/testdata/roomData";
 import Trails from "@/assets/testdata/trailList";
-import Users from "@/assets/testdata/users";
 import EditScreenInfo from "@/src/components/EditScreenInfo";
+import { getusernamebyid } from "@/src/lib/serverlogin";
 import { Room, Trail, User } from "@/src/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -23,7 +23,7 @@ const RoomJoinScreen = () => {
   //룸 가져오기
   const room = RoomList[Number(roomid)];
   const trail = Trails[room.trail_id];
-  const hostname = Users[room.host_id-1].username;
+  const hostname = getusernamebyid(room.host_id);
   //console.log(room);
   return (
     <View style={styles.container}>

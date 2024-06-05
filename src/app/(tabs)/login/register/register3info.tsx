@@ -16,7 +16,7 @@ const now = dayjs();
 
 export default function registerPage3Info() {
   //getUserData in provider
-  const {locate, setloc} = UserData();
+  const {locate, setloc, user, setuser} = UserData();
 
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
@@ -57,6 +57,7 @@ export default function registerPage3Info() {
       setErrorMessage(" ");
       setnameBorderColor("#aaa");
       setBirthBorderColor("#aaa");
+      setuser({id: -1, username: name, email: user.email, pw: user.pw, gender: gender, age: -1, islogin: false});
       await setloc(0, '도/특별시/광역시');
       await setloc(1, '시/군/구');
       await setloc(2, '읍/면/동');

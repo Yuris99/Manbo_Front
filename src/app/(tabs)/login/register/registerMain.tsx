@@ -13,7 +13,7 @@ import { UserData } from '@/src/providers/UserProvider';
 
 
 export default function registerPage() {
-  const {user} = UserData();
+  const {user, setuser} = UserData();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +37,7 @@ export default function registerPage() {
       setEmailBorderColor("#aaa");
       setErrorMessage(" ");
       
-      //db접속 및 인증
+      setuser({id: -1, username: "", email: email,pw: "", gender: '', age: -1, islogin: false});
       router.push("/login/register/register2pw");
     }
     setLoading(false);

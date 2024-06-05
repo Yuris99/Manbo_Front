@@ -10,11 +10,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { UserData } from '@/src/providers/UserProvider';
 
 export default function registerPage3Info() {
-  const {user} = UserData();
+  const {user, login} = UserData();
   const [loading, setLoading] = useState(false);
 
   async function signin() {
-    router.replace("/home")
+    const result = await login(user.email, user.pw);
+    if(user.id != -1) 
+      router.replace("/home")
   }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

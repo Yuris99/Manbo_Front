@@ -1,46 +1,62 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, Pressable, Platform } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
-export default function TabTwoScreen() {
+export default function CommunityMain() {
   return (
     <View style={styles.container}>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <View style={styles.iconTextContainer}>
+    <Link href={"/community/board/notice"} asChild>
+    <Pressable style={styles.iconTextContainer}>
         <View style={styles.topButton01}>
           <MaterialIcons name="info" size={24} color="black" />
           <Text style={styles.title}>만보 정식출시 안내</Text>
         </View>
-      </View>
-      {/**실시간 인기글 */}
-      <View style={styles.middleContainer}>
-        <Text style={styles.middleButtonText}>실시간 인기글(임시로 공지링크)</Text>
-        <Link href={"/community/board/notice"} asChild>
-          <Pressable onPress={()=>{console.log("tes");}}>
-            <View style={styles.middleButton}></View>
-          </Pressable>
-        </Link>
-      </View>
+    </Pressable>
+    </Link>
       {/**추천 게시판 */}
-      <View style={styles.middleContainer}>
-        <Text style={styles.middleButtonText}>산책로 추천 게시판</Text>
-        <Link href={"/community/board/recommand"} asChild>
-          <Pressable style={styles.middleButton}>
-          </Pressable>
-        </Link>
-      </View>
+      <Link href={"/community/board/recommand"} asChild>
+      <Pressable style={styles.middleContainer}>
+        <View style={styles.buttontextview}>
+          <Text style={styles.middleButtonText}>산책로 추천 게시판</Text>
+          <MaterialCommunityIcons
+            name="arrow-right"
+            size={24}
+            color="black"
+          />
+        </View>
+          <View style={styles.middleButton}>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+          </View>
+      </Pressable>
+      </Link>
       {/**자유 게시판 */}
-      <View style={styles.middleContainer}>
-        <Text style={styles.middleButtonText}>자유 게시판</Text>
-        <Link href={"/community/board/free"} asChild>
-          <Pressable style={styles.middleButton}>
-          </Pressable>
-        </Link>
-      </View>
+      <Link href={"/community/board/free"} asChild>
+      <Pressable style={styles.middleContainer}>
+        <View style={styles.buttontextview}>
+          <Text style={styles.middleButtonText}>자유 게시판</Text>
+          <MaterialCommunityIcons
+            name="arrow-right"
+            size={24}
+            color="black"
+          />
+        </View>
+          <View style={styles.middleButton}>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+            <Text style={styles.thumbnailText}>테스트</Text>
+          </View>
+      </Pressable>
+      </Link>
     </View>
   );
 }
@@ -50,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 20,
@@ -61,30 +78,46 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topButton01: {
-    width: 300,
+    width: "90%",
     height: 50,
     backgroundColor: "#ffadad",
     borderRadius: 15,
     flexDirection: 'row', // 아이콘과 텍스트를 가로로 배치
     alignItems: 'center', // 세로 정렬
     paddingHorizontal: 10, // 수평 패딩 추가
+    margin: 10,
+    marginVertical: 30,
   },
   middleButtonText: {
     color: "#000",
-    fontSize: 18,
+    fontSize: Platform.OS == 'ios' ? 24 : 20,
     textAlign: "left",
     marginLeft: 7
   },
   middleContainer: {
-    borderWidth: 0,
+    borderWidth: 1,
+    width: '90%',
+    borderRadius: 30,
+    padding: 10,
+    borderColor: '#aaa',
+    marginVertical: 10,
+  },
+  buttontextview: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingLeft: 10,
+    alignItems: 'center',
   },
   middleButton: {
-    width: 300,
-    height: 120,
-    padding: 15,
-    backgroundColor: "#d0d0d0",
+    backgroundColor: "#fff",
     borderRadius: 15,
-    margin: 7,
+    margin: 10,
+    paddingHorizontal: 10,
+  },
+  thumbnailText: {
+    fontSize: 14,
+    marginVertical: 5,
   },
   separator: {
     marginVertical: 20,

@@ -11,40 +11,42 @@ type UserType = {
   locate: Loc;
   coordinate: Region;
   login: (email: string, password: string) => void;
+  setuser: (userdata: User) => void;
   logout: () => void;
   setloc: (selector: number, flow: string) => void;
   getCoordinate: () => void;
 };
 
 const UserContext = createContext<UserType>({
-  user: {id: -1, email: "", username: "", age: 0, gender: "M", islogin: false},
+  user: {id: -1, email: "", username: "", pw: "", age: 0, gender: "M", islogin: false},
   locate: {city:'', town:'', village:''},
   coordinate: {latitude: 37.551180, longitude: 127.001610, latitudeDelta: 0, longitudeDelta: 0},
   login: () => {},
+  setuser: () => {},
   setloc: () => {},
   logout: () => {},
   getCoordinate: () => {},
 });
 
 const UserProvider = ({children}: PropsWithChildren) => {
-  const [user, setUser] = useState<User>({id: -1, email: "", username: "", age: 0, gender: "M", islogin: false});
+  const [user, setUser] = useState<User>({id: -1, email: "", username: "", pw: "", age: 0, gender: "M", islogin: false});
   const [locate, setLocate] = useState<Loc>({city:'도/특별시/광역시', town:'시/군/구', village:'읍/면/동'});
   const [coordinate, setCoordinate] = useState<Region>({latitude: 37.5011953, longitude: 126.9516201, latitudeDelta: 0.002, longitudeDelta: 0.004});
-  console.log("reload");
-  console.log(coordinate);
   const login = async (email: string, password: string) => {
-    console.log("test");
     const returndata = await logincheck(email, password);
     console.log(returndata);
     if(returndata == null) {
       return false;
     }
-    setUser({id: returndata.memberId, username: returndata.name, email: returndata.email, gender: 'M', age: 24, islogin: true});
+    setUser({id: returndata.memberId, username: returndata.name, email: returndata.email, gender: 'M', pw: "", age: 24, islogin: true});
     return true;
   };
+  const setuser = (userdata: User) => {
+    setUser(userdata);
+  }
   
   const logout = () => {
-    setUser({id: -1, email: "", username: "", age: 0, gender: "M", islogin: false});
+    setUser({id: -1, email: "", username: "", age: 0, gender: "M", pw: "", islogin: false});
   };
 
   const setloc = (selector: number, flow: string) => {
@@ -73,7 +75,7 @@ const UserProvider = ({children}: PropsWithChildren) => {
 
   return (
     <UserContext.Provider
-      value={{user, locate, coordinate, login, logout, setloc, getCoordinate}}>
+      value={{user, locate, coordinate, login, logout, setloc, setuser, getCoordinate}}>
         {children}
       </UserContext.Provider>
   )

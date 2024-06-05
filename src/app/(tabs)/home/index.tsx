@@ -2,7 +2,7 @@ import { Platform, Pressable, SafeAreaView, StatusBar, StyleSheet } from 'react-
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
-import { Stack, useFocusEffect, useNavigation } from 'expo-router';
+import { Stack, router, useFocusEffect, useNavigation } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeSentences, { Saying } from '@/assets/data/HomeSentences';
 import { NaverMapMarkerOverlay, NaverMapView, Region } from '@mj-studio/react-native-naver-map';
@@ -14,10 +14,8 @@ import { useCallback, useEffect, useState } from 'react';
 const iconsize = 30;
 
 export default function homePage() {
-  const {coordinate, getCoordinate} = UserData();
+  const {user, coordinate, getCoordinate} = UserData();
   const saying: Saying = HomeSentences[Math.floor(Math.random() * (HomeSentences.length-1))];
-  //테스트
-  const username = "홍지훈";
   useFocusEffect(
     useCallback(() => {
       const getuserpos = async() => {
@@ -37,7 +35,7 @@ export default function homePage() {
         title: '',
         headerShadowVisible: false,
         headerLeft: () => (
-          <Text style={styles.headertext}>{username}님, 반갑습니다!</Text>
+          <Text style={styles.headertext}>{user.username}님, 반갑습니다!</Text>
         ),
       }} />
       {/**명언 */}
@@ -66,7 +64,15 @@ export default function homePage() {
           </NaverMapView>
         </MaskedView>
       </View>
-      {/**모임 */}
+      {/**모임 */}        
+      <Pressable style={styles.meetingButton} onPress={()=>{router.replace("/trail")}}>
+          <Text style={styles.meetingText}>산책하러 가기!</Text>
+          <MaterialCommunityIcons
+            name="arrow-right"
+            size={32}
+            color="black"
+          />
+        </Pressable>
       <Pressable onPress={()=>{}}>
         <Text>test</Text>
       </Pressable>
@@ -116,5 +122,22 @@ const styles = StyleSheet.create({
   headertext: {
     fontSize: 20,
     fontWeight: '500',
+  },
+  meetingButton: {
+    width: '90%',
+    height: '10%',
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    borderWidth:1,
+    borderRadius: 10,
+    marginTop: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+  },
+  meetingText: {
+    fontSize: 24,
+    color: '#000',
   },
 });

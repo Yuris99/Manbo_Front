@@ -7,10 +7,12 @@ import SubmitButton from '@/src/components/login/SubmitButton';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { UserData } from '@/src/providers/UserProvider';
 
 
 
 export default function registerPage2Password() {
+  const {user, setuser} = UserData();
   const [password, setPassword] = useState('');
   const [passwordc, setPasswordc] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,6 +47,7 @@ export default function registerPage2Password() {
       setErrorMessage(" ");
       setPwBorderColor("#aaa");
       setPwcBorderColor("#aaa");
+      setuser({id: -1, username: "", email: user.email, pw: password, gender: '', age: -1, islogin: false});
       router.push("/login/register/register3info");
     }
     setLoading(false);

@@ -9,7 +9,6 @@ type PostProps = {
 
 const viewPost = (post_id: number) => {
   router.push(`/community/board/${post_id}/viewpost`);
-  console.log('pushview');
 };
 
 const CommunityIndexfree = ({ post }: PostProps) => {
@@ -21,13 +20,19 @@ const CommunityIndexfree = ({ post }: PostProps) => {
             {post.title}
           </Text>
           <View style={styles.postDetails}>
-            <Text style={styles.detailText}>
+            <Text style={[styles.detailText, {width: '100%',}]}>
               {post.created.getMonth() + 1}/{post.created.getDate()} {post.created.getHours() >= 12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours() - 12 : (post.created.getHours() === 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ? '0' + post.created.getMinutes() : post.created.getMinutes()}
             </Text>
           </View>
           <View style={styles.postDetails}>
             <Text style={styles.detailText}>
-              조회수 {post.view}       추천수 {post.like}
+              조회수 {post.view}
+            </Text>
+            <Text style={[styles.detailText, {marginLeft: 5,}]}>
+              추천수 {post.like}
+            </Text>
+            <Text style={[styles.detailText, {marginLeft: 5,}]}>
+              댓글수 {post.like}
             </Text>
           </View>
         </View>
@@ -42,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginVertical: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     alignSelf: 'center',
   },
   card: {
@@ -69,6 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 5,
+    width: '100%',
   },
   detailText: {
     fontSize: 12,
