@@ -37,5 +37,12 @@ export default function RoomStack() {
     }} />
     <Stack.Screen name="Roominfo" options={{ 
     }} />
+    <Stack.Screen name="Roomjoin" options={{ 
+      presentation:'modal',
+      title:'모임 참여',
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+    }} />
   </Stack>);
 }

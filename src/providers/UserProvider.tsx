@@ -34,6 +34,7 @@ const UserProvider = ({children}: PropsWithChildren) => {
   const [coordinate, setCoordinate] = useState<Region>({latitude: 37.5011953, longitude: 126.9516201, latitudeDelta: 0.002, longitudeDelta: 0.004});
   const login = async (email: string, password: string) => {
     const returndata = await logincheck(email, password);
+    console.log("in UserPRovider");
     console.log(returndata);
     if(returndata == null) {
       return false;

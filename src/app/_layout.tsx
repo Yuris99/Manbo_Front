@@ -55,14 +55,6 @@ function RootLayoutNav() {
       <UserProvider>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="modals/Roomjoin" options={{ 
-          presentation:'modal',
-          title:'모임 참여',
-          headerLeft: () => (
-            <HeaderBackButton />
-          ),
-        }} />
         </Stack>
       </UserProvider>
     </ThemeProvider>

@@ -34,7 +34,7 @@ const TrailTag = (tagname : {tagname:string}) => {
 };
 
 const openJoinPage = (item : Room) => {
-  router.push({ pathname: `/modals/Roomjoin`, params: {roomid: item.id} });
+  router.push({ pathname: `/trail/roompage/Roomjoin`, params: {roomid: item.id} });
 }
 const noroomtitle = Platform.OS == 'ios' ? 30 : 26;
 const noroomlink = Platform.OS == 'ios' ? 20 : 18;

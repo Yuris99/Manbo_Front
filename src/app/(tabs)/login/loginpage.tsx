@@ -42,7 +42,8 @@ export default function LoginPage() {
       setEmailBorderColor("#aaa");
       setPwBorderColor("#FF1744");
     } else {
-      await login(email, password);
+      const result = await login(email, password);
+      console.log(result);
       if(user?.islogin) {
         setEmailBorderColor("#aaa");
         setPwBorderColor("#aaa");

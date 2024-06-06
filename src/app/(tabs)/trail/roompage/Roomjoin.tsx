@@ -18,12 +18,12 @@ const JoinRoom = (item : Room) => {
   router.replace({pathname: '/trail/roompage/Roominfo', params: {roomid: item.id}});
 }
 
-const RoomJoinScreen = async () => {
+const RoomJoinScreen = () => {
   const { roomid } = useLocalSearchParams();
   //룸 가져오기
   const room = RoomList[Number(roomid)];
   const trail = Trails[room.trail_id];
-  const hostname = await getusernamebyid(room.host_id);
+  const hostname = getusernamebyid(room.host_id);
   //console.log(room);
   return (
     <View style={styles.container}>
@@ -32,7 +32,7 @@ const RoomJoinScreen = async () => {
       <View style={styles.roomdata}>
         {/**모임제목 */}
         <View style={styles.titlebox}>
-          <Text style={styles.hostinfo}>{hostname}</Text>
+          <Text style={styles.hostinfo}>{hostname == null ? "" : hostname}</Text>
           <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">{room.name}</Text>
         </View>
         {/**모임 설명 */}
