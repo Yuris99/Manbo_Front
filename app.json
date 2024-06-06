@@ -4,11 +4,11 @@
     "slug": "Manbo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/LOGO.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/LOGO.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/LOGO.png",
+        "foregroundImage": "./assets/images/adaptiveIcon.png",
         "backgroundColor": "#ffffff"
       },
       "softwareKeyboardLayoutMode": "pan",
