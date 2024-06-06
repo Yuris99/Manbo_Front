@@ -15,7 +15,7 @@ export default function registerPage3Info() {
 
   async function signin() {
     const result = await login(user.email, user.pw);
-    if(user.id != -1) 
+    if(user.islogin == true) 
       router.replace("/home")
   }
   return (

@@ -14,7 +14,7 @@ const isExistEmail = async(email: string) => {
 };
 
 type Logindata = {
-  email: string;
+  mid: string;
   password: string;
 }
 type Joindata = {
@@ -24,11 +24,8 @@ type Joindata = {
   name: string;
 }
 const logincheck = async(email: string, password: string) => {  
-  const logindata: Logindata = {email, password};
+  const logindata: Logindata = {mid: email, password};
   console.log(logindata);
-
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
   try {
     const response = await fetch(url+'/members/login', {
       method: 'POST',

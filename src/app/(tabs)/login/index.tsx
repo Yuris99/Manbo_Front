@@ -13,7 +13,7 @@ export default function FirstLoginPage() {
       }}/>
       <View style={styles.imagecontainer}>
         <Image 
-          source={require('@assets/images/LOGO.png')} 
+          source={require('@assets/images/icon.png')} 
           style={styles.image}
           resizeMode='contain'  
         />

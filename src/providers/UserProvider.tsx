@@ -10,7 +10,7 @@ type UserType = {
   user: User;
   locate: Loc;
   coordinate: Region;
-  login: (email: string, password: string) => void;
+  login: (email: string, password: string) => boolean;
   setuser: (userdata: User) => void;
   logout: () => void;
   setloc: (selector: number, flow: string) => void;
@@ -21,7 +21,7 @@ const UserContext = createContext<UserType>({
   user: {id: -1, email: "", username: "", pw: "", age: 0, gender: "M", islogin: false},
   locate: {city:'', town:'', village:''},
   coordinate: {latitude: 37.551180, longitude: 127.001610, latitudeDelta: 0, longitudeDelta: 0},
-  login: () => {},
+  login: () => true,
   setuser: () => {},
   setloc: () => {},
   logout: () => {},
@@ -36,10 +36,10 @@ const UserProvider = ({children}: PropsWithChildren) => {
     const returndata = await logincheck(email, password);
     console.log("in UserPRovider");
     console.log(returndata);
-    if(returndata == null) {
+    if(returndata == null || returndata == undefined) {
       return false;
     }
-    setUser({id: returndata.memberId, username: returndata.name, email: returndata.email, gender: 'M', pw: "", age: 24, islogin: true});
+    await setUser({id: returndata.memberId, username: returndata.name, email: returndata.email, gender: 'M', pw: "", age: 24, islogin: true});
     return true;
   };
   const setuser = (userdata: User) => {
