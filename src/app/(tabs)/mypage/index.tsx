@@ -9,10 +9,9 @@ import { UserData } from '@/src/providers/UserProvider';
 const iconsize = 30;
 
 export default function TabTwoScreen() {
-  const {logout} = UserData();
+  const {logout, user} = UserData();
 
   //테스트
-  const username = "홍지훈";
   const walksum = 5923;
 
   const logoutandmain = async() => {
@@ -25,7 +24,7 @@ export default function TabTwoScreen() {
       <Stack.Screen options={{
         title: '',
         headerLeft: () => (
-          <Text style={styles.headertext}>{username}님, 반갑습니다!</Text>
+          <Text style={styles.headertext}>{user.username}님, 반갑습니다!</Text>
         ),
         headerRight: () => (
           <Pressable onPress={logoutandmain}>
