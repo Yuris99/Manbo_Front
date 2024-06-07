@@ -56,12 +56,21 @@ export default function BoardTabs() {
         <AssignWriteComponent />
       ),
     }} />
+    <Stack.Screen name="WriteRecommand" options={{
+      title: "산책로 만들기",
+      headerLeft: () => (
+        <HeaderBackButton />
+      ),
+      headerRight: () => (
+        <AssignWriteComponent />
+      ),
+    }} />
     <Stack.Screen name="[postid]" options={{
+      title: "공지사항",
       headerLeft: () => (
         <HeaderBackButton />
       ),
       headerShadowVisible: false,
-      title: '',
     }}
     />
     </Stack>

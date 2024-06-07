@@ -4,7 +4,8 @@ import EditScreenInfo from "@/src/components/EditScreenInfo";
 import { getusernamebyid } from "@/src/lib/serverlogin";
 import { Room, Trail, User } from "@/src/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
 
@@ -20,10 +21,22 @@ const JoinRoom = (item : Room) => {
 
 const RoomJoinScreen = () => {
   const { roomid } = useLocalSearchParams();
+  const [roomhost, setRoomhost] = useState("");
   //룸 가져오기
   const room = RoomList[Number(roomid)];
   const trail = Trails[room.trail_id];
-  const hostname = getusernamebyid(room.host_id);
+  useFocusEffect(
+    useCallback(() => {
+      async() => {
+        const hname = await getusernamebyid(room.host_id);
+        console.log(hname);
+        if(hname != null) {
+          setRoomhost(hname);
+        }
+      };
+
+    }, [])
+  );
   //console.log(room);
   return (
     <View style={styles.container}>
@@ -32,7 +45,7 @@ const RoomJoinScreen = () => {
       <View style={styles.roomdata}>
         {/**모임제목 */}
         <View style={styles.titlebox}>
-          <Text style={styles.hostinfo}>{hostname == null ? "" : hostname}</Text>
+          <Text style={styles.hostinfo}>{roomhost}</Text>
           <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">{room.name}</Text>
         </View>
         {/**모임 설명 */}

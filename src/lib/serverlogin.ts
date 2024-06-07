@@ -62,6 +62,9 @@ const join = async(user: User) => {
 const getusernamebyid = async(userid: number) => {
   const response = await fetch(url+'/members/list');
   const users = await response.json();
+  console.log(response);
+  console.log(users);
+  console.log(users.filter(data => data.memberId == userid)[0].name);
   return (users.filter(data => data.memberId == userid).length > 0 ? users.filter(data => data.memberId == userid)[0].name : "");
 };
 

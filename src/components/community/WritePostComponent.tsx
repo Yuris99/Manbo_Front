@@ -7,7 +7,7 @@ const WritePostComponent = () => {
         backgroundColor: '#cccccc',
         alignSelf: 'flex-end',
         height: 30,
-        marginRight: 30,
+        marginRight: 10,
         justifyContent: 'center',
         paddingHorizontal: 10,
         borderRadius: 100,
