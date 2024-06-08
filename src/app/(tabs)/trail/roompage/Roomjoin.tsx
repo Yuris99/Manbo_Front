@@ -99,7 +99,7 @@ const RoomJoinScreen = () => {
           </View>
         </View>
         {/**모임 참여 버튼 */}
-        <Pressable style={styles.joinbutton} onPress={()=>{JoinRoom(room)}}>
+        <Pressable style={styles.joinbutton} onPress={()=>{/**JoinRoom(room) 테스트*/ router.push("/trail/roompage/Roominfo");}}>
           <Text style={styles.joinbuttontext}>모임 참여!</Text>
         </Pressable>
       </View>
