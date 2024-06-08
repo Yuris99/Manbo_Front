@@ -1,11 +1,11 @@
 // app/map.tsx
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, FlatList, Dimensions, StyleSheet, Image } from 'react-native';
 import * as fs from 'expo-file-system';
 import { useState, useEffect } from 'react';
 import { Trail } from '@/src/types';
 import Trails from '@/assets/testdata/trailList';
-import { NaverMapMarkerOverlay, NaverMapView } from '@mj-studio/react-native-naver-map';
+import { NaverMapMarkerOverlay, NaverMapView, NaverMapViewRef } from '@mj-studio/react-native-naver-map';
 import { UserData } from '@/src/providers/UserProvider';
 import TrailIndexTrail from '@/src/components/trail/TrailIndextrail';
 
@@ -14,9 +14,11 @@ const { width } = Dimensions.get('window');
 export default function MapScreen() {
   const {coordinate, getCoordinate} = UserData();
   const [data, setData] = useState<Trail[]>([]);
+  const mapref = useRef<NaverMapViewRef>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      mapref.current?.setLocationTrackingMode("Face");
       try {
         //여기서 get trail data
         const members: Trail[] = Trails;
@@ -30,17 +32,20 @@ export default function MapScreen() {
     fetchData();
   }, []);
 
+
   return (
     <View style={{ flex: 1 }}>
       <NaverMapView
+        ref={mapref}
         style={{ flex: 1, }}
-        region={{
+        initialRegion={{
           latitude: coordinate.latitude-coordinate.latitudeDelta,
           longitude: coordinate.longitude-coordinate.longitudeDelta,
           latitudeDelta: coordinate.latitudeDelta*2,
           longitudeDelta: coordinate.longitudeDelta*2,
         }}
         isShowLocationButton={false}
+        
         
         isShowZoomControls={false}
       >

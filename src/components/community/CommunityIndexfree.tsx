@@ -1,19 +1,50 @@
 import { StyleSheet, View, Text, Pressable, Platform, FlatList } from 'react-native';
 import React from 'react';
 import { Post } from '@/src/types';
-import { router } from 'expo-router';
+import { router, useSegments } from 'expo-router';
 
 type PostProps = {
   post: Post;
 };
 
-const viewPost = (post_id: number) => {
-  router.push(`/community/board/${post_id}`);
+const viewPost = (post_id: number, posttype: string) => {
+  router.push({pathname: `/community/board/${post_id}`, params: {posttype}});
 };
 
-const CommunityIndexfree = ({ post }: PostProps) => {
+const CommunityIndex = ({ post }: PostProps) => {
+  const segment = useSegments();
+
+  return (segment[segment.length-1] == 'free' ? CommunityIndexfree(post, segment[segment.length-1]) : CommunityIndexother(post, segment[segment.length-1]));
+};
+const CommunityIndexother = (post: Post, seg: string) => {
   return (
-    <Pressable onPress={() => { viewPost(post.id); }} style={styles.container}>
+    <Pressable onPress={() => { viewPost(post.id, seg); }} style={styles.container}>
+      <View style={styles.card}>
+        <View style={styles.postInfo}>
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+            {post.title}
+          </Text>
+          <View style={styles.postDetails}>
+            <Text style={[styles.detailText, {width: '100%',}]}>
+              {post.created.getMonth() + 1}/{post.created.getDate()} {post.created.getHours() >= 12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours() - 12 : (post.created.getHours() === 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ? '0' + post.created.getMinutes() : post.created.getMinutes()}
+            </Text>
+          </View>
+          <View style={styles.postDetails}>
+            <Text style={styles.detailText}>
+              조회수 {post.view}
+            </Text>
+            <Text style={[styles.detailText, {marginLeft: 5,}]}>
+              추천수 {post.like}
+            </Text>
+          </View>
+        </View>
+      </View>
+    </Pressable>
+  );
+};
+const CommunityIndexfree = (post: Post, seg: string) => {
+  return (
+    <Pressable onPress={() => { viewPost(post.id, seg); }} style={styles.container}>
       <View style={styles.card}>
         <View style={styles.postInfo}>
           <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
@@ -40,7 +71,6 @@ const CommunityIndexfree = ({ post }: PostProps) => {
     </Pressable>
   );
 };
-
 const titlesize = Platform.OS === 'ios' ? 20 : 18;
 
 const styles = StyleSheet.create({
@@ -82,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommunityIndexfree;
+export default CommunityIndex;

@@ -5,21 +5,23 @@ import { Text, View } from '@components/Themed';
 import { Link, Stack, router, useFocusEffect, useNavigation } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeSentences, { Saying } from '@/assets/data/HomeSentences';
-import { NaverMapMarkerOverlay, NaverMapView, Region } from '@mj-studio/react-native-naver-map';
+import { NaverMapMarkerOverlay, NaverMapView, NaverMapViewRef, Region } from '@mj-studio/react-native-naver-map';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { UserData } from '@/src/providers/UserProvider';
 import { requestForegroundPermissionsAsync, requestPermissionsAsync } from 'expo-location';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const iconsize = 30;
 
 export default function homePage() {
   const {user, coordinate, getCoordinate} = UserData();
+  const mapref = useRef<NaverMapViewRef>(null);
   const saying: Saying = HomeSentences[Math.floor(Math.random() * (HomeSentences.length-1))];
   useFocusEffect(
     useCallback(() => {
       const getuserpos = async() => {
         await getCoordinate();
+        mapref.current?.setLocationTrackingMode("Face");
       };
       getuserpos();
 
@@ -62,6 +64,7 @@ export default function homePage() {
           </View>
         }>
           <NaverMapView
+            ref={mapref}
             style={styles.titlemap}
             symbolScale={0}
             isShowLocationButton={false}

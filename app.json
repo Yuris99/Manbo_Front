@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Manbo",
+    "name": "만보",
     "slug": "Manbo",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -42,13 +42,25 @@
     },
     "plugins": [
       "expo-router",
-      "expo-location",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "만보에서 위치를 사용하도록 허용합니다.",
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
       [
         "expo-font",
         {
           "fonts": [
             "./assets/fonts/KCC-Hanbit.ttf"
           ]
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "글쓰기 게시판을 사용하기 위해 사진을 공유합니다."
         }
       ],
       [
@@ -72,7 +84,11 @@
           "android": {
             "extraMavenRepos": [
               "https://repository.map.naver.com/archive/maven"
-            ]
+            ],
+            "newArchEnabled": true
+          },
+          "ios": {
+            "newArchEnabled": true
           }
         }
       ]
@@ -88,32 +104,5 @@
         "projectId": "2c5ca273-54e0-4051-984c-d4f615712528"
       }
     }
-  },
-  "plugins": [
-    [
-      "@mj-studio/react-native-naver-map",
-      {
-        "client_id": "hcrfyw5ljo",
-        "android": {
-          "ACCESS_FINE_LOCATION": true,
-          "ACCESS_COARSE_LOCATION": true,
-          "ACCESS_BACKGROUND_LOCATION": true
-        },
-        "ios": {
-          "NSLocationAlwaysAndWhenInUseUsageDescription": "{{ your location usage description }}",
-          "NSLocationWhenInUseUsageDescription": "{{ your location usage description }}"
-        }
-      }
-    ],
-    [
-      "expo-build-properties",
-      {
-        "android": {
-          "extraMavenRepos": [
-            "https://repository.map.naver.com/archive/maven"
-          ]
-        }
-      }
-    ]
-  ]
+  }
 }

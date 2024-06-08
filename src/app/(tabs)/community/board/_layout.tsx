@@ -9,9 +9,9 @@ import {
   MaterialTopTabNavigationEventMap,
 } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { Stack, Tabs, withLayoutContext } from 'expo-router';
+import { Link, Stack, Tabs, withLayoutContext } from 'expo-router';
 
-import { Platform } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 
 
 
@@ -29,7 +29,11 @@ export default function BoardTabs() {
         <HeaderBackButton />
       ),
       headerRight: () => (
-        <WritePostComponent />
+        <Link href={"/community/board/WriteRecommand"} asChild>
+        <Pressable>
+          <WritePostComponent />
+        </Pressable>
+        </Link>
       )
     }} />
     <Stack.Screen name="free" options={{
@@ -38,7 +42,11 @@ export default function BoardTabs() {
         <HeaderBackButton />
       ),
       headerRight: () => (
-        <WritePostComponent />
+        <Link href={"/community/board/writepost"} asChild>
+          <Pressable>
+            <WritePostComponent />
+          </Pressable>
+        </Link>
       )
     }} />
     <Stack.Screen name="notice" options={{

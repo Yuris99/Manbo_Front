@@ -4,21 +4,17 @@ import { useState } from 'react';
 import { View, FlatList, StyleSheet, TextInput, Pressable, Text, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 
-
-export default function CreateRoom() {
-  return Platform.OS == 'ios' ? CreateRoomIOS() : CreateRoomAndroid();
+export default function WriteRecommand() {
+  return CreateRoomIOS();
 }
 
 function CreateRoomIOS() {
   const [title, setTitle] = useState("");
   const [trail, setTrail] = useState<Trail | null>(null);
-  const [month, setMonth] = useState("");
-  const [date, setDate] = useState("");
-  const [hour, setHour] = useState("");
-  const [minute, setMinute] = useState("");
-  const [numofmember, setNumofmember] = useState("");
   const [content, setContent] = useState("");
-  const [tag, setTag] = useState("");
+  const [tag, setTag] = useState("");  
+  const [image, setImage] = useState(null);
+  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View 
@@ -42,208 +38,29 @@ function CreateRoomIOS() {
               size={30}
           />
       </Pressable>
-      {/**시간 */}
-      <View style={styles.selectmaximum}>
-        <View style={styles.timeview}>
-          <TextInput 
-            placeholder='06' 
-            value={month}
-            onChangeText={(text) => setMonth(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            placeholderTextColor={"#aaa"}
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>월</Text>
-          <TextInput 
-            placeholder='30' 
-            value={date}
-            onChangeText={(text) => setDate(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            placeholderTextColor={"#aaa"}
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>일</Text>
-          <TextInput 
-            placeholder='12' 
-            value={hour}
-            onChangeText={(text) => setHour(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            placeholderTextColor={"#aaa"}
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>시</Text>
-          <TextInput 
-            placeholder='00' 
-            value={minute}
-            onChangeText={(text) => setMinute(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            placeholderTextColor={"#aaa"}
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>분</Text>
-        </View>
-      </View>
-      {/** 최대 인원 */}
-      <View style={styles.selectmaximum}>
-        <Text style={styles.selectmaximumtext}>모임 인원: </Text>
-        <View style={styles.selectorview}>
-          <TextInput 
-            placeholder='최대 8' 
-            value={numofmember}
-            onChangeText={(text) => setNumofmember(text)}
-            style={styles.selectorbox}
-            keyboardType='numeric'
-            placeholderTextColor={"#aaa"}
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>명</Text>
-        </View>
-      </View>
-      {/** 내용 입력 */}
-      <View style={styles.inputcontentview}>
-        <TextInput 
-          placeholder='모임에 대한 설명을 자세하게 적어 주세요!' 
-          value={content}
-          onChangeText={(text) => setContent(text)}
-          style={styles.inputcontent} 
-          placeholderTextColor={"#aaa"}
-          multiline />
-      </View>
-      {/** 태그 입력 */}
-      <KeyboardAvoidingView
-        behavior='padding'
-        keyboardVerticalOffset={120}
-        style={{width: "100%", alignItems: 'center'}}
-      >
-      <TextInput 
-        placeholder='#숭실대생_환영' 
-        value={tag}
-        onChangeText={(text) => setTag(text)}
-        placeholderTextColor={"#aaa"}
-        style={styles.inputtag}  />
-      </KeyboardAvoidingView>
-    </View>
-    </TouchableWithoutFeedback>
-  );
-};
-function CreateRoomAndroid() {
-  const [title, setTitle] = useState("");
-  const [trail, setTrail] = useState<Trail | null>(null);
-  const [month, setMonth] = useState("");
-  const [date, setDate] = useState("");
-  const [hour, setHour] = useState("");
-  const [minute, setMinute] = useState("");
-  const [numofmember, setNumofmember] = useState("");
-  const [content, setContent] = useState("");
-  const [tag, setTag] = useState("");
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <View 
-      style={styles.container}>
-      {/**제목 입력 */}
-      <TextInput 
-        placeholder='제목' 
-        value={title}
-        onChangeText={(text) => setTitle(text)}
-        style={styles.inputtitle} 
-        numberOfLines={1}               
-        blurOnSubmit={true}
-      />
-      {/** 산책로 선택 */}
+      {/** 이미지 선택 */}
       <Pressable style={styles.selecttrail}>
-        <Text style={styles.selecttrailtext}>{trail == null ? "산책로 선택" : trail.name}</Text>
+        <Text style={styles.selecttrailtext}>산책로 선택</Text>
           <MaterialCommunityIcons 
               name="arrow-right" 
               color={"#000000"} 
               size={30}
           />
       </Pressable>
-      {/**시간 */}
-      <View style={styles.selectmaximum}>
-        <View style={styles.timeview}>
-          <TextInput 
-            placeholder='06' 
-            value={month}
-            onChangeText={(text) => setMonth(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>월</Text>
-          <TextInput 
-            placeholder='30' 
-            value={date}
-            onChangeText={(text) => setDate(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>일</Text>
-          <TextInput 
-            placeholder='12' 
-            value={hour}
-            onChangeText={(text) => setHour(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>시</Text>
-          <TextInput 
-            placeholder='00' 
-            value={minute}
-            onChangeText={(text) => setMinute(text)}
-            style={styles.timebox}
-            keyboardType='numeric'
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>분</Text>
-        </View>
-      </View>
-      {/** 최대 인원 */}
-      <View style={styles.selectmaximum}>
-        <Text style={styles.selectmaximumtext}>모임 인원: </Text>
-        <View style={styles.selectorview}>
-          <TextInput 
-            placeholder='최대 8' 
-            value={numofmember}
-            onChangeText={(text) => setNumofmember(text)}
-            style={styles.selectorbox}
-            keyboardType='numeric'
-            scrollEnabled={false}
-            blurOnSubmit />
-          <Text style={styles.selectmaximumtext}>명</Text>
-        </View>
-      </View>
       {/** 내용 입력 */}
       <View style={styles.inputcontentview}>
         <TextInput 
-          placeholder='모임에 대한 설명을 자세하게 적어 주세요!' 
+          placeholder='산책로에 대한 설명을 자세하게 적어 주세요!' 
           value={content}
           onChangeText={(text) => setContent(text)}
           style={styles.inputcontent} 
+          placeholderTextColor={"#aaa"}
           multiline />
       </View>
-      {/** 태그 입력 */}
-      <KeyboardAvoidingView
-        behavior='padding'
-        keyboardVerticalOffset={100}
-        style={{width: "100%", alignItems: 'center'}}
-      >
-      <TextInput 
-        placeholder='#숭실대생_환영' 
-        value={tag}
-        onChangeText={(text) => setTag(text)}
-        style={styles.inputtag}  />
-      </KeyboardAvoidingView>
     </View>
     </TouchableWithoutFeedback>
   );
 };
-
 const titlesize = Platform.OS == 'ios' ? 25 : 20;
 const contentsize = Platform.OS == 'ios' ? 15 : 15;
 

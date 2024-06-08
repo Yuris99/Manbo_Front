@@ -3,7 +3,7 @@ import { Pressable, Text, View } from "react-native"
 
 const WritePostComponent = () => {
     return (
-      <Pressable style={{
+      <View style={{
         backgroundColor: '#cccccc',
         alignSelf: 'flex-end',
         height: 30,
@@ -12,9 +12,8 @@ const WritePostComponent = () => {
         paddingHorizontal: 10,
         borderRadius: 100,
       }}
-      onPress={()=>{router.push('/community/board/writepost')}}
       ><Text style={{fontSize: 13}}>글쓰기 +</Text>
-      </Pressable>
+      </View>
     );
   };
   
