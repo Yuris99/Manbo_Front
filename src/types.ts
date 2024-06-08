@@ -68,6 +68,15 @@ export type Trail = {
     startcoord: MapPosition;
 };
 
+export type Review = {
+    id: number;
+    trail_id: number;
+    user_id: number;
+    score: number;
+    content: string;
+    created: Date;
+};
+
 /** 게시글 종류 ENUM
  * 
  */

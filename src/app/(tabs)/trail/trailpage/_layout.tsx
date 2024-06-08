@@ -8,9 +8,11 @@ export default function TrailPage() {
   const params = useLocalSearchParams();
   const trailtitle:string = (typeof params.name == 'string' ? params.name : "산책로")
   return (<Stack screenOptions={{
+    
   }}>
   <Stack.Screen name="Traillist" options={{
     title: '산책로',
+    
     headerLeft: () => (
       <HeaderBackButton />
     ),
@@ -41,6 +43,13 @@ export default function TrailPage() {
       <HeaderBackButton />
     ),
     headerShadowVisible: false,
+  }} />
+  <Stack.Screen name="TrailReviews" options={{
+    title: '리뷰',
+    headerLeft: () => (
+      <HeaderBackButton />
+    ),
+    presentation:'modal',
   }} />
   </Stack>);
 }

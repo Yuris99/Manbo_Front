@@ -1,6 +1,6 @@
 import Trails from '@/assets/testdata/trailList';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
-import { Stack, router, useLocalSearchParams } from 'expo-router';
+import { Link, Stack, router, useLocalSearchParams } from 'expo-router';
 import { View, FlatList, Text, ScrollView, StyleSheet, Image, Dimensions, Pressable, Platform } from 'react-native';
 import Animated , { interpolate, interpolateColor, useAnimatedRef, useAnimatedStyle, useScrollViewOffset  } from 'react-native-reanimated';
 import useHeaderHeight from '@react-navigation/elements'
@@ -82,7 +82,14 @@ export default function TrailInfo() {
             <Text style={styles.title}>{trail.name}</Text>
           </View>
           {/**리뷰 목록 */}
-          <Pressable style={styles.reviewdata}>
+          <Pressable style={styles.reviewdata} onPress={
+            () => {
+              router.push({
+                pathname: '/trail/trailpage/TrailReviews',
+                params: {trail_id: id}
+              })
+            }
+          }>
             <View style={styles.score}>
             <MaterialCommunityIcons
               name={'star'}

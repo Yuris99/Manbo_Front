@@ -23,8 +23,8 @@ export default function LoginPage() {
   async function signin() {
     setLoading(true);
     const emailRegex =
-    /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     if(email == '') {
       setErrorMessage("이메일을 입력해주세요!");
       setEmailBorderColor("#FF1744");
@@ -42,16 +42,17 @@ export default function LoginPage() {
       setEmailBorderColor("#aaa");
       setPwBorderColor("#FF1744");
     } else {
-      const result = await login(email, password);
-      console.log(result);
-      if(user?.islogin) {
+      const res = await login(email, password);
+      console.log(res);
+      console.log("Test");
+      if(res) {
         setEmailBorderColor("#aaa");
         setPwBorderColor("#aaa");
         setErrorMessage(" ");
         //db접속 및 인증
         Alert.alert("성공적으로 로그인 되었습니다!");
         router.replace('/home');
-      }else {
+      } else {
         setErrorMessage("이메일 또는 비밀번호가 일치하지 않습니다!");
         setEmailBorderColor("#FF1744");
         setPwBorderColor("#FF1744");
