@@ -44,6 +44,10 @@ export default function TrailPage() {
     ),
     headerShadowVisible: false,
   }} />
+  <Stack.Screen name="TrailingRes" options={{
+    title: '산책 결과',
+    headerShadowVisible: false,
+  }} />
   <Stack.Screen name="TrailReviews" options={{
     title: '리뷰',
     headerLeft: () => (

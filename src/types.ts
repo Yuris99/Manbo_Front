@@ -68,6 +68,16 @@ export type Trail = {
     startcoord: MapPosition;
 };
 
+export type Coordinate = {
+    latitude: number;
+    longitude: number;
+};
+
+export type TrailPath = {
+    trail_id: number;
+    coordlist: Coordinate[];
+}
+
 export type Review = {
     id: number;
     trail_id: number;

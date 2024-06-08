@@ -1,4 +1,4 @@
-import { Trail } from "@/src/types"
+import { Trail, TrailPath } from "@/src/types"
 import dayjs from 'dayjs';
 
 const now = dayjs();

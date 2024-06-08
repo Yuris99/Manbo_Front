@@ -2,130 +2,174 @@ import Trails from '@/assets/testdata/trailList';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
 import { Link, Stack, router, useLocalSearchParams } from 'expo-router';
 import { View, FlatList, Text, ScrollView, StyleSheet, Image, Dimensions, Pressable, Platform } from 'react-native';
-import Animated , { interpolate, interpolateColor, useAnimatedRef, useAnimatedStyle, useScrollViewOffset  } from 'react-native-reanimated';
-import useHeaderHeight from '@react-navigation/elements'
+import Animated , { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { NaverMapMarkerOverlay, NaverMapView } from '@mj-studio/react-native-naver-map';
+import { NaverMapMarkerOverlay, NaverMapPathOverlay, NaverMapView } from '@mj-studio/react-native-naver-map';
+import coord1 from '@/assets/testdata/trailListLoc';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
 
+type Coordinate = {
+  latitude: number;
+  longitude: number;
+};
+
 export default function TrailInfo() {
-  //애니메이션 관련 데이터
-	const scrollRef = useAnimatedRef<Animated.ScrollView>();
-	const scrollOffset = useScrollViewOffset(scrollRef);
-
-
+  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollOffset = useScrollViewOffset(scrollRef);
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
-		return {
-			transform: [
-				{
-					translateY: interpolate(
-						scrollOffset.value,
-						[-IMG_HEIGHT, 0, IMG_HEIGHT],
-						[-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
-					)
-				},
-				{
-					scale: interpolate(scrollOffset.value, [-IMG_HEIGHT, 0, IMG_HEIGHT], [2, 1, 1])
-				}
-			]
-		};
-	});
+    return {
+      transform: [
+        {
+          translateY: interpolate(
+            scrollOffset.value,
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
+            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
+          )
+        },
+        {
+          scale: interpolate(scrollOffset.value, [-IMG_HEIGHT, 0, IMG_HEIGHT], [2, 1, 1])
+        }
+      ]
+    };
+  });
 
   const {id} = useLocalSearchParams();
-  //산책로 정보 가져오기
   const trail = Trails[Number(id)];
+  const clist = coord1[0].coordlist;
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       opacity: interpolate(scrollOffset.value-IMG_HEIGHT+100, [0, (IMG_HEIGHT) / 5], [0, 1]),
     };
-  });  
-  
+  });
+
+  const calculateBoundingBox = (coordinates: Coordinate[]) => {
+    const lats = coordinates.map(coord => coord.latitude);
+    const lons = coordinates.map(coord => coord.longitude);
+    
+    const minLat = Math.min(...lats);
+    const maxLat = Math.max(...lats);
+    const minLon = Math.min(...lons);
+    const maxLon = Math.max(...lons);
+
+    return {
+      minLat,
+      maxLat,
+      minLon,
+      maxLon,
+      latDelta: maxLat - minLat,
+      lonDelta: maxLon - minLon
+    };
+  };
+
+  const boundingBox = calculateBoundingBox(clist);
+  const latDelta = boundingBox.latDelta * 1.5; // Adjusted delta with 1.5 factor
+  const lonDelta = boundingBox.lonDelta * 1.5; // Adjusted delta with 1.5 factor
+  const midLat = boundingBox.minLat + latDelta / 2;
+  const midLon = boundingBox.minLon + lonDelta / 2;
+
+  const region = {
+    latitude: midLat - latDelta / 1.5, // Adjust for center
+    longitude: midLon - lonDelta / 1.5, // Adjust for center
+    latitudeDelta: latDelta,
+    longitudeDelta: lonDelta
+  };
 
   return (
     <View style={styles.container}>
-    <Stack.Screen 
-      options={{
-        headerTransparent: true,
-        title: trail.name,
-        headerLeft: () => <HeaderBackButton iconcolor='#ffffff' />,
-        headerRight: () => (
-          <Pressable style={{}}>
-            <MaterialCommunityIcons
-              name="heart-outline"
-              size={30}
-              color={"white"}
-            />
-          </Pressable>
-        ),
-        headerTitleStyle: {color: "white"},
-        headerBackground: () => <Animated.View style={[styles.header, headerAnimatedStyle]}/>
-      }}
-    />
-      {/**header */}
+      <Stack.Screen 
+        options={{
+          headerTransparent: true,
+          title: trail.name,
+          headerLeft: () => <HeaderBackButton iconcolor='#ffffff' />,
+          headerRight: () => (
+            <Pressable style={{}}>
+              <MaterialCommunityIcons
+                name="heart-outline"
+                size={30}
+                color={"white"}
+              />
+            </Pressable>
+          ),
+          headerTitleStyle: {color: "white"},
+          headerBackground: () => <Animated.View style={[styles.header, headerAnimatedStyle]}/>
+        }}
+      />
       <Animated.ScrollView 
         ref={scrollRef}
         style={styles.Startheader}
-        >
-        {/**이미지 */}
+      >
         <Animated.Image source={{
           uri: trail.trailImgs[0],
         }}
         style={[styles.image, imageAnimatedStyle]}
         />
-        {/**내용 */}
         <View style={styles.traildata}>
           <View style={styles.titlewrapper}>
             <Text style={styles.title}>{trail.name}</Text>
           </View>
-          {/**리뷰 목록 */}
-          <Pressable style={styles.reviewdata} onPress={
-            () => {
-              router.push({
-                pathname: '/trail/trailpage/TrailReviews',
-                params: {trail_id: id}
-              })
-            }
-          }>
+          <Pressable style={styles.reviewdata} onPress={() => {
+            router.push({
+              pathname: '/trail/trailpage/TrailReviews',
+              params: {trail_id: id}
+            });
+          }}>
             <View style={styles.score}>
-            <MaterialCommunityIcons
-              name={'star'}
-              size={30}
-              color={"gold"}
-            />
-            <Text style={styles.scorenum}>{trail.rank}</Text> 
+              <MaterialCommunityIcons
+                name={'star'}
+                size={30}
+                color={"gold"}
+              />
+              <Text style={styles.scorenum}>{trail.rank}</Text> 
             </View>
-              <Text style={[styles.scorenum, {color: 'grey'}]}>리뷰 보러 가기 {">"}</Text>
+            <Text style={[styles.scorenum, {color: 'grey'}]}>리뷰 보러 가기 {">"}</Text>
           </Pressable>
-        {/**지도보기 */}
-          <NaverMapView
-            style={styles.trailmap}
-            symbolScale={0}
-            isShowLocationButton={false}
-            isShowZoomControls={false}
-            region={{latitude: trail.startcoord.latitude-0.001, longitude: trail.startcoord.longitude-0.002, latitudeDelta: 0.002, longitudeDelta: 0.004}}
-          >
-            <NaverMapMarkerOverlay
-              latitude={trail.startcoord.latitude}
-              longitude={trail.startcoord.longitude}
-              anchor={{x: 0.5, y: 1}}
-          />
-
-          </NaverMapView>
-        {/**설명 */}
-        <View style={styles.contentwrapper}>
-          <Text style={styles.content}>{trail.content}</Text>
-        </View>
+          <View style={styles.trailmapContainer}>
+            <NaverMapView
+              style={styles.trailmap}
+              region={region}
+              symbolScale={1}
+              isShowLocationButton={false}
+              isShowZoomControls={false}
+              isScrollGesturesEnabled={false}
+              isZoomGesturesEnabled={false}
+              isTiltGesturesEnabled={false}
+              isRotateGesturesEnabled={false}
+            >
+              {clist.length > 1 && (
+                <NaverMapPathOverlay
+                  coords={clist}
+                  width={5}
+                  color="red"
+                />
+              )}
+              {clist.length > 0 && (
+                <NaverMapMarkerOverlay
+                  latitude={clist[0].latitude}
+                  longitude={clist[0].longitude}
+                  anchor={{x: 0.5, y: 1}}
+                  caption={{
+                    text: trail.name,
+                  }}
+                />
+              )}
+            </NaverMapView>
+            {/* 투명한 더미 View */}
+            <View style={styles.transparentOverlay} />
+          </View>
+          <View style={styles.contentwrapper}>
+            <Text style={styles.content}>{trail.content}</Text>
+          </View>
         </View>
       </Animated.ScrollView>
     </View>
   );
 }
 
-const titlealign = Platform.OS == 'ios' ? 'center' : 'left';
+const titlealign = Platform.OS === 'ios' ? 'center' : 'left';
 
 const styles = StyleSheet.create({
   container: {
@@ -147,17 +191,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: '100%',
   },
-  trailmap: {
-    backgroundColor: '#fff',
-    width: '100%',
+  trailmapContainer: {
     height: 300,
     marginTop: 20,
     marginBottom: 10,
   },
+  trailmap: {
+    backgroundColor: '#fff',
+    width: '100%',
+    height: '100%',
+  },
+  transparentOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+  },
   title: {
-    fontSize: 25, 
-    fontWeight: 'bold', 
-    textAlign: titlealign, 
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: titlealign,
   },
   titlewrapper: {
     padding: 20,
@@ -183,11 +234,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
     marginRight: 30,
-    fontWeight: '600', 
+    fontWeight: '600',
   },
   content: {
-    fontSize: 18, 
-    fontWeight: '500', 
+    fontSize: 18,
+    fontWeight: '500',
   },
   contentwrapper: {
     margin: 10,
@@ -200,4 +251,4 @@ const styles = StyleSheet.create({
     color: 'green',
     height: 100,
   }
-})
+});

@@ -1,32 +1,74 @@
-// app/map.tsx
-import React from 'react';
-import { View, Text, FlatList, Dimensions, StyleSheet, Image, Pressable } from 'react-native';
-import * as fs from 'expo-file-system';
-import { useState, useEffect } from 'react';
-import { Trail } from '@/src/types';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { View, Text, Dimensions, StyleSheet, Pressable, Alert, BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Trails from '@/assets/testdata/trailList';
-import { NaverMapMarkerOverlay, NaverMapView } from '@mj-studio/react-native-naver-map';
+import { NaverMapPathOverlay, NaverMapView, NaverMapViewProps, NaverMapViewRef } from '@mj-studio/react-native-naver-map';
 import { UserData } from '@/src/providers/UserProvider';
-import TrailIndexTrail from '@/src/components/trail/TrailIndextrail';
+import { router } from 'expo-router';
+import * as Location from 'expo-location';
 
 const { width } = Dimensions.get('window');
 
+type TimeLeft = {
+  minutes: number;
+  seconds: number;
+};
+
+type Coordinate = {
+  latitude: number;
+  longitude: number;
+};
+
 export default function MapScreen() {
-  const {coordinate, getCoordinate} = UserData();
+  const { coordinate, getCoordinate } = UserData();
   const [isTrailing, setIsTrailing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [startTime, setStartTime] = useState(0);
-  const [labtime, setLabtime] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ minutes: 0, seconds: 0 });
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-  const [buttonText, setButtonText] = useState("산책 시작");
-  const [data, setData] = useState<Trail[]>([]);
+  const [buttonText, setButtonText] = useState('산책 시작');
+  const [data, setData] = useState(Trails);
+  const [locationList, setLocationList] = useState<Coordinate[]>([]);
+  const [distance, setDistance] = useState(0); // 거리 추가
+  const [steps, setSteps] = useState(0); // 걸음 수 추가
+  const mapref = useRef<NaverMapViewRef>(null);
+
+  const showExitConfirmation = () => {
+    Alert.alert(
+      '산책 종료',
+      '정말 나가시겠습니까?\n지금 나가시면 산책 기록이 모두 삭제됩니다.',
+      [
+        {
+          text: '취소',
+          style: 'cancel',
+        },
+        {
+          text: '확인',
+          onPress: () => router.back(),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (isTrailing) showExitConfirmation();
+        else router.back();
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [isTrailing])
+  );
 
   useEffect(() => {
     const fetchData = async () => {
+      mapref.current?.setLocationTrackingMode("Face");
       try {
-        //여기서 get trail data
-        const members: Trail[] = Trails;
-        setData(members);
         getCoordinate();
       } catch (error) {
         console.error('Error reading JSON file:', error);
@@ -35,82 +77,146 @@ export default function MapScreen() {
 
     fetchData();
   }, []);
-  async function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  async function trailingtimer() {
-    setStartTime(Date.now());
-    console.log(formatTime(startTime));
-    const intid = setInterval(() => {
-      setLabtime((Date.now()-startTime));
-      console.log(formatTime(labtime));
+
+  const calculateTimeLeft = (elapsedTime: number): TimeLeft => {
+    const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
+    const seconds = Math.floor((elapsedTime / 1000) % 60);
+
+    return { minutes, seconds };
+  };
+
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const haversineDistance = (coord1: Coordinate, coord2: Coordinate): number => {
+    const toRad = (x: number) => (x * Math.PI) / 180;
+    const R = 6371e3; // metres
+    const φ1 = toRad(coord1.latitude);
+    const φ2 = toRad(coord2.latitude);
+    const Δφ = toRad(coord2.latitude - coord1.latitude);
+    const Δλ = toRad(coord2.longitude - coord1.longitude);
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // in metres
+  };
+
+  const trailingtimer = async () => {
+    startTimeRef.current = Date.now();
+    setTimeLeft({ minutes: 0, seconds: 0 });
+    const intid = setInterval(async () => {
+      if (startTimeRef.current) {
+        const elapsedTime = Date.now() - startTimeRef.current;
+        setTimeLeft(calculateTimeLeft(elapsedTime));
+        // Fetch location every 3 seconds
+        if (elapsedTime % 3000 < 1000) {
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== 'granted') {
+            console.error('Permission to access location was denied');
+            return;
+          }
+
+          let location = await Location.getCurrentPositionAsync({});
+          setLocationList((prev) => {
+            const newLocation = { latitude: location.coords.latitude, longitude: location.coords.longitude };
+            if (prev.length > 0) {
+              const lastLocation = prev[prev.length - 1];
+              const dist = haversineDistance(lastLocation, newLocation);
+              setDistance((d) => d + dist);
+              setSteps((s) => s + Math.floor(dist / 1.2));
+            }
+            return [...prev, newLocation];
+          });
+        }
+      }
     }, 1000);
     setIntervalId(intid);
-  }
-  async function stopTimer() {
-    if(intervalId != null)
-      clearInterval(intervalId);
-    setLabtime(0);
-  }
-  async function changeState() {
-    setLoading(true);
-    if(isTrailing) {
-      setIsTrailing(false);
-      await stopTimer();
-      setButtonText("산책 시작");
+  };
 
+  const stopTimer = () => {
+    if (intervalId != null) clearInterval(intervalId);
+    router.push({pathname: `/trail/trailpage/TrailingRes`, params: {resList: JSON.stringify(locationList)}})
+    setTimeLeft({ minutes: 0, seconds: 0 });
+    setLocationList([]);
+    setDistance(0);
+    setSteps(0);
+    startTimeRef.current = null;
+  };
+
+  const changeState = async () => {
+    setLoading(true);
+    if (isTrailing) {
+      setIsTrailing(false);
+      stopTimer();
+      setButtonText('산책 시작');
     } else {
-      setButtonText("3");
-      console.log("3");
-      await delay(1000);
-      setButtonText("2");
-      console.log("2");
-      await delay(1000);
-      setButtonText("1");
-      console.log("1");
-      await delay(1000);
-      //start record
-      console.log("start");
+      for (let i = 3; i > 0; i--) {
+        setButtonText(i.toString());
+        await delay(1000);
+      }
+      setButtonText('산책 종료');
       trailingtimer();
-      setButtonText("산책 종료");
       setIsTrailing(true);
     }
-
-
     setLoading(false);
-  }
-  function formatTime(ms: number): string {
-    const minutes = Math.floor((ms % 3600000) / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
+  };
 
-    return (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  }
+  const formatTime = (minutes: number, seconds: number): string => {
+    return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
 
   return (
     <View style={{ flex: 1 }}>
       <NaverMapView
-        style={{ flex: 1, }}
+        ref={mapref}
+        style={{ flex: 1 }}
         region={{
-          latitude: coordinate.latitude-coordinate.latitudeDelta,
-          longitude: coordinate.longitude-coordinate.longitudeDelta,
-          latitudeDelta: coordinate.latitudeDelta*2,
-          longitudeDelta: coordinate.longitudeDelta*2,
+          latitude: coordinate.latitude - coordinate.latitudeDelta/2,
+          longitude: coordinate.longitude - coordinate.longitudeDelta/2,
+          latitudeDelta: coordinate.latitudeDelta,
+          longitudeDelta: coordinate.longitudeDelta,
         }}
         isShowLocationButton={false}
-        
         isShowZoomControls={false}
+        isScrollGesturesEnabled={false}  // Disable scrolling
+        isZoomGesturesEnabled={false}    // Disable zooming
+        isTiltGesturesEnabled={false}    // Disable tilting
+        isRotateGesturesEnabled={false}  // Disable rotating
       >
+        {locationList.length > 1 && (
+          <NaverMapPathOverlay
+            coords={locationList}
+            width={5}
+            color="red"
+          />
+        )}
       </NaverMapView>
       <View style={styles.listContainer}>
         <View style={styles.trailingdata}>
-          <Text style={styles.trilingtextot}>0보</Text>
-          <Text style={styles.trilingtexttime}>{formatTime(labtime)}</Text>
-          <Text style={styles.trilingtextot}>0.00km</Text>
+          <Text style={styles.trilingtextot}>{steps} 보</Text>
+          <Text style={styles.trilingtexttime}>{formatTime(timeLeft.minutes, timeLeft.seconds)}</Text>
+          <Text style={styles.trilingtextot}>{(distance / 1000).toFixed(2)} km</Text>
         </View>
-        <Pressable style={isTrailing ? styles.viewTextbuttonend : styles.viewTextbutton} disabled={loading} onPress={() => {changeState()}}>
+        <Pressable
+          style={isTrailing ? styles.viewTextbuttonend : styles.viewTextbutton}
+          disabled={loading}
+          onPress={changeState}
+        >
           <Text style={styles.viewTextbuttontext}>{buttonText}</Text>
-          </Pressable>
+        </Pressable>
       </View>
+      {/**디버깅용
+      <View>
+        <Text>Recorded Locations:</Text>
+          {locationList.slice(-2).map((location, index) => (
+            <Text key={index}>
+              {location.latitude}, {location.longitude}
+            </Text>
+          ))}
+      </View>
+     */}
     </View>
   );
 }
@@ -120,28 +226,6 @@ const styles = StyleSheet.create({
     height: '30%',
     backgroundColor: 'white',
     justifyContent: 'space-evenly',
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    marginHorizontal: 10,
-    width: width * 0.8,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  image: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 10,
   },
   trailingdata: {
     flexDirection: 'row',
@@ -159,10 +243,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     width: '30%',
-  },
-  description: {
-    fontSize: 14,
-    color: 'gray',
   },
   viewTextbutton: {
     width: '90%',
