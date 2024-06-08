@@ -23,7 +23,7 @@ const RoomList : Room[] = [
         name: "모임임제목이 존나 길면 어떻게 되려나?????어디까지길어지는rjdpdyd",
         content: "모임설명이존나긴거도테스트해봐야하는데 뭘 써야할지 모르겠네\n\n줄바꿈표도 사용 가능하려나? 잘될지 모르겠네 제발 살려주ㅏ 응애sdafasdfdsafjasdfkjladsgbwakjgnadskgsadfkajsdlfsadfjsakdlfkjasdflaksjdfadslkjfasdlkfjasdlfkjdsalkfjasdlkfjasdlfkjlkjdsaflasdkjfsadlkjfsad lkjf asdfklj sadf jksadflj sadfjsadfksad jfldksj asdljkf asdjkf laskjhfasdlkjhflksadj hfadslkjfhasdlkjfhasdkfljahfsdlkjafdhlasdkfjsadhflkjdsafhsadkljfhdsafkljasdfhkjasdfhsdalkjfhsadkljfhsdafilkj",
         maximum: 8,
-        meettime: now.add(11, 'hour').toDate(),
+        meettime: now.add(5, 'second').toDate(),
         state: 'Open',
         membercnt: 4,
         roomTags: ["태그도", "존나많아지면", "어떻게되려나?", "그냥", "아주아주", "많아지면?"],
