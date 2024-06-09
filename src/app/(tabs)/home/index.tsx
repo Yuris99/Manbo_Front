@@ -21,7 +21,6 @@ export default function homePage() {
     useCallback(() => {
       const getuserpos = async() => {
         await getCoordinate();
-        mapref.current?.setLocationTrackingMode("Face");
       };
       getuserpos();
 

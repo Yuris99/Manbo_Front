@@ -63,6 +63,7 @@ export default function registerPage() {
           <TextInput style={[styles.textinputstyle, {borderColor: emailBorderColor}]}
           value={email}
           onChangeText={setEmail}
+          placeholderTextColor={"#aaa"}
           inputMode='email'
           autoComplete='email'
           autoCapitalize='none'

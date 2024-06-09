@@ -32,6 +32,7 @@ export default function MapScreen({} : TrailingResProp) {
     <View style={{ flex: 1 }}>
       <TextInput
         value={resultDataset.map(loc => `${loc.latitude}, ${loc.longitude}`).join('\n')}
+        placeholderTextColor={"#aaa"}
         multiline
       />
     </View>

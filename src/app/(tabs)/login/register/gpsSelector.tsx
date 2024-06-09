@@ -11,7 +11,7 @@ type TrailInfoProps = {
 }
 
 export default function TrailInfo() {
-  const {setloc} = UserData();
+  const {locate, setloc} = UserData();
   const {selector, before1, before2} = useLocalSearchParams();
   const before1data = before1 == undefined ? "" : before1;
   const before2data = before2 == undefined ? "" : before2;
@@ -20,9 +20,11 @@ export default function TrailInfo() {
   var data: string[] = [];
 
   const changeloc = (item: string) => {
+    console.log(item);
     setloc(seltype, item);
     router.back();
   };
+  console.log(locate);
 
   if(seltype == 0) {
     newtitle = '도/특별시/광역시';

@@ -47,6 +47,8 @@ const logincheck = async(email: string, password: string) => {
 
 const join = async(user: User) => {
   const joindata: Joindata = {mid:user.email, password: user.pw, email: user.email, name: user.username};
+  console.log("joindata");
+  console.log(joindata);
   const response = await fetch(url+'/members/join', {
     method: 'POST',
     headers: {

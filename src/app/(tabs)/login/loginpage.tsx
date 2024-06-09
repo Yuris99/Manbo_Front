@@ -77,6 +77,7 @@ export default function LoginPage() {
           <TextInput style={[styles.textinputstyle, {borderColor: emailBorderColor}]}
           value={email}
           onChangeText={setEmail}
+          placeholderTextColor={"#aaa"}
           inputMode='email'
           autoComplete='email'
           autoCapitalize='none'
@@ -85,6 +86,7 @@ export default function LoginPage() {
           <TextInput style={[styles.textinputstyle, {borderColor: pwBorderColor}]}
           value={password}
           onChangeText={setPassword}
+          placeholderTextColor={"#aaa"}
           textContentType='password'
           autoCapitalize='none'
           placeholder="비밀번호를 입력해주세요."

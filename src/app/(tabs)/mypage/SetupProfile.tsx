@@ -22,6 +22,7 @@ function SetupProfile() {
       <TextInput 
         placeholder={userdata.email}
         style={styles.inputTextBox} 
+        placeholderTextColor={"#aaa"}
         editable={false}
         blurOnSubmit={true}
       />
@@ -29,6 +30,7 @@ function SetupProfile() {
       <Text style={styles.textstyle}>닉네임</Text>
       <TextInput 
         value={userdata.username}
+        placeholderTextColor={"#aaa"}
         style={styles.inputTextBox} 
         blurOnSubmit={true}
       />

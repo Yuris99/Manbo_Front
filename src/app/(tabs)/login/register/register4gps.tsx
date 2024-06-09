@@ -24,6 +24,7 @@ export default function registerPage4gps() {
       router.replace("/login/register/registerComplete");
     }
   }
+  console.log(locate);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
@@ -55,7 +56,7 @@ export default function registerPage4gps() {
           pathname: '/login/register/gpsSelector', 
           params: {selector: '1', before1: locate.city}
           }} 
-          style={[styles.linkstyle, { display: locate.city == '도/특별시/광역시' ? 'none' : 'flex' }]} 
+          style={[styles.linkstyle, { display: locate.city == '도/특별시/광역시' || locate.city == '' ? 'none' : 'flex' }]} 
         asChild>
           <Pressable>
         <Text style={[styles.textboxstyle, {color: (locate.town == '시/군/구' ? "#aaa" : 'black')}]}>{locate.town}</Text>
@@ -65,7 +66,7 @@ export default function registerPage4gps() {
           pathname: '/login/register/gpsSelector', 
           params: {selector: '2', before1: locate.city, before2: locate.town}
           }} 
-          style={[styles.linkstyle, { display: locate.town == '시/군/구' ? 'none' : 'flex' }]} 
+          style={[styles.linkstyle, { display: locate.town == '시/군/구' || locate.town == '' ? 'none' : 'flex' }]} 
         asChild>
           <Pressable>
         <Text style={[styles.textboxstyle, {color: (locate.village == '읍/면/동' ? "#aaa" : 'black')}]}>{locate.village}</Text>
@@ -76,7 +77,7 @@ export default function registerPage4gps() {
           width: '100%',
           alignItems: 'center',
           justifyContent: 'center',
-          display: locate.village == '읍/면/동' ? 'none' : 'flex',
+          display: locate.village == '읍/면/동' || locate.village == '' ? 'none' : 'flex',
         }}>
           <SubmitButton text="회원가입" disabled={loading} onPress={signin} />
         </View>

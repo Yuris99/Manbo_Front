@@ -74,6 +74,7 @@ export default function registerPage2Password() {
           <TextInput style={[styles.textinputstyle, {borderColor: pwBorderColor}]}
           value={password}
           onChangeText={setPassword}
+          placeholderTextColor={"#aaa"}
           textContentType='password'
           autoCapitalize='none'
           placeholder="비밀번호"
@@ -82,6 +83,7 @@ export default function registerPage2Password() {
           <TextInput style={[styles.textinputstyle, {borderColor: pwcBorderColor}]}
           value={passwordc}
           onChangeText={setPasswordc}
+          placeholderTextColor={"#aaa"}
           textContentType='password'
           autoCapitalize='none'
           placeholder="비밀번호 확인"

@@ -58,9 +58,9 @@ export default function registerPage3Info() {
       setnameBorderColor("#aaa");
       setBirthBorderColor("#aaa");
       setuser({id: -1, username: name, email: user.email, pw: user.pw, gender: gender, age: -1, islogin: false});
-      await setloc(0, '도/특별시/광역시');
-      await setloc(1, '시/군/구');
-      await setloc(2, '읍/면/동');
+      setloc(0, '도/특별시/광역시');
+      setloc(1, '시/군/구');
+      setloc(2, '읍/면/동');
       console.log(locate);
       router.push("/login/register/register4gps");
 
@@ -96,12 +96,14 @@ export default function registerPage3Info() {
           <TextInput style={[styles.textinputstyle, {borderColor: nameBorderColor}]}
           value={name}
           onChangeText={setName}
+          placeholderTextColor={"#aaa"}
           textContentType='name'
           placeholder="닉네임"
           />
           <TextInput style={[styles.textinputstyle, {borderColor: birthBorderColor}]}
           value={birth}
           onChangeText={birth => inputbirth(birth)}
+          placeholderTextColor={"#aaa"}
           textContentType='birthdate'
           inputMode='numeric'
           placeholder="생년월일 (YYYY/MM/DD)"
