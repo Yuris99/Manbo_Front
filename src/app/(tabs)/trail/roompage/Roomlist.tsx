@@ -9,6 +9,9 @@ export default function RoomScreen() {
   return (
     <FlatList 
       data={RoomList}
+      style={{
+        backgroundColor: 'white',
+      }}
       renderItem={({ item }) => <TrailIndexRoom room={ item } />}
     />
   );

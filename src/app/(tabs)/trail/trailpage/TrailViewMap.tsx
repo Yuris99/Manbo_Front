@@ -26,6 +26,7 @@ export default function MapScreen() {
         getCoordinate();
       } catch (error) {
         console.error('Error reading JSON file:', error);
+        
       }
     };
 

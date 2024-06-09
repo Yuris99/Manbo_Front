@@ -253,7 +253,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     width: '100%',
-    borderWidth: 1,
   },
   inputtitle: {
     backgroundColor: 'white',

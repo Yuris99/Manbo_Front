@@ -7,7 +7,10 @@ import TrailIndexRoom from '@components/trail/TrailIndexroom';
 import Trails from '@/assets/testdata/trailList';
 import RoomList from '@/assets/testdata/roomData';
 import TrailIndexTrail from '@/src/components/trail/TrailIndextrail';
-import { Link, router } from 'expo-router';
+import { Link, router, useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { Trail } from '@/src/types';
+import { getAllTrailList, trailObjToTypeList } from '@/src/lib/TrailDB';
 
 //메뉴 정보
 const MenuTab = [
@@ -35,7 +38,15 @@ const MenuTab = [
 
 const MenuTabSize = 40;
 
-export default function Trail() {
+export default function Trailindex() {
+  const [trails, setTrails] = useState<Trail[]>([]);
+  useEffect(() => {
+      const fetchData = async() => {
+        setTrails(await trailObjToTypeList(await getAllTrailList()));
+        console.log(trails);
+      };
+      fetchData();
+}, []);
   return (
     <View style={styles.container}>
       {/*메뉴리스트*/}
@@ -128,7 +139,7 @@ export default function Trail() {
               marginVertical: 15,
               gap: 10,
             }}
-            data={Trails}
+            data={trails}
             renderItem={({item}) => <TrailIndexTrail trail={item} look={1} />}
             horizontal={true}
             scrollEnabled

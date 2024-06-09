@@ -1,5 +1,5 @@
 import { UserData } from "../providers/UserProvider";
-import { Coordinate, Trail, User } from "../types";
+import { Coordinate, User } from "../types";
 
 const turl = 'http://58.76.163.10:8080/api/trails';
 const rurl = 'http://58.76.163.10:8080/api/routes';
@@ -28,38 +28,6 @@ const getTrailListByMid = async(email: string) => {
   const ret = trails.filter((data: any) => data.member.mid == email)
   .sort((a: any, b: any) => (b.trailId-a.trailId));
   return ret;
-}
-const getAllTrailList = async() => {
-  try {
-    const response = await fetch(turl+'/list');
-    const trails = await response.json();
-    const ret = trails
-    .sort((a: any, b: any) => (b.trailId-a.trailId));
-    return ret;
-  } catch(err) {
-    console.error("error in TrailDB/getAllTrailList: " + err);
-  }
-  return [];
-}
-const trailObjToTypeList = async(obj: any) => {
-  try {
-    const ret:Trail[] = obj.map((data: any) => ({
-      id: data.trailId,
-      user_id: data.member.memberId,
-      username: data.member.name,
-      location: {city: "서울특별시", town: "동작구", village: "상도동"},
-      name: data.trailName,
-      content: data.startLocation,
-      walks: 0,
-      rank: 0,
-      created: data.createdDate,
-      trailImg: "https://hips.hearstapps.com/hmg-prod/images/magical-forests-uk-65c63afd52556.jpg?crop=1.00xw:0.751xh;0,0.141xh&resize=1200:*",
-    }));
-    return ret;
-  }catch(err) {
-    console.error("error in TrailDB/trailObjToTypeList: " + err);
-  }
-  return [];
 }
 
 const uploadTrailAndRoute = async(email: string, routelist: Coordinate[], distance: number, endDate: Date) => {
@@ -100,4 +68,4 @@ const uploadTrailAndRoute = async(email: string, routelist: Coordinate[], distan
   }
 }
 
-export {uploadTrailAndRoute, getAllTrailList, trailObjToTypeList, getTrailListByMid};
+export {uploadTrailAndRoute};

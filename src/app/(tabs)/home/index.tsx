@@ -63,13 +63,12 @@ export default function homePage() {
           </View>
         }>
           <NaverMapView
-            ref={mapref}
             style={styles.titlemap}
             symbolScale={0}
             isShowLocationButton={false}
             isShowZoomControls={false}
             initialRegion={coordinate}
-            region={{latitude: coordinate.latitude-0.001, longitude: coordinate.longitude-0.002, latitudeDelta: coordinate.latitudeDelta, longitudeDelta: coordinate.longitudeDelta}}
+            region={{latitude: coordinate.latitude-(coordinate.latitudeDelta/2), longitude: coordinate.longitude-(coordinate.longitudeDelta/2), latitudeDelta: coordinate.latitudeDelta, longitudeDelta: coordinate.longitudeDelta}}
           >
           </NaverMapView>
         </MaskedView>

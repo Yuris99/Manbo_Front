@@ -11,7 +11,7 @@ type Roomdata = {
 }
 //테스트용 데이터
 const img = "https://austinactivekids.com/wp-content/uploads/2020/01/2FC59971-A3F5-4C07-BFF4-439E8D663D0E-1536x1536.jpg";
-const startloc = Trails[0].startloc;
+
 
 const WeekendKorean : string[] = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -118,7 +118,6 @@ const TrailIndexRoom = ({room} : Roomdata) => {
                 marginLeft: 5,
                 marginRight: 15,
               }} numberOfLines={1} ellipsizeMode='tail'>
-                {startloc}
                 </Text>
             </View>
           </View>

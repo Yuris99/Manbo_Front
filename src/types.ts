@@ -56,16 +56,13 @@ export type MapPosition = {
 export type Trail = {
     id: number;
     user_id: number;
-    startloc: string;
+    user_name: number;
     location: Loc;
     name: string;
     content: string;
     walks: number;
     rank: number;
-    created: Date;
-    tags: TrailTag[];
-    trailImgs: string[];
-    startcoord: MapPosition;
+    trailImg: string;
 };
 
 export type Coordinate = {

@@ -21,12 +21,12 @@ type UserType = {
 // 초기 Context 값 설정
 const initialUserState: User = { id: -1, email: "", username: "", pw: "", age: 0, gender: "M", islogin: false };
 const initialLocState: Loc = { city: '', town: '', village: '' };
-const initialCoordinateState: Region = { latitude: 37.551180, longitude: 127.001610, latitudeDelta: 0, longitudeDelta: 0 };
+const initialCoordinateState: Region = { latitude: 37.551180, longitude: 127.001610, latitudeDelta: 0.001, longitudeDelta: 0.002 };
 
 const UserContext = createContext<UserType>({
   user: {id: -1, email: "", username: "", pw: "", age: 0, gender: "M", islogin: false},
   locate: {city:'', town:'', village:''},
-  coordinate: {latitude: 37.551180, longitude: 127.001610, latitudeDelta: 0, longitudeDelta: 0},
+  coordinate: {latitude: 37.551180, longitude: 127.001610, latitudeDelta: 0.001, longitudeDelta: 0.002},
   login: () => Promise.resolve(true),
   setuser: () => {},
   setloc: () => {},
@@ -63,25 +63,34 @@ const UserProvider = ({children}: PropsWithChildren) => {
   }, [coordinate]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    const returndata = await logincheck(email, password);
-    if(returndata != true) {
-      return false;
+    try {
+      const returndata = await logincheck(email, password);
+      if(returndata != true) {
+        return false;
+      }
+      const userdata = await getUserDataByMID(email);
+      console.log("udate");
+      console.log(userdata);
+      setUser({id: userdata.memberId, username: userdata.name, email: userdata.email, gender: 'M', pw: "", age: 24, islogin: true});
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      console.log(user);
+      return true;
+    } catch (err) {
+      console.error('Error In UserProvider/login:', err);
     }
-    const userdata = await getUserDataByMID(email);
-    console.log("udate");
-    console.log(userdata);
-    setUser({id: userdata.memberId, username: userdata.name, email: userdata.email, gender: 'M', pw: "", age: 24, islogin: true});
-    await AsyncStorage.setItem('user', JSON.stringify(user));
-    console.log(user);
-    return true;
+    return false;
   };
   const setuser = (userdata: User) => {
     setUser(userdata);
   }
   
   const logout = async() => {
-    setUser(initialUserState);
-    await AsyncStorage.removeItem('user');
+    try {
+      setUser(initialUserState);
+      await AsyncStorage.removeItem('user');
+    } catch (err) {
+      console.error('Error In UserProvider/logout:', err);
+    }
   };
 
   const setloc = (selector: number, flow: string) => {
@@ -97,19 +106,22 @@ const UserProvider = ({children}: PropsWithChildren) => {
   }
 
   const getCoordinate = async () => {
-    console.log("getcoordinate");
-    const {status} = await requestForegroundPermissionsAsync();
-    if(status !== 'granted') {
-      console.error("권한 허용 안됨!");
-      return;
+    try {
+      console.log("getcoordinate");
+      const {status} = await requestForegroundPermissionsAsync();
+      if(status !== 'granted') {
+        console.error("권한 허용 안됨!");
+        return;
+      }
+      const loc = await getCurrentPositionAsync({accuracy: 5});
+      setCoordinate({latitude: loc.coords.latitude, longitude: loc.coords.longitude, latitudeDelta: coordinate.latitudeDelta, longitudeDelta: coordinate.longitudeDelta});
+      console.log("c");
+      console.log(coordinate);
+      console.log(loc);
+    }  catch (err) {
+      console.error('Error In UserProvider/getCoordinate:', err);
     }
-    const loc = await getCurrentPositionAsync({accuracy: 5});
-    setCoordinate({latitude: loc.coords.latitude, longitude: loc.coords.longitude, latitudeDelta: coordinate.latitudeDelta, longitudeDelta: coordinate.longitudeDelta});
-    console.log("c");
-    console.log(coordinate);
-    console.log(loc);
   }
-
 
   return (
     <UserContext.Provider

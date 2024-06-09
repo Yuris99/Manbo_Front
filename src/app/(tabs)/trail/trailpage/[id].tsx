@@ -103,7 +103,7 @@ export default function TrailInfo() {
         style={styles.Startheader}
       >
         <Animated.Image source={{
-          uri: trail.trailImgs[0],
+          uri: trail.trailImg,
         }}
         style={[styles.image, imageAnimatedStyle]}
         />

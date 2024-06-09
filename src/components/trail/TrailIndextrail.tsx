@@ -19,7 +19,7 @@ const TrailIndexTrail = ({trail, look} : TrailData) => {
     <Link href={{pathname: `/trail/trailpage/${trail.id}`, params: {name:trail.name}}} key={trail.name} asChild>
       <Pressable style={(look == 1 ? styles.container : styles.container2)}>
         {/* background image */}
-        <Image source={{uri: trail.trailImgs[0]}}
+        <Image source={{uri: trail.trailImg != "" ? trail.trailImg : 'https://hips.hearstapps.com/hmg-prod/images/magical-forests-uk-65c63afd52556.jpg?crop=1.00xw:0.751xh;0,0.141xh&resize=1200:*'}}
           style={styles.image}
         />
         {/* infoText */}
