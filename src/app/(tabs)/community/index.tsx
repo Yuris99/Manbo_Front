@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Pressable, Platform } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
@@ -6,17 +6,21 @@ import { Text, View } from '@components/Themed';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
 
-export default function CommunityMain() {
+export default function CommunityMain() {  
+  const [annoStr, setAnnoStr] = useState<string>("공지사항");
+  const [recommandStr, setRecommandStr] = useState<string[]>(["게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다."]);
+  const [freeStr, setFreeStr] = useState<string[]>(["게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다."]);
+
   return (
     <View style={styles.container}>
-    <Link href={"/community/board/notice"} asChild>
-    <Pressable style={styles.iconTextContainer}>
-        <View style={styles.topButton01}>
-          <MaterialIcons name="info" size={24} color="black" />
-          <Text style={styles.title}>만보 정식출시 안내</Text>
-        </View>
-    </Pressable>
-    </Link>
+      <Link href={"/community/board/notice"} asChild>
+        <Pressable style={styles.iconTextContainer}>
+          <View style={styles.topButton01}>
+            <MaterialIcons name="info" size={24} color="black" />
+            <Text style={styles.title}>{annoStr}</Text>
+          </View>
+        </Pressable>
+      </Link>
       {/**추천 게시판 */}
       <Pressable style={styles.middleContainer} onPress={()=>{router.push('/community/board/recommand')}}>
         <View style={styles.buttontextview}>
@@ -27,37 +31,34 @@ export default function CommunityMain() {
             color="black"
           />
         </View>
-          <View style={styles.middleButton}>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
-          </View>
+        <View style={styles.middleButton}>
+          {recommandStr.map((str, index) => (
+            <Text key={index} style={styles.thumbnailText}>{str}</Text>
+          ))}
+        </View>
       </Pressable>
       {/**자유 게시판 */}
       <Link href={{pathname: "/community/board/free"}} asChild>
-      <Pressable style={styles.middleContainer}>
-        <View style={styles.buttontextview}>
-          <Text style={styles.middleButtonText}>자유 게시판</Text>
-          <MaterialCommunityIcons
-            name="arrow-right"
-            size={24}
-            color="black"
-          />
-        </View>
-          <View style={styles.middleButton}>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
-            <Text style={styles.thumbnailText}>테스트</Text>
+        <Pressable style={styles.middleContainer}>
+          <View style={styles.buttontextview}>
+            <Text style={styles.middleButtonText}>자유 게시판</Text>
+            <MaterialCommunityIcons
+              name="arrow-right"
+              size={24}
+              color="black"
+            />
           </View>
-      </Pressable>
+          <View style={styles.middleButton}>
+            {freeStr.map((str, index) => (
+              <Text key={index} style={styles.thumbnailText}>{str}</Text>
+            ))}
+          </View>
+        </Pressable>
       </Link>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

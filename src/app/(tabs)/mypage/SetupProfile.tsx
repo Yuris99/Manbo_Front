@@ -11,6 +11,7 @@ export default function CreateRoom() {
 function SetupProfile() {
   const {user} = UserData();
   const userdata = user;
+  console.log(user);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

@@ -13,6 +13,10 @@ export default function MypageStack () {
             headerShown: true,
             title: "찜 목록",
         }} />
+        <Stack.Screen name="HistoryPage" options={{
+            headerShown: true,
+            title: "산책 내역",
+        }} />
         <Stack.Screen name="SetupProfile" options={{
             headerShown: true,
             title: "프로필 설정",

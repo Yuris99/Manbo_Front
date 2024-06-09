@@ -1,7 +1,24 @@
+import { View } from '@/src/components/Themed';
+import { UserData } from '@/src/providers/UserProvider';
 import { Redirect } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 
 export default function TabIndex () {
-  //테스트 - 로그인 리다이렉트
-  //return <Redirect href={'/login/'} />;
-  return <Redirect href={'/home'} />;
+  const {user} = UserData();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 1000); // Simulating loading
+  }, []);  
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  if(user.islogin) {
+    return <Redirect href={'/home'} />;
+  }
+  return <Redirect href={'/login'} />;
 };

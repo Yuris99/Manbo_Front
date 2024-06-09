@@ -90,7 +90,7 @@ export default function LoginPage() {
           placeholder="비밀번호를 입력해주세요."
           secureTextEntry
           />
-        <SubmitButton text="로그인" disabled={loading} onPress={signin} />
+        <SubmitButton text="로그인" disabled={loading} onPress={() => {signin();}} />
         <Text style={{
           width: '90%',
           alignSelf: 'center',

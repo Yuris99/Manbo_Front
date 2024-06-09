@@ -34,7 +34,8 @@ const logincheck = async(email: string, password: string) => {
       },
       body: JSON.stringify(logindata),
     });
-    console.log(response);
+    console.log("logincheck test");
+    console.log(response.ok);
     if(response.ok == true)
       return true;
     else return false;
@@ -67,5 +68,13 @@ const getusernamebyid = async(userid: number) => {
   console.log(users.filter(data => data.memberId == userid)[0].name);
   return (users.filter(data => data.memberId == userid).length > 0 ? users.filter(data => data.memberId == userid)[0].name : "");
 };
+const getUserDataByMID = async(mid: string) => {
+  const response = await fetch(url+'/members/list');
+  const users = await response.json();
+  console.log(response);
+  console.log(users);
+  console.log(users.filter(data => data.mid == mid)[0].name);
+  return (users.filter(data => data.mid == mid).length > 0 ? users.filter(data => data.mid == mid)[0] : "");
+};
 
-export {isExistEmail, logincheck, join, getusernamebyid};
+export {isExistEmail, logincheck, join, getusernamebyid, getUserDataByMID};

@@ -1,8 +1,9 @@
 import { Trail } from '@/src/types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { View, FlatList, StyleSheet, TextInput, Pressable, Text, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, FlatList, StyleSheet, TextInput, Pressable, Text, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { Header } from 'react-native/Libraries/NewAppScreen';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function WriteRecommand() {
   return CreateRoomIOS();
@@ -14,6 +15,47 @@ function CreateRoomIOS() {
   const [content, setContent] = useState("");
   const [tag, setTag] = useState("");  
   const [image, setImage] = useState(null);
+
+  
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [3, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const ImageViewOrNot = () => {
+    if(image == null) {
+      return (
+
+        <Pressable style={styles.selecttrail} onPress={()=>{pickImage()}}>
+        <Text style={styles.selecttrailtext}>사진 선택</Text>
+          <MaterialCommunityIcons 
+              name="arrow-right" 
+              color={"#000000"} 
+              size={30}
+          />
+      </Pressable>
+      )
+    } else {
+          
+        return (<Pressable style={styles.selectimage} onPress={()=>{pickImage()}}>
+          <Image source={{uri: image}}
+          style={styles.image}
+          />
+      </Pressable>)
+    }
+  }
+
   
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -39,14 +81,7 @@ function CreateRoomIOS() {
           />
       </Pressable>
       {/** 이미지 선택 */}
-      <Pressable style={styles.selecttrail}>
-        <Text style={styles.selecttrailtext}>산책로 선택</Text>
-          <MaterialCommunityIcons 
-              name="arrow-right" 
-              color={"#000000"} 
-              size={30}
-          />
-      </Pressable>
+      <ImageViewOrNot />
       {/** 내용 입력 */}
       <View style={styles.inputcontentview}>
         <TextInput 
@@ -84,6 +119,19 @@ const styles = StyleSheet.create({
     padding: 20,
     textAlignVertical: 'top',
     minHeight: '10%',
+  },
+  image: {
+    height: '100%',
+    aspectRatio: 1,
+  },
+  selectimage: {
+    backgroundColor: 'white',
+    marginTop: 10,
+    borderColor: '#aaaaaa',
+    height: '20%',
+    width: '100%',
+    borderRadius: 20,
+    paddingHorizontal: 30,
   },
   selecttrail: {
     backgroundColor: 'white',

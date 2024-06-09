@@ -58,7 +58,7 @@ export default function TabTwoScreen() {
           <Text style={styles.menutext} onPress={() => router.push('/mypage/SetupProfile')}>프로필 설정</Text>
         </Pressable>
       {/**산책 기록 */}
-        <Pressable style={styles.menuview}>
+        <Pressable style={styles.menuview} onPress={() => router.push('/mypage/HistoryPage')}>
         <MaterialCommunityIcons
           name="history"
           size={iconsize}
