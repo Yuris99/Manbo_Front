@@ -39,7 +39,7 @@ export default function homePage() {
           <Text style={styles.headertext}>{user.username}님, 반갑습니다!</Text>
         ),
       }} />
-      <Link href={"/community/board/notice"} asChild>
+      <Link href={"/community"} asChild>
       <Pressable style={styles.iconTextContainer}>
           <View style={styles.topButton01}>
             <MaterialCommunityIcons name="information" size={24} color="black" />

@@ -6,7 +6,7 @@ const isExistEmail = async(email: string) => {
   try {
     const response = await fetch(url+'/members/list');
     const users = await response.json();
-    return (users.filter(data => data.email == email).length > 0 ? true : false);
+    return (users.filter((data: any) => data.email == email).length > 0 ? true : false);
   } catch(err) {
     console.error(err);
     return false;

@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@components/useColorScheme';
 import UserProvider from '../providers/UserProvider';
 import HeaderBackButton from '../components/default/HeaderBackButton';
+import { ScreenProvider } from '../providers/ScreenProvider';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,9 +54,11 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={DefaultTheme}>
       <UserProvider>
+      <ScreenProvider>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
+      </ScreenProvider>
       </UserProvider>
     </ThemeProvider>
   );

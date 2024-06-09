@@ -10,7 +10,7 @@ export default function CommunityMain() {
   const [annoStr, setAnnoStr] = useState<string>("공지사항");
   const [recommandStr, setRecommandStr] = useState<string[]>(["게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다."]);
   const [freeStr, setFreeStr] = useState<string[]>(["게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다."]);
-
+  console.log("test");
   return (
     <View style={styles.container}>
       <Link href={"/community/board/notice"} asChild>

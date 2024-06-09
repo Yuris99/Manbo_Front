@@ -5,12 +5,14 @@ import { Link, Tabs } from 'expo-router';
 
 import Colors from '@constants/Colors';
 import { useClientOnlyValue } from '@/src/components/useClientOnlyValue';
+import { useScreenOption } from '@/src/providers/ScreenProvider';
 
 
 
 export default function TabLayout() {
   const colorScheme = 'light';
   const iconSize = Platform.OS == 'ios' ? 32 : 28;
+  const {isTabBarVisible} = useScreenOption();
 
   return (    
     <Tabs
@@ -27,7 +29,9 @@ export default function TabLayout() {
         } : {
           height: '6.5%',
         },
+        
       }}
+      
     >
     <Tabs.Screen name="index" options={{ href: null }} />
     <Tabs.Screen name="login" options={{ 
@@ -35,7 +39,7 @@ export default function TabLayout() {
       headerShown: false, 
       tabBarStyle: {
         display: 'none',
-      }
+      },
     }}
     />
     <Tabs.Screen
@@ -61,6 +65,7 @@ export default function TabLayout() {
             color={color} 
             size={iconSize} 
           />,
+          unmountOnBlur: true,
       }}
     />
     <Tabs.Screen
@@ -74,6 +79,8 @@ export default function TabLayout() {
             color={color} 
             size={iconSize} 
           />,
+          unmountOnBlur: true,
+          tabBarStyle:{display: isTabBarVisible ? 'flex' : 'none'}
       }}
     />
     <Tabs.Screen
@@ -87,6 +94,7 @@ export default function TabLayout() {
             color={color} 
             size={iconSize} 
           />,
+          unmountOnBlur: true,
       }}
     />
     </Tabs>

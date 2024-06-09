@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
 import { View, Text, Dimensions, StyleSheet, Pressable, Alert, BackHandler } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Trails from '@/assets/testdata/trailList';
 import { NaverMapPathOverlay, NaverMapView, NaverMapViewProps, NaverMapViewRef } from '@mj-studio/react-native-naver-map';
 import { UserData } from '@/src/providers/UserProvider';
-import { router } from 'expo-router';
+import { Stack, router, useNavigation } from 'expo-router';
 import * as Location from 'expo-location';
+import { useScreenOption } from '@/src/providers/ScreenProvider';
+import { uploadTrailAndRoute } from '@/src/lib/TrailDB';
 
 const { width } = Dimensions.get('window');
 
@@ -20,7 +22,7 @@ type Coordinate = {
 };
 
 export default function MapScreen() {
-  const { coordinate, getCoordinate } = UserData();
+  const { coordinate, getCoordinate, user } = UserData();
   const [isTrailing, setIsTrailing] = useState(false);
   const [loading, setLoading] = useState(false);
   const startTimeRef = useRef<number | null>(null);
@@ -32,6 +34,18 @@ export default function MapScreen() {
   const [distance, setDistance] = useState(0); // 거리 추가
   const [steps, setSteps] = useState(0); // 걸음 수 추가
   const mapref = useRef<NaverMapViewRef>(null);
+
+  
+  const navigation = useNavigation();
+  const { setTabBarVisible } = useScreenOption();
+
+  useLayoutEffect(() => {
+    setTabBarVisible(false);
+    return () => {
+      setTabBarVisible(true);
+    };
+  }, [navigation]);
+
 
   const showExitConfirmation = () => {
     Alert.alert(
@@ -135,14 +149,21 @@ export default function MapScreen() {
     setIntervalId(intid);
   };
 
-  const stopTimer = () => {
+
+  const stopTimer = async () => {
+    setLoading(true);
     if (intervalId != null) clearInterval(intervalId);
-    router.push({pathname: `/trail/trailpage/TrailingRes`, params: {resList: JSON.stringify(locationList)}})
+    const enddate = new Date(0);
+    enddate.setMinutes(timeLeft.minutes);
+    enddate.setSeconds(timeLeft.seconds);
+    await uploadTrailAndRoute(user.email, locationList, distance, enddate);
+    router.replace({pathname: `/trail/trailpage/TrailingRes`, params: {resList: JSON.stringify(locationList), runningTime:formatTime(timeLeft.minutes, timeLeft.seconds), distance:((distance / 1000).toFixed(2)).toString()  }})
     setTimeLeft({ minutes: 0, seconds: 0 });
     setLocationList([]);
     setDistance(0);
     setSteps(0);
     startTimeRef.current = null;
+    setLoading(false);
   };
 
   const changeState = async () => {
@@ -166,9 +187,12 @@ export default function MapScreen() {
   const formatTime = (minutes: number, seconds: number): string => {
     return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
-
   return (
     <View style={{ flex: 1 }}>
+      <Stack.Screen 
+        options={{
+        }}
+      />
       <NaverMapView
         ref={mapref}
         style={{ flex: 1 }}
@@ -178,7 +202,6 @@ export default function MapScreen() {
           latitudeDelta: coordinate.latitudeDelta,
           longitudeDelta: coordinate.longitudeDelta,
         }}
-        isShowLocationButton={false}
         isShowZoomControls={false}
         isScrollGesturesEnabled={false}  // Disable scrolling
         isZoomGesturesEnabled={false}    // Disable zooming
@@ -251,6 +274,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: '#9BC34Add',
     padding: 10,
+    marginBottom: 30,
   },
   viewTextbuttonend: {
     width: '90%',
@@ -259,6 +283,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: '#FF5722dd',
     padding: 10,
+    marginBottom: 30,
   },
   viewTextbuttontext: {
     fontSize: 32,
