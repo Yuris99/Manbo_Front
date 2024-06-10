@@ -60,9 +60,6 @@ export default function BoardTabs() {
       headerLeft: () => (
         <HeaderBackButton />
       ),
-      headerRight: () => (
-        <AssignWriteComponent />
-      ),
     }} />
     <Stack.Screen name="WriteRecommand" options={{
       title: "산책로 만들기",

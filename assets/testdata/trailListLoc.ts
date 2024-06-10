@@ -23,6 +23,21 @@ const coord1: TrailPath[] = [{
         {latitude: 37.50028976442297,longitude: 126.95197871352015},
         {latitude: 37.500319197328416,longitude: 126.95201112837302},
         {latitude: 37.500357949070946,longitude: 126.95201990907607},
-    ]}
+    ]},
+    {
+        trail_id: 2,
+        coordlist: [
+            {latitude: 37.504, longitude: 126.954135},
+            {latitude: 37.5035, longitude: 126.954122},
+            {latitude: 37.503, longitude: 126.954108},
+            {latitude: 37.5025, longitude: 126.954095},
+            {latitude: 37.502, longitude: 126.954082},
+            {latitude: 37.5015, longitude: 126.954068},
+            {latitude: 37.501, longitude: 126.954055},
+            {latitude: 37.5005, longitude: 126.954042},
+            {latitude: 37.5, longitude: 126.954028},
+            {latitude: 37.4995, longitude: 126.954015}
+        ]
+    }
 ];
 export default coord1;

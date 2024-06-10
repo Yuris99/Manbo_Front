@@ -55,14 +55,18 @@ export type MapPosition = {
  */
 export type Trail = {
     id: number;
+    startloc: string;
     user_id: number;
-    user_name: number;
+    user_name: string;
     location: Loc;
     name: string;
     content: string;
     walks: number;
+    created: Date;
+    tags: TrailTag[];
     rank: number;
     trailImg: string;
+    startcoord: Coordinate;
 };
 
 export type Coordinate = {
@@ -104,7 +108,7 @@ export type PostType = 'Free' | 'Recommend' | "Announcement";
 export type Post = {
     type: PostType;
     id: number;
-    username: number;
+    username: string;
     trail_id: number | null;
     title: string;
     content: string;

@@ -42,8 +42,7 @@ export default function Trailindex() {
   const [trails, setTrails] = useState<Trail[]>([]);
   useEffect(() => {
       const fetchData = async() => {
-        setTrails(await trailObjToTypeList(await getAllTrailList()));
-        console.log(trails);
+        setTrails(Trails);
       };
       fetchData();
 }, []);

@@ -17,11 +17,7 @@ function postFree(postid: number) {
 
   useEffect(() => {
     const fetchData = async() => {
-      const fd = await getFreebyPid(postid);
-      console.log(fd);
-      const sd = await freeObjToType(fd);
-      console.log(sd);
-      setPost(sd);
+      setPost(FreePost[Number(postid)]);
       
     };
     fetchData();
@@ -55,10 +51,6 @@ function postFree(postid: number) {
       </View>
       {/**like */}
       {/**Commends */}
-      <View style={styles.commandView}>
-        <Text style={styles.commandText}>댓글</Text>
-        <Text style={styles.commandnum}>32</Text>
-      </View>
     </ScrollView>
     {/**댓글창 */}
     <View style={styles.wcmdview}>

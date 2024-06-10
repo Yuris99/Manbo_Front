@@ -27,6 +27,11 @@ type FreeWriteData = {
   fbtitle: String,
   fbcontent: string;
 }
+type RecommandWriteData = {
+  member: Member;
+  rbtitle: String,
+  rbcontent: string;
+}
 
 const writeFreeData = async(email: string, title: string, context: string) => {
   try {
@@ -52,6 +57,31 @@ const writeFreeData = async(email: string, title: string, context: string) => {
   }
   return;
 }
+const writeRecommandData = async(email: string, title: string, context: string) => {
+  try {
+    console.log("writedata");
+    const data: FreeWriteData = {member: {mid: email}, fbtitle: title, fbcontent: context};
+    console.log(data);
+    const response = await fetch(furl+'/write', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(response);
+    if(response.ok == true) {
+    return true;
+    } else {
+    return false;
+    }
+  } catch(err) {
+    console.error("error in CommunityDB/writeFreeData: " + err);
+  }
+  return;
+}
+
 
 const getFreeListByMid = async(email: string) => {
   const response = await fetch(furl+'/list');

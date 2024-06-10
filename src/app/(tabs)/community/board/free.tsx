@@ -9,8 +9,7 @@ export default function FreePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
       const fetchData = async() => {
-        setPosts(await freeObjToTypeList(await getAllFreeList()));
-        console.log(posts);
+        setPosts(FreePost);
       };
       fetchData();
 }, []);

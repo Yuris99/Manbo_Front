@@ -25,9 +25,10 @@ export default function TrailInfo() {
   const {id} = useLocalSearchParams();
   const trail = Trails[Number(id)];
   const [clist, setClist] = useState<Coordinate[]>([]);
+  console.log(clist);
   useEffect(() => {
     const fetchData = async() => {
-      setClist(await getAllRoutebyTid(Number(id)));
+      setClist(coord1[Number(id)].coordlist);
       console.log(clist);
     };
     fetchData();

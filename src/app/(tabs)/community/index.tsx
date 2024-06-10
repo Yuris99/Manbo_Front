@@ -7,6 +7,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
 import { trailObjToTypeList } from '@/src/lib/TrailDB';
 import { freeObjToTypeList, getAllFreeList } from '@/src/lib/CommunityDB';
+import FreePost from '@/assets/testdata/freedata';
 
 export default function CommunityMain() {  
   const [annoStr, setAnnoStr] = useState<string>("공지사항");
@@ -14,7 +15,7 @@ export default function CommunityMain() {
   const [freeStr, setFreeStr] = useState<string[]>(["게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다."]);
   useEffect(() => {
     const fetchData = async() => {
-      setFreeStr((await freeObjToTypeList(await getAllFreeList())).map(data => data.title).slice(1, 6));
+      setFreeStr((FreePost).map(data => data.title).slice(1, 6));
       console.log(freeStr);
     };
     fetchData();

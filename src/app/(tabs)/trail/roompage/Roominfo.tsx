@@ -38,7 +38,7 @@ export default function RoomScreen() {
         },
         {
           text: "확인",
-          onPress: () => console.log('나가기 확인')
+          onPress: () => router.back()
         }
       ],
       { cancelable: false }
@@ -86,7 +86,7 @@ export default function RoomScreen() {
       <ScrollView style={styles.scrollContainer}>
         {/** 이미지, 제목 */}
         <View style={styles.headwrapper}>
-          <Image source={{uri: trail.trailImgs[0]}} style={styles.image} />
+          <Image source={{uri: trail.trailImg}} style={styles.image} />
         </View>
         <View style={styles.titlewrapper}>
           <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail' adjustsFontSizeToFit>{room.name}</Text>

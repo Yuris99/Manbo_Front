@@ -41,7 +41,7 @@ const RoomJoinScreen = () => {
   return (
     <View style={styles.container}>
       {/**이미지 */}
-      <Image source={{uri: trail.trailImgs[0]}} style={styles.image} />
+      <Image source={{uri: trail.trailImg}} style={styles.image} />
       <View style={styles.roomdata}>
         {/**모임제목 */}
         <View style={styles.titlebox}>
