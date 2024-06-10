@@ -29,6 +29,25 @@ const getTrailListByMid = async(email: string) => {
   .sort((a: any, b: any) => (b.trailId-a.trailId));
   return ret;
 }
+const getAllRoutebyTid = async(tid: number) => {
+  try {
+    const response = await fetch(rurl+'/'+tid);
+    const route = await response.json();
+    if(Array.isArray(route)) {
+      const tmp = route.sort((a:any,b:any) => (a.timeIDX-b.timeIDX));
+      const ret:Coordinate[] = tmp.map((data: any) => ({
+        latitude: data.latitude,
+        longitude: data.longitude,
+      }));
+      return ret;
+    } else {
+      console.log(route);
+    }
+  } catch(err) {
+    console.error("error in TrailDB/getAllRoute: " + err);
+  }
+  return [];
+}
 const getAllTrailList = async() => {
   try {
     const response = await fetch(turl+'/list');
@@ -73,7 +92,6 @@ const uploadTrailAndRoute = async(email: string, routelist: Coordinate[], distan
       },
       body: JSON.stringify(postData),
     });
-    console.log("trailUpload test");
     console.log(response);
     if(response.ok ==false) return;
     const trails = await getTrailListByMid(email);
@@ -100,4 +118,4 @@ const uploadTrailAndRoute = async(email: string, routelist: Coordinate[], distan
   }
 }
 
-export {uploadTrailAndRoute, getAllTrailList, trailObjToTypeList, getTrailListByMid};
+export {uploadTrailAndRoute, getAllTrailList, trailObjToTypeList, getTrailListByMid, getAllRoutebyTid};

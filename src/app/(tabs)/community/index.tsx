@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Pressable, Platform } from 'react-native';
 
 import EditScreenInfo from '@components/EditScreenInfo';
 import { Text, View } from '@components/Themed';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
+import { trailObjToTypeList } from '@/src/lib/TrailDB';
+import { freeObjToTypeList, getAllFreeList } from '@/src/lib/CommunityDB';
 
 export default function CommunityMain() {  
   const [annoStr, setAnnoStr] = useState<string>("공지사항");
   const [recommandStr, setRecommandStr] = useState<string[]>(["게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다."]);
   const [freeStr, setFreeStr] = useState<string[]>(["게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다.", "게시글이 존재하지 않습니다."]);
-  console.log("test");
+  useEffect(() => {
+    const fetchData = async() => {
+      setFreeStr((await freeObjToTypeList(await getAllFreeList())).map(data => data.title).slice(1, 6));
+      console.log(freeStr);
+    };
+    fetchData();
+}, []);
   return (
     <View style={styles.container}>
       <Link href={"/community/board/notice"} asChild>

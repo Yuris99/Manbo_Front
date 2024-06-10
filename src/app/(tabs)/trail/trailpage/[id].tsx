@@ -1,12 +1,14 @@
 import Trails from '@/assets/testdata/trailList';
 import HeaderBackButton from '@/src/components/default/HeaderBackButton';
-import { Link, Stack, router, useLocalSearchParams } from 'expo-router';
+import { Link, Stack, router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { View, FlatList, Text, ScrollView, StyleSheet, Image, Dimensions, Pressable, Platform } from 'react-native';
 import Animated , { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NaverMapMarkerOverlay, NaverMapPathOverlay, NaverMapView } from '@mj-studio/react-native-naver-map';
 import coord1 from '@/assets/testdata/trailListLoc';
 import StartTrailButton from '@/src/components/trail/CreateRoomComponent copy';
+import { getAllRoutebyTid } from '@/src/lib/TrailDB';
+import { useCallback, useEffect, useState } from 'react';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -20,6 +22,16 @@ export default function TrailInfo() {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
 
+  const {id} = useLocalSearchParams();
+  const trail = Trails[Number(id)];
+  const [clist, setClist] = useState<Coordinate[]>([]);
+  useEffect(() => {
+    const fetchData = async() => {
+      setClist(await getAllRoutebyTid(Number(id)));
+      console.log(clist);
+    };
+    fetchData();
+  }, []);
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -36,10 +48,6 @@ export default function TrailInfo() {
       ]
     };
   });
-
-  const {id} = useLocalSearchParams();
-  const trail = Trails[Number(id)];
-  const clist = coord1[0].coordlist;
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {

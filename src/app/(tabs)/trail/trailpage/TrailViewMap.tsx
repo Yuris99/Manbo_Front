@@ -40,8 +40,8 @@ export default function MapScreen() {
         ref={mapref}
         style={{ flex: 1, }}
         initialRegion={{
-          latitude: coordinate.latitude-coordinate.latitudeDelta,
-          longitude: coordinate.longitude-coordinate.longitudeDelta,
+          latitude: coordinate.latitude-coordinate.latitudeDelta/2,
+          longitude: coordinate.longitude-coordinate.longitudeDelta/2,
           latitudeDelta: coordinate.latitudeDelta*2,
           longitudeDelta: coordinate.longitudeDelta*2,
         }}

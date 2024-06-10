@@ -17,8 +17,12 @@ function postFree(postid: number) {
 
   useEffect(() => {
     const fetchData = async() => {
-      setPost(await freeObjToType(await getFreebyPid(postid)));
-      console.log(post);
+      const fd = await getFreebyPid(postid);
+      console.log(fd);
+      const sd = await freeObjToType(fd);
+      console.log(sd);
+      setPost(sd);
+      
     };
     fetchData();
 }, []);

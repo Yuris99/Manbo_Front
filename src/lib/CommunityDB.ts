@@ -3,6 +3,7 @@ import { UserData } from "../providers/UserProvider";
 import { Coordinate, Post, User } from "../types";
 
 const furl = 'http://58.76.163.10:8080/api/freeboard';
+const rurl = 'http://58.76.163.10:8080/api/recommend-boards';
 
 
 type Member = {
@@ -21,6 +22,36 @@ type UploadRouteData = {
   latitude: number;
   longitude: number;
 }
+type FreeWriteData = {
+  member: Member;
+  fbtitle: String,
+  fbcontent: string;
+}
+
+const writeFreeData = async(email: string, title: string, context: string) => {
+  try {
+    console.log("writedata");
+    const data: FreeWriteData = {member: {mid: email}, fbtitle: title, fbcontent: context};
+    console.log(data);
+    const response = await fetch(furl+'/write', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(response);
+    if(response.ok == true) {
+    return true;
+    } else {
+    return false;
+    }
+  } catch(err) {
+    console.error("error in CommunityDB/writeFreeData: " + err);
+  }
+  return;
+}
 
 const getFreeListByMid = async(email: string) => {
   const response = await fetch(furl+'/list');
@@ -30,7 +61,7 @@ const getFreeListByMid = async(email: string) => {
   return ret;
 }
 const getFreebyPid = async(pid: number) => {
-  const response = await fetch(furl+'/' + pid);
+  const response = await fetch(furl+ '/' + pid);
   const free = await response.json();
   return await free;
 }
@@ -44,11 +75,11 @@ const getAllFreeList = async() => {
   } catch(err) {
     console.error("error in CommunityDB/getAllFreeList: " + err);
   }
-  return [];
+  return null;
 }
 const freeObjToTypeList = async(obj: any) => {
   try {
-    const ret:Post = obj.map((data: any) => ({
+    const ret:Post[] = obj.map((data: any) => ({
       type: 'Free',
       id: data.fbid,
       username: data.member.name,
@@ -87,4 +118,4 @@ const freeObjToType = async(obj: any) => {
 }
 
 
-export {freeObjToTypeList, getAllFreeList, getFreebyPid, freeObjToType};
+export {freeObjToTypeList, getAllFreeList, getFreebyPid, freeObjToType, writeFreeData};
