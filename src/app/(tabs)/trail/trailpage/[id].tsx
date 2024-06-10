@@ -6,6 +6,7 @@ import Animated , { interpolate, useAnimatedRef, useAnimatedStyle, useScrollView
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NaverMapMarkerOverlay, NaverMapPathOverlay, NaverMapView } from '@mj-studio/react-native-naver-map';
 import coord1 from '@/assets/testdata/trailListLoc';
+import StartTrailButton from '@/src/components/trail/CreateRoomComponent copy';
 
 const { width } = Dimensions.get('window');
 const IMG_HEIGHT = 300;
@@ -165,6 +166,9 @@ export default function TrailInfo() {
           </View>
         </View>
       </Animated.ScrollView>
+      <View style={styles.bottomButton}>
+        <StartTrailButton />
+      </View>
     </View>
   );
 }
@@ -177,7 +181,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     width: '100%',
-    borderWidth: 1,
   },
   Startheader: {
     flex: 1,
@@ -250,5 +253,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#9BC34A",
     color: 'green',
     height: 100,
-  }
+  },
+  bottomButton: {
+    height: '8%',
+    width: '100%',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems:'center',
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
 });

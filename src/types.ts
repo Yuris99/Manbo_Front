@@ -104,7 +104,7 @@ export type PostType = 'Free' | 'Recommend' | "Announcement";
 export type Post = {
     type: PostType;
     id: number;
-    user_id: number;
+    username: number;
     trail_id: number | null;
     title: string;
     content: string;

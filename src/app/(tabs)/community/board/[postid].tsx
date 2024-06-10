@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, Dimensions, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import FreePost from '@assets/testdata/freedata';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { freeObjToType, getFreebyPid } from '@/src/lib/CommunityDB';
+import FreePage from './free';
+import { Post } from '@/src/types';
 
 export default function postView() {
   const { postid, posttype } = useLocalSearchParams();
@@ -10,7 +13,16 @@ export default function postView() {
   return posttype == 'free' ? postFree(Number(postid)) : (posttype == 'recommand' ? postrec(Number(postid)) : postnotice(Number(postid)));
 }
 function postFree(postid: number) {
-  const post = postid === undefined ? FreePost[0] : FreePost[postid];
+  const [post, setPost] = useState<Post>(FreePost[0]);
+
+  useEffect(() => {
+    const fetchData = async() => {
+      setPost(await freeObjToType(await getFreebyPid(postid)));
+      console.log(post);
+    };
+    fetchData();
+}, []);
+
   return (
     <KeyboardAvoidingView 
       behavior={Platform.OS==='ios' ? 'padding' : 'height'}
@@ -28,7 +40,7 @@ function postFree(postid: number) {
       />
       <Text style={styles.title}>{post.title}</Text>
       <View style={styles.userContainer}>
-        <Text style={styles.username}>{post.user_id}</Text>
+        <Text style={styles.username}>{post.username}</Text>
         <Text style={styles.userinfo}>
           {post.created.getMonth() + 1}/{post.created.getDate()} {post.created.getHours() >= 12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours() - 12 : (post.created.getHours() === 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ? '0' + post.created.getMinutes() : post.created.getMinutes()}
         </Text>
@@ -38,14 +50,6 @@ function postFree(postid: number) {
         <Text style={styles.content}>{post.content}</Text>
       </View>
       {/**like */}
-      <Pressable style={styles.likeView}>
-        <MaterialCommunityIcons
-          name="thumb-up"
-          size={32}
-          color={'#aaa'}
-        />
-        <Text style={styles.liketext}>{post.like}</Text>
-      </Pressable>
       {/**Commends */}
       <View style={styles.commandView}>
         <Text style={styles.commandText}>댓글</Text>
@@ -81,7 +85,7 @@ function postnotice(postid: number) {
     />
       <Text style={styles.title}>{post.title}</Text>
       <View style={styles.userContainer}>
-        <Text style={styles.username}>{post.user_id}</Text>
+        <Text style={styles.username}>{post.username}</Text>
         <Text style={styles.userinfo}>
           {post.created.getMonth() + 1}/{post.created.getDate()} {post.created.getHours() >= 12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours() - 12 : (post.created.getHours() === 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ? '0' + post.created.getMinutes() : post.created.getMinutes()}
         </Text>
@@ -90,15 +94,6 @@ function postnotice(postid: number) {
       <View style={styles.userContent}>
         <Text style={styles.content}>{post.content}</Text>
       </View>
-      {/**like */}
-      <Pressable style={styles.likeView}>
-        <MaterialCommunityIcons
-          name="thumb-up"
-          size={32}
-          color={'#aaa'}
-        />
-        <Text style={styles.liketext}>{post.like}</Text>
-      </Pressable>
     </ScrollView>
   );
 }
@@ -114,7 +109,7 @@ function postrec(postid: number) {
     />
       <Text style={styles.title}>{post.title}</Text>
       <View style={styles.userContainer}>
-        <Text style={styles.username}>{post.user_id}</Text>
+        <Text style={styles.username}>{post.username}</Text>
         <Text style={styles.userinfo}>
           {post.created.getMonth() + 1}/{post.created.getDate()} {post.created.getHours() >= 12 ? '오후' : '오전'} {post.created.getHours() > 12 ? post.created.getHours() - 12 : (post.created.getHours() === 0 ? 12 : post.created.getHours())}:{post.created.getMinutes() < 10 ? '0' + post.created.getMinutes() : post.created.getMinutes()}
         </Text>
@@ -132,15 +127,6 @@ function postrec(postid: number) {
       <View style={styles.userContent}>
         <Text style={styles.content}>{post.content}</Text>
       </View>
-      {/**like */}
-      <Pressable style={styles.likeView}>
-        <MaterialCommunityIcons
-          name="thumb-up"
-          size={32}
-          color={'#aaa'}
-        />
-        <Text style={styles.liketext}>{post.like}</Text>
-      </Pressable>
     </ScrollView>
   );
 }

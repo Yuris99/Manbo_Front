@@ -1,8 +1,8 @@
+import FreePost from "@/assets/testdata/freedata";
 import { UserData } from "../providers/UserProvider";
-import { Coordinate, User } from "../types";
+import { Coordinate, Post, User } from "../types";
 
-const turl = 'http://58.76.163.10:8080/api/trails';
-const rurl = 'http://58.76.163.10:8080/api/routes';
+const furl = 'http://58.76.163.10:8080/api/freeboard';
 
 
 type Member = {
@@ -22,50 +22,69 @@ type UploadRouteData = {
   longitude: number;
 }
 
-const getTrailListByMid = async(email: string) => {
-  const response = await fetch(turl+'/list');
-  const trails = await response.json();
-  const ret = trails.filter((data: any) => data.member.mid == email)
-  .sort((a: any, b: any) => (b.trailId-a.trailId));
+const getFreeListByMid = async(email: string) => {
+  const response = await fetch(furl+'/list');
+  const free = await response.json();
+  const ret = free.filter((data: any) => data.member.mid == email)
+  .sort((a: any, b: any) => (b.fbid-a.fbid));
   return ret;
 }
-
-const uploadTrailAndRoute = async(email: string, routelist: Coordinate[], distance: number, endDate: Date) => {
+const getFreebyPid = async(pid: number) => {
+  const response = await fetch(furl+'/' + pid);
+  const free = await response.json();
+  return await free;
+}
+const getAllFreeList = async() => {
   try {
-    const postData: UploadTrailData = {member: {mid:email}, startLocation: "", trailName: "", endDate: endDate.toISOString(), distance}
-    console.log(postData);
-    const response = await fetch(turl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    });
-    console.log("trailUpload test");
-    console.log(response);
-    if(response.ok ==false) return;
-    const trails = await getTrailListByMid(email);
-    const tid = trails[0].trailId;
-    //console.log(trails);
-    const routeData: UploadRouteData[] = routelist.map((coordinate, index) => ({
-      trailId: tid,
-      timeIDX: index + 1,
-      latitude: coordinate.latitude,
-      longitude: coordinate.longitude,
-    }));
-    console.log(routeData);
-    const responseRoute = await fetch(rurl + '/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(routeData),
-    });
-    console.log(responseRoute);
-    return;
+    const response = await fetch(furl+'/list');
+    const free = await response.json();
+    const ret = free.content
+    .sort((a: any, b: any) => (b.fbid-a.fbid));
+    return ret;
   } catch(err) {
-    console.error(err);
+    console.error("error in CommunityDB/getAllFreeList: " + err);
   }
+  return [];
+}
+const freeObjToTypeList = async(obj: any) => {
+  try {
+    const ret:Post = obj.map((data: any) => ({
+      type: 'Free',
+      id: data.fbid,
+      username: data.member.name,
+      trail_id: null,
+      title: data.fbtitle,
+      content: data.fbcontent,
+      created: new Date(data.createdDate),
+      view: data.fbhit,
+      like: data.like,
+    }));
+    return ret;
+  }catch(err) {
+    console.error("error in CommunityDB/freeObjToTypeList: " + err);
+  }
+  return [];
+}
+const freeObjToType = async(obj: any) => {
+  try {
+    console.log(obj);
+    const ret:Post = {
+      type: 'Free',
+      id: obj.fbid,
+      username: obj.member.name,
+      trail_id: null,
+      title: obj.fbtitle,
+      content: obj.fbcontent,
+      created: new Date(obj.createdDate),
+      view: obj.fbhit,
+      like: obj.like,
+    };
+    return ret;
+  }catch(err) {
+    console.error("error in CommunityDB/freeObjToType: " + err);
+  }
+  return FreePost[0];
 }
 
-export {uploadTrailAndRoute};
+
+export {freeObjToTypeList, getAllFreeList, getFreebyPid, freeObjToType};

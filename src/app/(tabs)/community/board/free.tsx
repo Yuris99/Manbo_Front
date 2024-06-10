@@ -1,12 +1,23 @@
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 import FreePost from '@/assets/testdata/freedata';
 import CommunityIndexfree from '@/src/components/community/CommunityIndexfree';
+import { Post } from '@/src/types';
+import { useEffect, useState } from 'react';
+import { freeObjToTypeList, getAllFreeList } from '@/src/lib/CommunityDB';
 
 export default function FreePage() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  useEffect(() => {
+      const fetchData = async() => {
+        setPosts(await freeObjToTypeList(await getAllFreeList()));
+        console.log(posts);
+      };
+      fetchData();
+}, []);
   return (
     <View style={styles.container}>
       <FlatList 
-      data={FreePost}
+      data={posts}
       renderItem={({item}) => <CommunityIndexfree post={item} />}
       />
 

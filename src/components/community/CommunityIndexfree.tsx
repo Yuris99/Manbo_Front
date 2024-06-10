@@ -33,9 +33,6 @@ const CommunityIndexother = (post: Post, seg: string) => {
             <Text style={styles.detailText}>
               조회수 {post.view}
             </Text>
-            <Text style={[styles.detailText, {marginLeft: 5,}]}>
-              추천수 {post.like}
-            </Text>
           </View>
         </View>
       </View>
@@ -58,9 +55,6 @@ const CommunityIndexfree = (post: Post, seg: string) => {
           <View style={styles.postDetails}>
             <Text style={styles.detailText}>
               조회수 {post.view}
-            </Text>
-            <Text style={[styles.detailText, {marginLeft: 5,}]}>
-              추천수 {post.like}
             </Text>
             <Text style={[styles.detailText, {marginLeft: 5,}]}>
               댓글수 {post.like}

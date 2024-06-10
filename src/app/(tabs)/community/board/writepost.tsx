@@ -1,6 +1,11 @@
 import { View, FlatList, StyleSheet, TextInput, Pressable, Text, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Header } from 'react-native/Libraries/NewAppScreen';
-export default function NoticeBoard() {
+export default function WritePost() {
+
+  const write = async() => {
+
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
